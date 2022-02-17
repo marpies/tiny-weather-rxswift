@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		C365225E27BE438400E6AF39 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365225D27BE438400E6AF39 /* AppDelegate.swift */; };
-		C365226027BE438400E6AF39 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365225F27BE438400E6AF39 /* RootViewController.swift */; };
 		C365226427BE438500E6AF39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C365226327BE438500E6AF39 /* Assets.xcassets */; };
 		C365226727BE438500E6AF39 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C365226527BE438500E6AF39 /* LaunchScreen.storyboard */; };
 		C365227227BE438500E6AF39 /* TinyWeatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365227127BE438500E6AF39 /* TinyWeatherTests.swift */; };
@@ -19,6 +18,11 @@
 		C365229227BE445D00E6AF39 /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = C365229127BE445D00E6AF39 /* RxBlocking */; };
 		C365229527BE446900E6AF39 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = C365229427BE446900E6AF39 /* Swinject */; };
 		C365229827BE447400E6AF39 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = C365229727BE447400E6AF39 /* SnapKit */; };
+		C36522A327BE591D00E6AF39 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36522A227BE591D00E6AF39 /* Coordinator.swift */; };
+		C36522A527BE594200E6AF39 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36522A427BE594200E6AF39 /* AppCoordinator.swift */; };
+		C36522AA27BE5A0B00E6AF39 /* SetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36522A827BE5A0B00E6AF39 /* SetupViewController.swift */; };
+		C36522AB27BE5A0B00E6AF39 /* SetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36522A927BE5A0B00E6AF39 /* SetupViewModel.swift */; };
+		C36522AD27BE5AFC00E6AF39 /* SetupAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36522AC27BE5AFC00E6AF39 /* SetupAssembly.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,7 +45,6 @@
 /* Begin PBXFileReference section */
 		C365225A27BE438400E6AF39 /* TinyWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinyWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C365225D27BE438400E6AF39 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C365225F27BE438400E6AF39 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		C365226327BE438500E6AF39 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C365226627BE438500E6AF39 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C365226827BE438500E6AF39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -51,6 +54,11 @@
 		C365227827BE438500E6AF39 /* TinyWeatherUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TinyWeatherUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C365227C27BE438500E6AF39 /* TinyWeatherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TinyWeatherUITests.swift; sourceTree = "<group>"; };
 		C365227E27BE438500E6AF39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C36522A227BE591D00E6AF39 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		C36522A427BE594200E6AF39 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		C36522A827BE5A0B00E6AF39 /* SetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupViewController.swift; sourceTree = "<group>"; };
+		C36522A927BE5A0B00E6AF39 /* SetupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupViewModel.swift; sourceTree = "<group>"; };
+		C36522AC27BE5AFC00E6AF39 /* SetupAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupAssembly.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,7 +116,8 @@
 			isa = PBXGroup;
 			children = (
 				C365225D27BE438400E6AF39 /* AppDelegate.swift */,
-				C365225F27BE438400E6AF39 /* RootViewController.swift */,
+				C36522A127BE590800E6AF39 /* Coordinators */,
+				C36522A627BE59F400E6AF39 /* Scenes */,
 				C365226327BE438500E6AF39 /* Assets.xcassets */,
 				C365226527BE438500E6AF39 /* LaunchScreen.storyboard */,
 				C365226827BE438500E6AF39 /* Info.plist */,
@@ -132,6 +141,33 @@
 				C365227E27BE438500E6AF39 /* Info.plist */,
 			);
 			path = TinyWeatherUITests;
+			sourceTree = "<group>";
+		};
+		C36522A127BE590800E6AF39 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				C36522A227BE591D00E6AF39 /* Coordinator.swift */,
+				C36522A427BE594200E6AF39 /* AppCoordinator.swift */,
+			);
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		C36522A627BE59F400E6AF39 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				C36522A727BE59FF00E6AF39 /* Setup */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		C36522A727BE59FF00E6AF39 /* Setup */ = {
+			isa = PBXGroup;
+			children = (
+				C36522A827BE5A0B00E6AF39 /* SetupViewController.swift */,
+				C36522A927BE5A0B00E6AF39 /* SetupViewModel.swift */,
+				C36522AC27BE5AFC00E6AF39 /* SetupAssembly.swift */,
+			);
+			path = Setup;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -277,8 +313,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C365226027BE438400E6AF39 /* RootViewController.swift in Sources */,
+				C36522A527BE594200E6AF39 /* AppCoordinator.swift in Sources */,
 				C365225E27BE438400E6AF39 /* AppDelegate.swift in Sources */,
+				C36522A327BE591D00E6AF39 /* Coordinator.swift in Sources */,
+				C36522AB27BE5A0B00E6AF39 /* SetupViewModel.swift in Sources */,
+				C36522AA27BE5A0B00E6AF39 /* SetupViewController.swift in Sources */,
+				C36522AD27BE5AFC00E6AF39 /* SetupAssembly.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

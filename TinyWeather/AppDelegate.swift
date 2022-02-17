@@ -10,17 +10,25 @@
 //
 
 import UIKit
+import Swinject
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    private var coordinator: Coordinator?
+    private var assembler: Assembler?
 
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.backgroundColor = .white
-        window?.rootViewController = RootViewController()
-        window?.makeKeyAndVisible()
+        self.assembler = Assembler()
+        self.coordinator = AppCoordinator(assembler: self.assembler!)
+        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.window?.backgroundColor = .black
+        self.window?.rootViewController = self.coordinator?.start()
+        self.window?.makeKeyAndVisible()
+        
         return true
     }
 
