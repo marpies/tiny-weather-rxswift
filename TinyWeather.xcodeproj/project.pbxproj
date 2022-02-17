@@ -1,0 +1,668 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 52;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C365225E27BE438400E6AF39 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365225D27BE438400E6AF39 /* AppDelegate.swift */; };
+		C365226027BE438400E6AF39 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365225F27BE438400E6AF39 /* RootViewController.swift */; };
+		C365226427BE438500E6AF39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C365226327BE438500E6AF39 /* Assets.xcassets */; };
+		C365226727BE438500E6AF39 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C365226527BE438500E6AF39 /* LaunchScreen.storyboard */; };
+		C365227227BE438500E6AF39 /* TinyWeatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365227127BE438500E6AF39 /* TinyWeatherTests.swift */; };
+		C365227D27BE438500E6AF39 /* TinyWeatherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365227C27BE438500E6AF39 /* TinyWeatherUITests.swift */; };
+		C365228C27BE445D00E6AF39 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C365228B27BE445D00E6AF39 /* RxSwift */; };
+		C365228E27BE445D00E6AF39 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = C365228D27BE445D00E6AF39 /* RxRelay */; };
+		C365229027BE445D00E6AF39 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = C365228F27BE445D00E6AF39 /* RxCocoa */; };
+		C365229227BE445D00E6AF39 /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = C365229127BE445D00E6AF39 /* RxBlocking */; };
+		C365229527BE446900E6AF39 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = C365229427BE446900E6AF39 /* Swinject */; };
+		C365229827BE447400E6AF39 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = C365229727BE447400E6AF39 /* SnapKit */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C365226E27BE438500E6AF39 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C365225227BE438400E6AF39 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C365225927BE438400E6AF39;
+			remoteInfo = TinyWeather;
+		};
+		C365227927BE438500E6AF39 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C365225227BE438400E6AF39 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C365225927BE438400E6AF39;
+			remoteInfo = TinyWeather;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		C365225A27BE438400E6AF39 /* TinyWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinyWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C365225D27BE438400E6AF39 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C365225F27BE438400E6AF39 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		C365226327BE438500E6AF39 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C365226627BE438500E6AF39 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C365226827BE438500E6AF39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C365226D27BE438500E6AF39 /* TinyWeatherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TinyWeatherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C365227127BE438500E6AF39 /* TinyWeatherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TinyWeatherTests.swift; sourceTree = "<group>"; };
+		C365227327BE438500E6AF39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C365227827BE438500E6AF39 /* TinyWeatherUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TinyWeatherUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C365227C27BE438500E6AF39 /* TinyWeatherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TinyWeatherUITests.swift; sourceTree = "<group>"; };
+		C365227E27BE438500E6AF39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C365225727BE438400E6AF39 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C365229027BE445D00E6AF39 /* RxCocoa in Frameworks */,
+				C365229527BE446900E6AF39 /* Swinject in Frameworks */,
+				C365229227BE445D00E6AF39 /* RxBlocking in Frameworks */,
+				C365229827BE447400E6AF39 /* SnapKit in Frameworks */,
+				C365228E27BE445D00E6AF39 /* RxRelay in Frameworks */,
+				C365228C27BE445D00E6AF39 /* RxSwift in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C365226A27BE438500E6AF39 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C365227527BE438500E6AF39 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C365225127BE438400E6AF39 = {
+			isa = PBXGroup;
+			children = (
+				C365225C27BE438400E6AF39 /* TinyWeather */,
+				C365227027BE438500E6AF39 /* TinyWeatherTests */,
+				C365227B27BE438500E6AF39 /* TinyWeatherUITests */,
+				C365225B27BE438400E6AF39 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C365225B27BE438400E6AF39 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C365225A27BE438400E6AF39 /* TinyWeather.app */,
+				C365226D27BE438500E6AF39 /* TinyWeatherTests.xctest */,
+				C365227827BE438500E6AF39 /* TinyWeatherUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C365225C27BE438400E6AF39 /* TinyWeather */ = {
+			isa = PBXGroup;
+			children = (
+				C365225D27BE438400E6AF39 /* AppDelegate.swift */,
+				C365225F27BE438400E6AF39 /* RootViewController.swift */,
+				C365226327BE438500E6AF39 /* Assets.xcassets */,
+				C365226527BE438500E6AF39 /* LaunchScreen.storyboard */,
+				C365226827BE438500E6AF39 /* Info.plist */,
+			);
+			path = TinyWeather;
+			sourceTree = "<group>";
+		};
+		C365227027BE438500E6AF39 /* TinyWeatherTests */ = {
+			isa = PBXGroup;
+			children = (
+				C365227127BE438500E6AF39 /* TinyWeatherTests.swift */,
+				C365227327BE438500E6AF39 /* Info.plist */,
+			);
+			path = TinyWeatherTests;
+			sourceTree = "<group>";
+		};
+		C365227B27BE438500E6AF39 /* TinyWeatherUITests */ = {
+			isa = PBXGroup;
+			children = (
+				C365227C27BE438500E6AF39 /* TinyWeatherUITests.swift */,
+				C365227E27BE438500E6AF39 /* Info.plist */,
+			);
+			path = TinyWeatherUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C365225927BE438400E6AF39 /* TinyWeather */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C365228127BE438500E6AF39 /* Build configuration list for PBXNativeTarget "TinyWeather" */;
+			buildPhases = (
+				C365225627BE438400E6AF39 /* Sources */,
+				C365225727BE438400E6AF39 /* Frameworks */,
+				C365225827BE438400E6AF39 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TinyWeather;
+			packageProductDependencies = (
+				C365228B27BE445D00E6AF39 /* RxSwift */,
+				C365228D27BE445D00E6AF39 /* RxRelay */,
+				C365228F27BE445D00E6AF39 /* RxCocoa */,
+				C365229127BE445D00E6AF39 /* RxBlocking */,
+				C365229427BE446900E6AF39 /* Swinject */,
+				C365229727BE447400E6AF39 /* SnapKit */,
+			);
+			productName = TinyWeather;
+			productReference = C365225A27BE438400E6AF39 /* TinyWeather.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C365226C27BE438500E6AF39 /* TinyWeatherTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C365228427BE438500E6AF39 /* Build configuration list for PBXNativeTarget "TinyWeatherTests" */;
+			buildPhases = (
+				C365226927BE438500E6AF39 /* Sources */,
+				C365226A27BE438500E6AF39 /* Frameworks */,
+				C365226B27BE438500E6AF39 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C365226F27BE438500E6AF39 /* PBXTargetDependency */,
+			);
+			name = TinyWeatherTests;
+			productName = TinyWeatherTests;
+			productReference = C365226D27BE438500E6AF39 /* TinyWeatherTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		C365227727BE438500E6AF39 /* TinyWeatherUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C365228727BE438500E6AF39 /* Build configuration list for PBXNativeTarget "TinyWeatherUITests" */;
+			buildPhases = (
+				C365227427BE438500E6AF39 /* Sources */,
+				C365227527BE438500E6AF39 /* Frameworks */,
+				C365227627BE438500E6AF39 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C365227A27BE438500E6AF39 /* PBXTargetDependency */,
+			);
+			name = TinyWeatherUITests;
+			productName = TinyWeatherUITests;
+			productReference = C365227827BE438500E6AF39 /* TinyWeatherUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C365225227BE438400E6AF39 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1250;
+				LastUpgradeCheck = 1250;
+				ORGANIZATIONNAME = "Marcel Piestansky";
+				TargetAttributes = {
+					C365225927BE438400E6AF39 = {
+						CreatedOnToolsVersion = 12.5.1;
+					};
+					C365226C27BE438500E6AF39 = {
+						CreatedOnToolsVersion = 12.5.1;
+						TestTargetID = C365225927BE438400E6AF39;
+					};
+					C365227727BE438500E6AF39 = {
+						CreatedOnToolsVersion = 12.5.1;
+						TestTargetID = C365225927BE438400E6AF39;
+					};
+				};
+			};
+			buildConfigurationList = C365225527BE438400E6AF39 /* Build configuration list for PBXProject "TinyWeather" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C365225127BE438400E6AF39;
+			packageReferences = (
+				C365228A27BE445D00E6AF39 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				C365229327BE446900E6AF39 /* XCRemoteSwiftPackageReference "Swinject" */,
+				C365229627BE447400E6AF39 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
+			productRefGroup = C365225B27BE438400E6AF39 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C365225927BE438400E6AF39 /* TinyWeather */,
+				C365226C27BE438500E6AF39 /* TinyWeatherTests */,
+				C365227727BE438500E6AF39 /* TinyWeatherUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C365225827BE438400E6AF39 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C365226427BE438500E6AF39 /* Assets.xcassets in Resources */,
+				C365226727BE438500E6AF39 /* LaunchScreen.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C365226B27BE438500E6AF39 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C365227627BE438500E6AF39 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C365225627BE438400E6AF39 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C365226027BE438400E6AF39 /* RootViewController.swift in Sources */,
+				C365225E27BE438400E6AF39 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C365226927BE438500E6AF39 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C365227227BE438500E6AF39 /* TinyWeatherTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C365227427BE438500E6AF39 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C365227D27BE438500E6AF39 /* TinyWeatherUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C365226F27BE438500E6AF39 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C365225927BE438400E6AF39 /* TinyWeather */;
+			targetProxy = C365226E27BE438500E6AF39 /* PBXContainerItemProxy */;
+		};
+		C365227A27BE438500E6AF39 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C365225927BE438400E6AF39 /* TinyWeather */;
+			targetProxy = C365227927BE438500E6AF39 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		C365226527BE438500E6AF39 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C365226627BE438500E6AF39 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C365227F27BE438500E6AF39 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C365228027BE438500E6AF39 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C365228227BE438500E6AF39 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Q6T2359V7Q;
+				INFOPLIST_FILE = TinyWeather/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.marpies.TinyWeather;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C365228327BE438500E6AF39 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Q6T2359V7Q;
+				INFOPLIST_FILE = TinyWeather/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.marpies.TinyWeather;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		C365228527BE438500E6AF39 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Q6T2359V7Q;
+				INFOPLIST_FILE = TinyWeatherTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.marpies.TinyWeatherTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TinyWeather.app/TinyWeather";
+			};
+			name = Debug;
+		};
+		C365228627BE438500E6AF39 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Q6T2359V7Q;
+				INFOPLIST_FILE = TinyWeatherTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.marpies.TinyWeatherTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TinyWeather.app/TinyWeather";
+			};
+			name = Release;
+		};
+		C365228827BE438500E6AF39 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Q6T2359V7Q;
+				INFOPLIST_FILE = TinyWeatherUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.marpies.TinyWeatherUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = TinyWeather;
+			};
+			name = Debug;
+		};
+		C365228927BE438500E6AF39 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Q6T2359V7Q;
+				INFOPLIST_FILE = TinyWeatherUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.marpies.TinyWeatherUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = TinyWeather;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C365225527BE438400E6AF39 /* Build configuration list for PBXProject "TinyWeather" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C365227F27BE438500E6AF39 /* Debug */,
+				C365228027BE438500E6AF39 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C365228127BE438500E6AF39 /* Build configuration list for PBXNativeTarget "TinyWeather" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C365228227BE438500E6AF39 /* Debug */,
+				C365228327BE438500E6AF39 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C365228427BE438500E6AF39 /* Build configuration list for PBXNativeTarget "TinyWeatherTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C365228527BE438500E6AF39 /* Debug */,
+				C365228627BE438500E6AF39 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C365228727BE438500E6AF39 /* Build configuration list for PBXNativeTarget "TinyWeatherUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C365228827BE438500E6AF39 /* Debug */,
+				C365228927BE438500E6AF39 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C365228A27BE445D00E6AF39 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.5.0;
+			};
+		};
+		C365229327BE446900E6AF39 /* XCRemoteSwiftPackageReference "Swinject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swinject/Swinject.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.1;
+			};
+		};
+		C365229627BE447400E6AF39 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C365228B27BE445D00E6AF39 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C365228A27BE445D00E6AF39 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		C365228D27BE445D00E6AF39 /* RxRelay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C365228A27BE445D00E6AF39 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxRelay;
+		};
+		C365228F27BE445D00E6AF39 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C365228A27BE445D00E6AF39 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		C365229127BE445D00E6AF39 /* RxBlocking */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C365228A27BE445D00E6AF39 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxBlocking;
+		};
+		C365229427BE446900E6AF39 /* Swinject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C365229327BE446900E6AF39 /* XCRemoteSwiftPackageReference "Swinject" */;
+			productName = Swinject;
+		};
+		C365229727BE447400E6AF39 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C365229627BE447400E6AF39 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = C365225227BE438400E6AF39 /* Project object */;
+}
