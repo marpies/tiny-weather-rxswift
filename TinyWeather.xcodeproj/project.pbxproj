@@ -23,7 +23,10 @@
 		C36522AA27BE5A0B00E6AF39 /* SetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36522A827BE5A0B00E6AF39 /* SetupViewController.swift */; };
 		C36522AB27BE5A0B00E6AF39 /* SetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36522A927BE5A0B00E6AF39 /* SetupViewModel.swift */; };
 		C36522AD27BE5AFC00E6AF39 /* SetupAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36522AC27BE5AFC00E6AF39 /* SetupAssembly.swift */; };
+		C36522B027BE60C500E6AF39 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36522AF27BE60C500E6AF39 /* Theme.swift */; };
+		C36522B427BE624D00E6AF39 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36522B327BE624D00E6AF39 /* AppTheme.swift */; };
 		C36522B727BE630900E6AF39 /* UIColor+RGB.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36522B627BE630900E6AF39 /* UIColor+RGB.swift */; };
+		C36522B927BE679700E6AF39 /* ThemeAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36522B827BE679700E6AF39 /* ThemeAssembly.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,7 +63,10 @@
 		C36522A827BE5A0B00E6AF39 /* SetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupViewController.swift; sourceTree = "<group>"; };
 		C36522A927BE5A0B00E6AF39 /* SetupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupViewModel.swift; sourceTree = "<group>"; };
 		C36522AC27BE5AFC00E6AF39 /* SetupAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupAssembly.swift; sourceTree = "<group>"; };
+		C36522AF27BE60C500E6AF39 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		C36522B327BE624D00E6AF39 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		C36522B627BE630900E6AF39 /* UIColor+RGB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+RGB.swift"; sourceTree = "<group>"; };
+		C36522B827BE679700E6AF39 /* ThemeAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeAssembly.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +126,7 @@
 				C365225D27BE438400E6AF39 /* AppDelegate.swift */,
 				C36522A127BE590800E6AF39 /* Coordinators */,
 				C36522A627BE59F400E6AF39 /* Scenes */,
+				C36522AE27BE60B900E6AF39 /* Themes */,
 				C36522B527BE62FC00E6AF39 /* Extensions */,
 				C365226327BE438500E6AF39 /* Assets.xcassets */,
 				C365226527BE438500E6AF39 /* LaunchScreen.storyboard */,
@@ -171,6 +178,16 @@
 				C36522AC27BE5AFC00E6AF39 /* SetupAssembly.swift */,
 			);
 			path = Setup;
+			sourceTree = "<group>";
+		};
+		C36522AE27BE60B900E6AF39 /* Themes */ = {
+			isa = PBXGroup;
+			children = (
+				C36522AF27BE60C500E6AF39 /* Theme.swift */,
+				C36522B327BE624D00E6AF39 /* AppTheme.swift */,
+				C36522B827BE679700E6AF39 /* ThemeAssembly.swift */,
+			);
+			path = Themes;
 			sourceTree = "<group>";
 		};
 		C36522B527BE62FC00E6AF39 /* Extensions */ = {
@@ -327,10 +344,13 @@
 				C36522A527BE594200E6AF39 /* AppCoordinator.swift in Sources */,
 				C365225E27BE438400E6AF39 /* AppDelegate.swift in Sources */,
 				C36522A327BE591D00E6AF39 /* Coordinator.swift in Sources */,
+				C36522B927BE679700E6AF39 /* ThemeAssembly.swift in Sources */,
 				C36522AB27BE5A0B00E6AF39 /* SetupViewModel.swift in Sources */,
 				C36522B727BE630900E6AF39 /* UIColor+RGB.swift in Sources */,
 				C36522AA27BE5A0B00E6AF39 /* SetupViewController.swift in Sources */,
+				C36522B427BE624D00E6AF39 /* AppTheme.swift in Sources */,
 				C36522AD27BE5AFC00E6AF39 /* SetupAssembly.swift in Sources */,
+				C36522B027BE60C500E6AF39 /* Theme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
