@@ -40,6 +40,7 @@ class AppCoordinator: Coordinator {
     
     private func setupAssembler(_ assembler: Assembler) {
         assembler.apply(assemblies: [
+            ThemeAssembly(),
             SetupAssembly()
         ])
     }

@@ -18,14 +18,21 @@ protocol SetupViewModelOutputs {
 }
 
 protocol SetupViewModelProtocol {
+    var theme: Theme { get }
     var inputs: SetupViewModelInputs { get }
     var outputs: SetupViewModelOutputs { get }
 }
 
 class SetupViewModel: SetupViewModelProtocol, SetupViewModelInputs, SetupViewModelOutputs {
+    
+    let theme: Theme
 
     var inputs: SetupViewModelInputs { return self }
     var outputs: SetupViewModelOutputs { return self }
+
+    init(theme: Theme) {
+        self.theme = theme
+    }
 
     // Inputs
 

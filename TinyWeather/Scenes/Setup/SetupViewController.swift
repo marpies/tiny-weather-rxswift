@@ -26,7 +26,7 @@ class SetupViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = .systemBackground
+        self.view.backgroundColor = self.viewModel.theme.colors.background
         
         self.bindViewModel()
     }
