@@ -27,6 +27,7 @@
 		C36522B427BE624D00E6AF39 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36522B327BE624D00E6AF39 /* AppTheme.swift */; };
 		C36522B727BE630900E6AF39 /* UIColor+RGB.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36522B627BE630900E6AF39 /* UIColor+RGB.swift */; };
 		C36522B927BE679700E6AF39 /* ThemeAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36522B827BE679700E6AF39 /* ThemeAssembly.swift */; };
+		C36522CD27C4E3FE00E6AF39 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C36522CF27C4E3FE00E6AF39 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		C36522B327BE624D00E6AF39 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		C36522B627BE630900E6AF39 /* UIColor+RGB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+RGB.swift"; sourceTree = "<group>"; };
 		C36522B827BE679700E6AF39 /* ThemeAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeAssembly.swift; sourceTree = "<group>"; };
+		C36522CE27C4E3FE00E6AF39 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,14 +125,15 @@
 		C365225C27BE438400E6AF39 /* TinyWeather */ = {
 			isa = PBXGroup;
 			children = (
+				C365226327BE438500E6AF39 /* Assets.xcassets */,
+				C365226527BE438500E6AF39 /* LaunchScreen.storyboard */,
+				C365226827BE438500E6AF39 /* Info.plist */,
 				C365225D27BE438400E6AF39 /* AppDelegate.swift */,
 				C36522A127BE590800E6AF39 /* Coordinators */,
 				C36522A627BE59F400E6AF39 /* Scenes */,
 				C36522AE27BE60B900E6AF39 /* Themes */,
 				C36522B527BE62FC00E6AF39 /* Extensions */,
-				C365226327BE438500E6AF39 /* Assets.xcassets */,
-				C365226527BE438500E6AF39 /* LaunchScreen.storyboard */,
-				C365226827BE438500E6AF39 /* Info.plist */,
+				C36522CA27C4E3B900E6AF39 /* Resources */,
 			);
 			path = TinyWeather;
 			sourceTree = "<group>";
@@ -196,6 +199,14 @@
 				C36522B627BE630900E6AF39 /* UIColor+RGB.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		C36522CA27C4E3B900E6AF39 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C36522CF27C4E3FE00E6AF39 /* Localizable.strings */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -316,6 +327,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C365226427BE438500E6AF39 /* Assets.xcassets in Resources */,
+				C36522CD27C4E3FE00E6AF39 /* Localizable.strings in Resources */,
 				C365226727BE438500E6AF39 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -394,6 +406,14 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
+		C36522CF27C4E3FE00E6AF39 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C36522CE27C4E3FE00E6AF39 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -401,6 +421,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -462,6 +483,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
