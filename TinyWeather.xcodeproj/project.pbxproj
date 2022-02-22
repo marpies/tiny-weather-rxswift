@@ -33,6 +33,13 @@
 		C36522C327BEDE0C00E6AF39 /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = C36522C227BEDE0C00E6AF39 /* RxGesture */; };
 		C36522C627C107F100E6AF39 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36522C527C107F100E6AF39 /* SearchTextField.swift */; };
 		C36522CD27C4E3FE00E6AF39 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C36522CF27C4E3FE00E6AF39 /* Localizable.strings */; };
+		C36522FB27C51A0B00E6AF39 /* APISecrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36522FA27C51A0B00E6AF39 /* APISecrets.swift */; };
+		C36522FE27C51B8B00E6AF39 /* RequestProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36522FD27C51B8A00E6AF39 /* RequestProviding.swift */; };
+		C365230027C51B9100E6AF39 /* RequestExecuting.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36522FF27C51B9100E6AF39 /* RequestExecuting.swift */; };
+		C365230227C51BAE00E6AF39 /* HTTPResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365230127C51BAE00E6AF39 /* HTTPResponse.swift */; };
+		C365230427C51BC300E6AF39 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365230327C51BC300E6AF39 /* NetworkError.swift */; };
+		C365230627C51C1C00E6AF39 /* APIResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365230527C51C1C00E6AF39 /* APIResource.swift */; };
+		C365230827C51F3100E6AF39 /* URLSessions+RequestExecuting.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365230727C51F3100E6AF39 /* URLSessions+RequestExecuting.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +85,13 @@
 		C36522BF27BE9C5200E6AF39 /* SearchAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAssembly.swift; sourceTree = "<group>"; };
 		C36522C527C107F100E6AF39 /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
 		C36522CE27C4E3FE00E6AF39 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C36522FA27C51A0B00E6AF39 /* APISecrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APISecrets.swift; sourceTree = "<group>"; };
+		C36522FD27C51B8A00E6AF39 /* RequestProviding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestProviding.swift; sourceTree = "<group>"; };
+		C36522FF27C51B9100E6AF39 /* RequestExecuting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestExecuting.swift; sourceTree = "<group>"; };
+		C365230127C51BAE00E6AF39 /* HTTPResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPResponse.swift; sourceTree = "<group>"; };
+		C365230327C51BC300E6AF39 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		C365230527C51C1C00E6AF39 /* APIResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResource.swift; sourceTree = "<group>"; };
+		C365230727C51F3100E6AF39 /* URLSessions+RequestExecuting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSessions+RequestExecuting.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +155,8 @@
 				C365225D27BE438400E6AF39 /* AppDelegate.swift */,
 				C36522A127BE590800E6AF39 /* Coordinators */,
 				C36522A627BE59F400E6AF39 /* Scenes */,
+				C36522F927C5193E00E6AF39 /* API */,
+				C36522FC27C51B7F00E6AF39 /* Networking */,
 				C36522AE27BE60B900E6AF39 /* Themes */,
 				C36522B527BE62FC00E6AF39 /* Extensions */,
 				C36522CA27C4E3B900E6AF39 /* Resources */,
@@ -237,6 +253,27 @@
 				C36522CF27C4E3FE00E6AF39 /* Localizable.strings */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		C36522F927C5193E00E6AF39 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				C36522FA27C51A0B00E6AF39 /* APISecrets.swift */,
+				C365230527C51C1C00E6AF39 /* APIResource.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		C36522FC27C51B7F00E6AF39 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				C36522FD27C51B8A00E6AF39 /* RequestProviding.swift */,
+				C36522FF27C51B9100E6AF39 /* RequestExecuting.swift */,
+				C365230127C51BAE00E6AF39 /* HTTPResponse.swift */,
+				C365230327C51BC300E6AF39 /* NetworkError.swift */,
+				C365230727C51F3100E6AF39 /* URLSessions+RequestExecuting.swift */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -385,19 +422,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C36522FE27C51B8B00E6AF39 /* RequestProviding.swift in Sources */,
 				C36522A527BE594200E6AF39 /* AppCoordinator.swift in Sources */,
 				C36522BD27BE9C3800E6AF39 /* SearchViewController.swift in Sources */,
 				C365225E27BE438400E6AF39 /* AppDelegate.swift in Sources */,
+				C365230627C51C1C00E6AF39 /* APIResource.swift in Sources */,
 				C36522A327BE591D00E6AF39 /* Coordinator.swift in Sources */,
 				C36522B927BE679700E6AF39 /* ThemeAssembly.swift in Sources */,
+				C365230827C51F3100E6AF39 /* URLSessions+RequestExecuting.swift in Sources */,
+				C365230027C51B9100E6AF39 /* RequestExecuting.swift in Sources */,
 				C36522AB27BE5A0B00E6AF39 /* SetupViewModel.swift in Sources */,
 				C36522C027BE9C5200E6AF39 /* SearchAssembly.swift in Sources */,
+				C365230427C51BC300E6AF39 /* NetworkError.swift in Sources */,
 				C36522BE27BE9C3800E6AF39 /* SearchViewModel.swift in Sources */,
 				C36522B727BE630900E6AF39 /* UIColor+RGB.swift in Sources */,
 				C36522AA27BE5A0B00E6AF39 /* SetupViewController.swift in Sources */,
+				C365230227C51BAE00E6AF39 /* HTTPResponse.swift in Sources */,
 				C36522B427BE624D00E6AF39 /* AppTheme.swift in Sources */,
 				C36522C627C107F100E6AF39 /* SearchTextField.swift in Sources */,
 				C36522AD27BE5AFC00E6AF39 /* SetupAssembly.swift in Sources */,
+				C36522FB27C51A0B00E6AF39 /* APISecrets.swift in Sources */,
 				C36522B027BE60C500E6AF39 /* Theme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
