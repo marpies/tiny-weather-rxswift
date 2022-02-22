@@ -32,3 +32,7 @@ protocol ThemeColors {
 protocol ThemeFonts {
     func primary(style: UIFont.TextStyle) -> UIFont
 }
+
+protocol ThemeProviding {
+    var theme: Theme { get }
+}
