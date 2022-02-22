@@ -30,6 +30,7 @@
 		C36522BD27BE9C3800E6AF39 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36522BB27BE9C3800E6AF39 /* SearchViewController.swift */; };
 		C36522BE27BE9C3800E6AF39 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36522BC27BE9C3800E6AF39 /* SearchViewModel.swift */; };
 		C36522C027BE9C5200E6AF39 /* SearchAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36522BF27BE9C5200E6AF39 /* SearchAssembly.swift */; };
+		C36522C327BEDE0C00E6AF39 /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = C36522C227BEDE0C00E6AF39 /* RxGesture */; };
 		C36522C627C107F100E6AF39 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36522C527C107F100E6AF39 /* SearchTextField.swift */; };
 		C36522CD27C4E3FE00E6AF39 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C36522CF27C4E3FE00E6AF39 /* Localizable.strings */; };
 /* End PBXBuildFile section */
@@ -90,6 +91,7 @@
 				C365229827BE447400E6AF39 /* SnapKit in Frameworks */,
 				C365228E27BE445D00E6AF39 /* RxRelay in Frameworks */,
 				C365228C27BE445D00E6AF39 /* RxSwift in Frameworks */,
+				C36522C327BEDE0C00E6AF39 /* RxGesture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,6 +262,7 @@
 				C365229127BE445D00E6AF39 /* RxBlocking */,
 				C365229427BE446900E6AF39 /* Swinject */,
 				C365229727BE447400E6AF39 /* SnapKit */,
+				C36522C227BEDE0C00E6AF39 /* RxGesture */,
 			);
 			productName = TinyWeather;
 			productReference = C365225A27BE438400E6AF39 /* TinyWeather.app */;
@@ -337,6 +340,7 @@
 				C365228A27BE445D00E6AF39 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				C365229327BE446900E6AF39 /* XCRemoteSwiftPackageReference "Swinject" */,
 				C365229627BE447400E6AF39 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				C36522C127BEDE0C00E6AF39 /* XCRemoteSwiftPackageReference "RxGesture" */,
 			);
 			productRefGroup = C365225B27BE438400E6AF39 /* Products */;
 			projectDirPath = "";
@@ -755,6 +759,14 @@
 				minimumVersion = 5.0.1;
 			};
 		};
+		C36522C127BEDE0C00E6AF39 /* XCRemoteSwiftPackageReference "RxGesture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxGesture.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -787,6 +799,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C365229627BE447400E6AF39 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		C36522C227BEDE0C00E6AF39 /* RxGesture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C36522C127BEDE0C00E6AF39 /* XCRemoteSwiftPackageReference "RxGesture" */;
+			productName = RxGesture;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
