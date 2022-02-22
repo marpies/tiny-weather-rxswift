@@ -27,6 +27,10 @@
 		C36522B427BE624D00E6AF39 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36522B327BE624D00E6AF39 /* AppTheme.swift */; };
 		C36522B727BE630900E6AF39 /* UIColor+RGB.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36522B627BE630900E6AF39 /* UIColor+RGB.swift */; };
 		C36522B927BE679700E6AF39 /* ThemeAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36522B827BE679700E6AF39 /* ThemeAssembly.swift */; };
+		C36522BD27BE9C3800E6AF39 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36522BB27BE9C3800E6AF39 /* SearchViewController.swift */; };
+		C36522BE27BE9C3800E6AF39 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36522BC27BE9C3800E6AF39 /* SearchViewModel.swift */; };
+		C36522C027BE9C5200E6AF39 /* SearchAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36522BF27BE9C5200E6AF39 /* SearchAssembly.swift */; };
+		C36522C627C107F100E6AF39 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36522C527C107F100E6AF39 /* SearchTextField.swift */; };
 		C36522CD27C4E3FE00E6AF39 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C36522CF27C4E3FE00E6AF39 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
@@ -68,6 +72,10 @@
 		C36522B327BE624D00E6AF39 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		C36522B627BE630900E6AF39 /* UIColor+RGB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+RGB.swift"; sourceTree = "<group>"; };
 		C36522B827BE679700E6AF39 /* ThemeAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeAssembly.swift; sourceTree = "<group>"; };
+		C36522BB27BE9C3800E6AF39 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		C36522BC27BE9C3800E6AF39 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		C36522BF27BE9C5200E6AF39 /* SearchAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAssembly.swift; sourceTree = "<group>"; };
+		C36522C527C107F100E6AF39 /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
 		C36522CE27C4E3FE00E6AF39 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -169,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				C36522A727BE59FF00E6AF39 /* Setup */,
+				C36522BA27BE9C2A00E6AF39 /* Search */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -199,6 +208,25 @@
 				C36522B627BE630900E6AF39 /* UIColor+RGB.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		C36522BA27BE9C2A00E6AF39 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				C36522C427C107DE00E6AF39 /* Views */,
+				C36522BB27BE9C3800E6AF39 /* SearchViewController.swift */,
+				C36522BC27BE9C3800E6AF39 /* SearchViewModel.swift */,
+				C36522BF27BE9C5200E6AF39 /* SearchAssembly.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		C36522C427C107DE00E6AF39 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C36522C527C107F100E6AF39 /* SearchTextField.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		C36522CA27C4E3B900E6AF39 /* Resources */ = {
@@ -354,13 +382,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				C36522A527BE594200E6AF39 /* AppCoordinator.swift in Sources */,
+				C36522BD27BE9C3800E6AF39 /* SearchViewController.swift in Sources */,
 				C365225E27BE438400E6AF39 /* AppDelegate.swift in Sources */,
 				C36522A327BE591D00E6AF39 /* Coordinator.swift in Sources */,
 				C36522B927BE679700E6AF39 /* ThemeAssembly.swift in Sources */,
 				C36522AB27BE5A0B00E6AF39 /* SetupViewModel.swift in Sources */,
+				C36522C027BE9C5200E6AF39 /* SearchAssembly.swift in Sources */,
+				C36522BE27BE9C3800E6AF39 /* SearchViewModel.swift in Sources */,
 				C36522B727BE630900E6AF39 /* UIColor+RGB.swift in Sources */,
 				C36522AA27BE5A0B00E6AF39 /* SetupViewController.swift in Sources */,
 				C36522B427BE624D00E6AF39 /* AppTheme.swift in Sources */,
+				C36522C627C107F100E6AF39 /* SearchTextField.swift in Sources */,
 				C36522AD27BE5AFC00E6AF39 /* SetupAssembly.swift in Sources */,
 				C36522B027BE60C500E6AF39 /* Theme.swift in Sources */,
 			);
