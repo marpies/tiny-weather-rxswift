@@ -180,7 +180,7 @@ class SearchViewController: UIViewController {
     private func setupConstraints() {
         let isRegular: Bool = self.traitCollection.horizontalSizeClass == .regular
         
-        self.searchField.snp.makeConstraints { make in
+        self.searchField.snp.remakeConstraints { make in
             if isRegular {
                 make.width.equalTo(self.view.readableContentGuide)
             } else {
