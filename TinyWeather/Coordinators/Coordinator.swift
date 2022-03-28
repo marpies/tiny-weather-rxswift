@@ -12,6 +12,18 @@
 import Foundation
 import UIKit
 
-protocol Coordinator {
+protocol Coordinator: AnyObject {
+    var parent: Coordinator? { get set }
+    var children: [Coordinator] { get set }
+    var navigationController: UINavigationController { get }
+    
     @discardableResult func start() -> UIViewController
+}
+
+extension Coordinator {
+    func childDidComplete(_ child: Coordinator) {
+        if let index = self.children.firstIndex(where: { $0 === child }) {
+            self.children.remove(at: index)
+        }
+    }
 }

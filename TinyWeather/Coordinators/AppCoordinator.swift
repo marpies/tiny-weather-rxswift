@@ -16,7 +16,10 @@ import Swinject
 class AppCoordinator: Coordinator {
     
     private let resolver: Resolver
-    private let navigationController: UINavigationController
+    
+    let navigationController: UINavigationController
+    var parent: Coordinator?
+    var children: [Coordinator] = []
 
     init(assembler: Assembler) {
         self.resolver = assembler.resolver
