@@ -40,6 +40,8 @@
 		C365230427C51BC300E6AF39 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365230327C51BC300E6AF39 /* NetworkError.swift */; };
 		C365230627C51C1C00E6AF39 /* APIResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365230527C51C1C00E6AF39 /* APIResource.swift */; };
 		C365230827C51F3100E6AF39 /* URLSessions+RequestExecuting.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365230727C51F3100E6AF39 /* URLSessions+RequestExecuting.swift */; };
+		C365231527D4C68800E6AF39 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365231427D4C68700E6AF39 /* Router.swift */; };
+		C365231927D4C71600E6AF39 /* WeakRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365231827D4C71600E6AF39 /* WeakRouter.swift */; };
 		C365231D27D6021F00E6AF39 /* RoutePanAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365231C27D6021F00E6AF39 /* RoutePanAnimation.swift */; };
 		C365231F27D6057300E6AF39 /* AppRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365231E27D6057300E6AF39 /* AppRoute.swift */; };
 /* End PBXBuildFile section */
@@ -94,6 +96,8 @@
 		C365230327C51BC300E6AF39 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		C365230527C51C1C00E6AF39 /* APIResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResource.swift; sourceTree = "<group>"; };
 		C365230727C51F3100E6AF39 /* URLSessions+RequestExecuting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSessions+RequestExecuting.swift"; sourceTree = "<group>"; };
+		C365231427D4C68700E6AF39 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		C365231827D4C71600E6AF39 /* WeakRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakRouter.swift; sourceTree = "<group>"; };
 		C365231C27D6021F00E6AF39 /* RoutePanAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePanAnimation.swift; sourceTree = "<group>"; };
 		C365231E27D6057300E6AF39 /* AppRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRoute.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -285,6 +289,8 @@
 			isa = PBXGroup;
 			children = (
 				C365231E27D6057300E6AF39 /* AppRoute.swift */,
+				C365231427D4C68700E6AF39 /* Router.swift */,
+				C365231827D4C71600E6AF39 /* WeakRouter.swift */,
 				C365231C27D6021F00E6AF39 /* RoutePanAnimation.swift */,
 			);
 			path = Routes;
@@ -440,6 +446,8 @@
 				C36522A527BE594200E6AF39 /* AppCoordinator.swift in Sources */,
 				C36522BD27BE9C3800E6AF39 /* SearchViewController.swift in Sources */,
 				C365225E27BE438400E6AF39 /* AppDelegate.swift in Sources */,
+				C365231927D4C71600E6AF39 /* WeakRouter.swift in Sources */,
+				C365231527D4C68800E6AF39 /* Router.swift in Sources */,
 				C365230627C51C1C00E6AF39 /* APIResource.swift in Sources */,
 				C36522A327BE591D00E6AF39 /* Coordinator.swift in Sources */,
 				C36522B927BE679700E6AF39 /* ThemeAssembly.swift in Sources */,
