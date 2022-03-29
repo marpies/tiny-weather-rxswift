@@ -8,9 +8,11 @@
 
 import Foundation
 import RxSwift
+import CoreGraphics
+import RxCocoa
 
 protocol SetupViewModelInputs {
-
+    var viewDidLoad: PublishRelay<Void> { get }
 }
 
 protocol SetupViewModelOutputs {
@@ -25,17 +27,25 @@ protocol SetupViewModelProtocol {
 
 class SetupViewModel: SetupViewModelProtocol, SetupViewModelInputs, SetupViewModelOutputs {
     
+    private let disposeBag: DisposeBag = DisposeBag()
+    
     let theme: Theme
 
     var inputs: SetupViewModelInputs { return self }
     var outputs: SetupViewModelOutputs { return self }
-
-    init(theme: Theme) {
-        self.theme = theme
-    }
-
+    
     // Inputs
-
-    // Outputs
+    let viewDidLoad: PublishRelay<Void> = PublishRelay()
+    
+    init(theme: Theme, router: WeakRouter<AppRoute>) {
+        self.theme = theme
+        
+        self.viewDidLoad
+            .take(1)
+            .subscribe(onNext: {
+                router.route(to: .search(nil))
+            })
+            .disposed(by: self.disposeBag)
+    }
 
 }

@@ -7,11 +7,11 @@
 //
 
 import UIKit
-import RxSwift
+import SnapKit
 
 class SetupViewController: UIViewController {
     
-    let viewModel: SetupViewModelProtocol
+    private let viewModel: SetupViewModelProtocol
 
     init(viewModel: SetupViewModelProtocol) {
         self.viewModel = viewModel
@@ -36,7 +36,9 @@ class SetupViewController: UIViewController {
     //
 
     private func bindViewModel() {
-        //
+        let inputs: SetupViewModelInputs = self.viewModel.inputs
+        
+        inputs.viewDidLoad.accept(())
     }
     
 }
