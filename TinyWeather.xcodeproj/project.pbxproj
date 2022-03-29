@@ -43,6 +43,7 @@
 		C365230A27C522C800E6AF39 /* SearchModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365230927C522C800E6AF39 /* SearchModels.swift */; };
 		C365230C27C524DD00E6AF39 /* SearchHintsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365230B27C524DD00E6AF39 /* SearchHintsView.swift */; };
 		C365230E27C5276100E6AF39 /* SearchHintCityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365230D27C5276100E6AF39 /* SearchHintCityView.swift */; };
+		C365231027C52D2000E6AF39 /* NetworkingAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365230F27C52D2000E6AF39 /* NetworkingAssembly.swift */; };
 		C365231227C6778100E6AF39 /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365231127C6778100E6AF39 /* SearchCoordinator.swift */; };
 		C365231527D4C68800E6AF39 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365231427D4C68700E6AF39 /* Router.swift */; };
 		C365231927D4C71600E6AF39 /* WeakRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365231827D4C71600E6AF39 /* WeakRouter.swift */; };
@@ -104,6 +105,7 @@
 		C365230927C522C800E6AF39 /* SearchModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModels.swift; sourceTree = "<group>"; };
 		C365230B27C524DD00E6AF39 /* SearchHintsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHintsView.swift; sourceTree = "<group>"; };
 		C365230D27C5276100E6AF39 /* SearchHintCityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHintCityView.swift; sourceTree = "<group>"; };
+		C365230F27C52D2000E6AF39 /* NetworkingAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingAssembly.swift; sourceTree = "<group>"; };
 		C365231127C6778100E6AF39 /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
 		C365231427D4C68700E6AF39 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		C365231827D4C71600E6AF39 /* WeakRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakRouter.swift; sourceTree = "<group>"; };
@@ -304,6 +306,7 @@
 				C365230127C51BAE00E6AF39 /* HTTPResponse.swift */,
 				C365230327C51BC300E6AF39 /* NetworkError.swift */,
 				C365230727C51F3100E6AF39 /* URLSessions+RequestExecuting.swift */,
+				C365230F27C52D2000E6AF39 /* NetworkingAssembly.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -493,6 +496,7 @@
 				C365231227C6778100E6AF39 /* SearchCoordinator.swift in Sources */,
 				C36522BE27BE9C3800E6AF39 /* SearchViewModel.swift in Sources */,
 				C36522B727BE630900E6AF39 /* UIColor+RGB.swift in Sources */,
+				C365231027C52D2000E6AF39 /* NetworkingAssembly.swift in Sources */,
 				C365230A27C522C800E6AF39 /* SearchModels.swift in Sources */,
 				C36522AA27BE5A0B00E6AF39 /* SetupViewController.swift in Sources */,
 				C365230227C51BAE00E6AF39 /* HTTPResponse.swift in Sources */,
