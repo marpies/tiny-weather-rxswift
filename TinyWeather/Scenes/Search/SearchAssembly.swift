@@ -17,7 +17,8 @@ struct SearchAssembly: Assembly {
     func assemble(container: Container) {
         container.register(SearchViewModelProtocol.self) { r in
             let theme: Theme = r.resolve(Theme.self)!
-            return SearchViewModel(theme: theme)
+            let apiService: RequestExecuting = r.resolve(RequestExecuting.self)!
+            return SearchViewModel(apiService: apiService, theme: theme)
         }
         container.register(SearchViewController.self) { (r: Resolver, viewModel: SearchViewModelProtocol) in
             return SearchViewController(viewModel: viewModel)

@@ -13,26 +13,22 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController, UIScrollViewDelegate {
     
-    private let effect: UIBlurEffect = UIBlurEffect(style: .regular)
     private let visualView: UIVisualEffectView = UIVisualEffectView(effect: nil)
     
+    private let scrollView: UIScrollView = UIScrollView()
+    private let contentView: UIView = UIView()
     private let searchField: SearchTextField = SearchTextField()
     private let disposeBag: DisposeBag = DisposeBag()
     
     private let viewModel: SearchViewModelProtocol
     
-    private var viewAnimator: UIViewPropertyAnimator?
-    private var blurAnimator: UIViewPropertyAnimator?
+    private var searchHintsView: SearchHintsView?
+    private var animation: SearchPanAnimation?
     
-    var animationState: SearchAnimationState {
-        return self.viewModel.outputs.animationState.value
-    }
-    
-    deinit {
-        self.viewAnimator?.stopAnimation(true)
-        self.blurAnimator?.stopAnimation(true)
+    private var animationState: Search.AnimationState {
+        return self.viewModel.outputs.animationState
     }
 
     init(viewModel: SearchViewModelProtocol) {
@@ -64,94 +60,23 @@ class SearchViewController: UIViewController {
     //
     
     func animateIn() {
-        self.viewAnimator = UIViewPropertyAnimator(duration: 0.6, dampingRatio: 0.6)
-        self.blurAnimator = UIViewPropertyAnimator(duration: 0.3, curve: .easeOut)
+        self.loadViewIfNeeded()
         
-        self.visualView.effect = nil
-        self.searchField.transform = CGAffineTransform(scaleX: 0.6, y: 0.6).translatedBy(x: 0, y: -50)
-        
-        self.viewAnimator?.addAnimations {
-            self.searchField.alpha = 1
-            self.searchField.transform = .identity
-        }
-        
-        self.viewAnimator?.addCompletion { _ in
-            self.viewModel.inputs.animationDidComplete.accept(())
-        }
-        
-        self.blurAnimator?.addAnimations {
-            self.visualView.effect = self.effect
-        }
-        
-        self.blurAnimator?.startAnimation()
-        self.viewAnimator?.startAnimation()
+        self.animation?.start()
     }
     
     func startScrubbingAnimation() {
-        self.viewAnimator?.stopAnimation(true)
-        self.blurAnimator?.stopAnimation(true)
+        self.loadViewIfNeeded()
         
-        switch self.viewModel.outputs.animationState.value {
-        case .hidden:
-            self.setupScrubAnimationIn()
-            
-        case .visible:
-            self.setupScrubAnimationOut()
-        }
+        self.animation?.startInteractive(to: self.animationState.opposite)
     }
     
-    func setAnimationProgress(_ value: CGFloat, translation: CGPoint) {
-        self.viewAnimator?.fractionComplete = value
-        self.blurAnimator?.fractionComplete = value
-        
-        if self.viewModel.outputs.animationState.value == .visible {
-            var transform = self.searchField.transform
-            transform.tx = 0
-            transform.ty = 0
-            
-            if translation.y > 0 {
-                self.searchField.transform = transform.translatedBy(x: 0, y: sqrt(translation.y))
-            } else {
-                self.searchField.transform = transform.translatedBy(x: 0, y: translation.y / 2)
-            }
-        }
+    func updateAnimationProgress(translation: CGPoint) {
+        self.animation?.updateAnimationProgress(translation: translation)
     }
     
     func finishAnimation(velocity: CGPoint) {
-        let state: SearchAnimationState = self.viewModel.outputs.animationState.value
-        let reversed: Bool
-        
-        switch state {
-        case .hidden:
-            reversed = velocity.y < 0
-            
-        case .visible:
-            reversed = velocity.y > 0
-        }
-        
-        self.finishAnimation(reversed: reversed, animations: { [weak self] in
-            guard let weakSelf = self else { return }
-            
-            switch state {
-            case .hidden:
-                if reversed {
-                    weakSelf.searchField.alpha = 0
-                    weakSelf.searchField.transform = CGAffineTransform(scaleX: 0.6, y: 0.6).translatedBy(x: 0, y: -50)
-                } else {
-                    weakSelf.searchField.alpha = 1
-                    weakSelf.searchField.transform = .identity
-                }
-                
-            case .visible:
-                if reversed {
-                    weakSelf.searchField.alpha = 1
-                    weakSelf.searchField.transform = .identity
-                } else {
-                    weakSelf.searchField.alpha = 0
-                    weakSelf.searchField.transform = CGAffineTransform(scaleX: 0.6, y: 0.6).translatedBy(x: 0, y: -50)
-                }
-            }
-        })
+        self.animation?.finishAnimation(velocity: velocity)
     }
     
     //
@@ -167,14 +92,35 @@ class SearchViewController: UIViewController {
             make.edges.equalToSuperview()
         }
         
+        // Scroll view
+        self.scrollView.alwaysBounceVertical = false
+        self.scrollView.showsVerticalScrollIndicator = false
+        self.scrollView.contentInsetAdjustmentBehavior = .always
+        self.scrollView.delegate = self
+        self.view.addSubview(self.scrollView)
+        self.scrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        self.scrollView.addSubview(self.contentView)
+        self.contentView.snp.makeConstraints { make in
+            make.width.equalTo(self.view)
+            make.leading.trailing.equalToSuperview()
+            make.top.bottom.equalTo(self.scrollView)
+        }
+        
         // Search field
         self.searchField.update(for: self.viewModel.theme)
         self.searchField.alpha = 0
         self.searchField.keyboardType = .alphabet
         self.searchField.textContentType = .addressCityAndState
-        self.searchField.returnKeyType = .search
+        self.searchField.returnKeyType = .done
         self.searchField.autocorrectionType = .no
-        self.view.addSubview(self.searchField)
+        self.searchField.transform = CGAffineTransform(scaleX: 0.6, y: 0.6).translatedBy(x: 0, y: -50)
+        self.contentView.addSubview(self.searchField)
+        
+        // Animation
+        self.animation = SearchPanAnimation(searchField: self.searchField, visualView: self.visualView)
     }
     
     private func setupConstraints() {
@@ -182,75 +128,43 @@ class SearchViewController: UIViewController {
         
         self.searchField.snp.remakeConstraints { make in
             if isRegular {
-                make.width.equalTo(self.view.readableContentGuide)
+                make.width.equalTo(self.contentView.readableContentGuide)
             } else {
                 make.width.equalToSuperview().inset(24)
             }
             make.height.equalTo(44)
             make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview().multipliedBy(0.5)
+            
+            if self.searchField.isFirstResponder {
+                make.top.equalTo(self.contentView).offset(8)
+            } else {
+                make.centerY.equalTo(self.scrollView).multipliedBy(0.5)
+            }
+            
+            make.bottom.equalToSuperview().priority(.high)
         }
     }
     
-    private func setupScrubAnimationIn() {
-        self.viewAnimator = UIViewPropertyAnimator(duration: 0.6, curve: .easeOut)
-        self.blurAnimator = UIViewPropertyAnimator(duration: 0.3, curve: .easeOut)
-        
-        self.visualView.effect = nil
-        self.searchField.transform = CGAffineTransform(scaleX: 0.6, y: 0.6).translatedBy(x: 0, y: -50)
-        self.blurAnimator?.scrubsLinearly = false
-        self.blurAnimator?.addAnimations {
-            self.visualView.effect = self.effect
-        }
-        
-        self.viewAnimator?.scrubsLinearly = false
-        self.viewAnimator?.addAnimations({
-            UIView.animateKeyframes(withDuration: 0.6, delay: 0, animations: {
-                UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.3) {
-                    self.searchField.alpha = 1
-                    self.searchField.transform = .identity
-                }
-                
-                UIView.addKeyframe(withRelativeStartTime: 0.3, relativeDuration: 0.6) {
-                    self.searchField.transform = CGAffineTransform(scaleX: 0.8, y: 0.8).translatedBy(x: 0, y: 50)
-                }
+    private func addHintsView(viewModel: Search.SearchHints) {
+        if self.searchHintsView == nil {
+            self.searchHintsView = SearchHintsView(theme: self.viewModel.theme)
+            self.searchHintsView?.hintViewTap
+                .bind(to: self.viewModel.inputs.cityHintTap)
+                .disposed(by: self.disposeBag)
+            self.contentView.insertSubview(self.searchHintsView!, belowSubview: self.searchField)
+            self.searchHintsView?.snp.makeConstraints({ make in
+                make.top.equalTo(self.searchField.snp.bottom).offset(-8)
+                make.leading.trailing.equalTo(self.searchField).inset(24)
+                make.bottom.equalToSuperview()
             })
-        })
-    }
-    
-    private func setupScrubAnimationOut() {
-        self.viewAnimator = UIViewPropertyAnimator(duration: 0.6, curve: .easeOut)
-        self.blurAnimator = UIViewPropertyAnimator(duration: 0.3, curve: .easeOut)
-        
-        self.visualView.effect = self.effect
-        self.blurAnimator?.scrubsLinearly = false
-        self.blurAnimator?.addAnimations {
-            self.visualView.effect = nil
         }
         
-        self.viewAnimator?.scrubsLinearly = false
-        self.viewAnimator?.addAnimations({
-            self.searchField.alpha = 0
-            self.searchField.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
-        })
+        self.searchHintsView?.update(viewModel: viewModel)
     }
     
-    private func finishAnimation(reversed: Bool, animations: @escaping () -> Void) {
-        self.viewAnimator?.stopAnimation(true)
-        
-        self.viewAnimator = UIViewPropertyAnimator(duration: 0.6, dampingRatio: 0.5, animations: nil)
-        
-        self.viewAnimator?.isReversed = reversed
-        self.blurAnimator?.isReversed = reversed
-        
-        self.blurAnimator?.continueAnimation(withTimingParameters: nil, durationFactor: 1)
-        
-        self.viewAnimator?.addAnimations(animations)
-        self.viewAnimator?.startAnimation()
-        
-        if !reversed {
-            self.viewModel.inputs.animationDidComplete.accept(())
-        }
+    private func removeHintsView() {
+        self.searchHintsView?.removeFromSuperview()
+        self.searchHintsView = nil
     }
 
     //
@@ -272,14 +186,63 @@ class SearchViewController: UIViewController {
             })
             .disposed(by: self.disposeBag)
         
+        outputs.searchHints
+            .subscribe(onNext: { [weak self] hints in
+                if let hints = hints {
+                    self?.addHintsView(viewModel: hints)
+                } else {
+                    self?.removeHintsView()
+                }
+            })
+            .disposed(by: self.disposeBag)
+        
         self.searchField.rx.text
             .bind(to: inputs.searchValue)
             .disposed(by: self.disposeBag)
         
         self.searchField.rx
-            .controlEvent(.editingDidEndOnExit)
+            .controlEvent(.editingChanged)
+            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
             .bind(to: inputs.performSearch)
             .disposed(by: self.disposeBag)
+        
+        let editBegin = self.searchField.rx.controlEvent(.editingDidBegin)
+        let editEnd = self.searchField.rx.controlEvent(.editingDidEnd)
+        let editEndExit = self.searchField.rx.controlEvent(.editingDidEndOnExit)
+        
+        let editEvents = Observable.merge([editBegin.asObservable(), editEnd.asObservable(), editEndExit.asObservable()]).share()
+        
+        editEvents
+            .map({ [weak self] in
+                self?.searchField.isFirstResponder ?? false
+            })
+            .bind(to: self.scrollView.rx.alwaysBounceVertical)
+            .disposed(by: self.disposeBag)
+        
+        editEvents
+            .subscribe(onNext: { [weak self] in
+                self?.setupConstraints()
+                
+                UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+                    self?.view.layoutIfNeeded()
+                }, completion: nil)
+            })
+            .disposed(by: self.disposeBag)
+        
+        self.animation?.animationDidComplete
+            .map({ $0 == .end })
+            .bind(to: inputs.animationDidComplete)
+            .disposed(by: self.disposeBag)
+    }
+    
+    //
+    // MARK: - Scroll view delegate
+    //
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        if self.searchField.isFirstResponder {
+            self.searchField.endEditing(true)
+        }
     }
     
 }

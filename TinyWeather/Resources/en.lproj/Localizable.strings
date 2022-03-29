@@ -14,3 +14,14 @@
 //
 
 "searchInputPlaceholder" = "Search location";
+"searchHintsNoResultsMessage" = "Location not found";
+"searchHintsErrorMessage" = "Error looking up locations";
+
+//
+// MARK: - Misc
+//
+
+"latitudeNorthAbbreviation" = "N";
+"latitudeSouthAbbreviation" = "S";
+"longitudeEastAbbreviation" = "E";
+"longitudeWestAbbreviation" = "W";

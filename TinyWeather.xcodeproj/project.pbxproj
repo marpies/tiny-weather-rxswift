@@ -40,10 +40,15 @@
 		C365230427C51BC300E6AF39 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365230327C51BC300E6AF39 /* NetworkError.swift */; };
 		C365230627C51C1C00E6AF39 /* APIResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365230527C51C1C00E6AF39 /* APIResource.swift */; };
 		C365230827C51F3100E6AF39 /* URLSessions+RequestExecuting.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365230727C51F3100E6AF39 /* URLSessions+RequestExecuting.swift */; };
+		C365230A27C522C800E6AF39 /* SearchModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365230927C522C800E6AF39 /* SearchModels.swift */; };
+		C365230C27C524DD00E6AF39 /* SearchHintsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365230B27C524DD00E6AF39 /* SearchHintsView.swift */; };
+		C365230E27C5276100E6AF39 /* SearchHintCityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365230D27C5276100E6AF39 /* SearchHintCityView.swift */; };
+		C365231227C6778100E6AF39 /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365231127C6778100E6AF39 /* SearchCoordinator.swift */; };
 		C365231527D4C68800E6AF39 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365231427D4C68700E6AF39 /* Router.swift */; };
 		C365231927D4C71600E6AF39 /* WeakRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365231827D4C71600E6AF39 /* WeakRouter.swift */; };
 		C365231D27D6021F00E6AF39 /* RoutePanAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365231C27D6021F00E6AF39 /* RoutePanAnimation.swift */; };
 		C365231F27D6057300E6AF39 /* AppRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365231E27D6057300E6AF39 /* AppRoute.swift */; };
+		C37724BD27DFB8C900C50450 /* SearchAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37724BC27DFB8C900C50450 /* SearchAnimations.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,10 +101,15 @@
 		C365230327C51BC300E6AF39 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		C365230527C51C1C00E6AF39 /* APIResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResource.swift; sourceTree = "<group>"; };
 		C365230727C51F3100E6AF39 /* URLSessions+RequestExecuting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSessions+RequestExecuting.swift"; sourceTree = "<group>"; };
+		C365230927C522C800E6AF39 /* SearchModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModels.swift; sourceTree = "<group>"; };
+		C365230B27C524DD00E6AF39 /* SearchHintsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHintsView.swift; sourceTree = "<group>"; };
+		C365230D27C5276100E6AF39 /* SearchHintCityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHintCityView.swift; sourceTree = "<group>"; };
+		C365231127C6778100E6AF39 /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
 		C365231427D4C68700E6AF39 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		C365231827D4C71600E6AF39 /* WeakRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakRouter.swift; sourceTree = "<group>"; };
 		C365231C27D6021F00E6AF39 /* RoutePanAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePanAnimation.swift; sourceTree = "<group>"; };
 		C365231E27D6057300E6AF39 /* AppRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRoute.swift; sourceTree = "<group>"; };
+		C37724BC27DFB8C900C50450 /* SearchAnimations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAnimations.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,6 +205,7 @@
 			children = (
 				C36522A227BE591D00E6AF39 /* Coordinator.swift */,
 				C36522A427BE594200E6AF39 /* AppCoordinator.swift */,
+				C365231127C6778100E6AF39 /* SearchCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -240,6 +251,8 @@
 		C36522BA27BE9C2A00E6AF39 /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				C37724BB27DFB8A700C50450 /* Animation */,
+				C36522F627C4F7BA00E6AF39 /* Models */,
 				C36522C427C107DE00E6AF39 /* Views */,
 				C36522BB27BE9C3800E6AF39 /* SearchViewController.swift */,
 				C36522BC27BE9C3800E6AF39 /* SearchViewModel.swift */,
@@ -252,6 +265,8 @@
 			isa = PBXGroup;
 			children = (
 				C36522C527C107F100E6AF39 /* SearchTextField.swift */,
+				C365230B27C524DD00E6AF39 /* SearchHintsView.swift */,
+				C365230D27C5276100E6AF39 /* SearchHintCityView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -262,6 +277,14 @@
 				C36522CF27C4E3FE00E6AF39 /* Localizable.strings */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		C36522F627C4F7BA00E6AF39 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C365230927C522C800E6AF39 /* SearchModels.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		C36522F927C5193E00E6AF39 /* API */ = {
@@ -294,6 +317,14 @@
 				C365231C27D6021F00E6AF39 /* RoutePanAnimation.swift */,
 			);
 			path = Routes;
+			sourceTree = "<group>";
+		};
+		C37724BB27DFB8A700C50450 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				C37724BC27DFB8C900C50450 /* SearchAnimations.swift */,
+			);
+			path = Animation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -452,19 +483,24 @@
 				C36522A327BE591D00E6AF39 /* Coordinator.swift in Sources */,
 				C36522B927BE679700E6AF39 /* ThemeAssembly.swift in Sources */,
 				C365230827C51F3100E6AF39 /* URLSessions+RequestExecuting.swift in Sources */,
+				C365230E27C5276100E6AF39 /* SearchHintCityView.swift in Sources */,
 				C365231D27D6021F00E6AF39 /* RoutePanAnimation.swift in Sources */,
 				C365230027C51B9100E6AF39 /* RequestExecuting.swift in Sources */,
 				C36522AB27BE5A0B00E6AF39 /* SetupViewModel.swift in Sources */,
 				C36522C027BE9C5200E6AF39 /* SearchAssembly.swift in Sources */,
 				C365230427C51BC300E6AF39 /* NetworkError.swift in Sources */,
+				C365230C27C524DD00E6AF39 /* SearchHintsView.swift in Sources */,
+				C365231227C6778100E6AF39 /* SearchCoordinator.swift in Sources */,
 				C36522BE27BE9C3800E6AF39 /* SearchViewModel.swift in Sources */,
 				C36522B727BE630900E6AF39 /* UIColor+RGB.swift in Sources */,
+				C365230A27C522C800E6AF39 /* SearchModels.swift in Sources */,
 				C36522AA27BE5A0B00E6AF39 /* SetupViewController.swift in Sources */,
 				C365230227C51BAE00E6AF39 /* HTTPResponse.swift in Sources */,
 				C36522B427BE624D00E6AF39 /* AppTheme.swift in Sources */,
 				C36522C627C107F100E6AF39 /* SearchTextField.swift in Sources */,
 				C36522AD27BE5AFC00E6AF39 /* SetupAssembly.swift in Sources */,
 				C36522FB27C51A0B00E6AF39 /* APISecrets.swift in Sources */,
+				C37724BD27DFB8C900C50450 /* SearchAnimations.swift in Sources */,
 				C36522B027BE60C500E6AF39 /* Theme.swift in Sources */,
 				C365231F27D6057300E6AF39 /* AppRoute.swift in Sources */,
 			);
