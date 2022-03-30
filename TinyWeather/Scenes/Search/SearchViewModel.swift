@@ -37,7 +37,7 @@ protocol SearchViewModelProtocol: ThemeProviding {
     var outputs: SearchViewModelOutputs { get }
 }
 
-class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchViewModelOutputs {
+class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchViewModelOutputs, CoordinatesPresenting {
     
     private let disposeBag: DisposeBag = DisposeBag()
     
@@ -167,32 +167,6 @@ class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchVie
         
         let subtitle: String = self.getCoords(lat: response.lat, lon: response.lon)
         return Search.City.ViewModel(flag: UIImage(named: response.country), title: title, subtitle: subtitle)
-    }
-    
-    private func getCoords(lat: Double, lon: Double) -> String {
-        let latAbbr: String
-        let lonAbbr: String
-        var latValue: Double = lat
-        var lonValue: Double = lon
-        
-        if lat < 0 {
-            latValue = abs(latValue)
-            latAbbr = NSLocalizedString("latitudeSouthAbbreviation", comment: "")
-        } else {
-            latAbbr = NSLocalizedString("latitudeNorthAbbreviation", comment: "")
-        }
-        
-        if lon < 0 {
-            lonValue = abs(lonValue)
-            lonAbbr = NSLocalizedString("longitudeWestAbbreviation", comment: "")
-        } else {
-            lonAbbr = NSLocalizedString("longitudeEastAbbreviation", comment: "")
-        }
-        
-        let latFormat: String = String(format: "%.2f", latValue).replacingOccurrences(of: ".", with: "°")
-        let lonFormat: String = String(format: "%.2f", lonValue).replacingOccurrences(of: ".", with: "°")
-        
-        return "\(latFormat)'\(latAbbr) \(lonFormat)'\(lonAbbr)"
     }
     
     private func updateAnimationState(finished: Bool) {

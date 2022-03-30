@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C348A54A27F4C951006787C3 /* CoordinatesPresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348A54927F4C951006787C3 /* CoordinatesPresenting.swift */; };
 		C365225E27BE438400E6AF39 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365225D27BE438400E6AF39 /* AppDelegate.swift */; };
 		C365226427BE438500E6AF39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C365226327BE438500E6AF39 /* Assets.xcassets */; };
 		C365226727BE438500E6AF39 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C365226527BE438500E6AF39 /* LaunchScreen.storyboard */; };
@@ -70,6 +71,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C348A54927F4C951006787C3 /* CoordinatesPresenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatesPresenting.swift; sourceTree = "<group>"; };
 		C365225A27BE438400E6AF39 /* TinyWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinyWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C365225D27BE438400E6AF39 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C365226327BE438500E6AF39 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -146,6 +148,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C348A54727F4C936006787C3 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				C348A54827F4C942006787C3 /* Presenters */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		C348A54827F4C942006787C3 /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				C348A54927F4C951006787C3 /* CoordinatesPresenting.swift */,
+			);
+			path = Presenters;
+			sourceTree = "<group>";
+		};
 		C365225127BE438400E6AF39 = {
 			isa = PBXGroup;
 			children = (
@@ -175,6 +193,7 @@
 				C365225D27BE438400E6AF39 /* AppDelegate.swift */,
 				C36522A127BE590800E6AF39 /* Coordinators */,
 				C36522A627BE59F400E6AF39 /* Scenes */,
+				C348A54727F4C936006787C3 /* Common */,
 				C36522F927C5193E00E6AF39 /* API */,
 				C36522FC27C51B7F00E6AF39 /* Networking */,
 				C36522AE27BE60B900E6AF39 /* Themes */,
@@ -480,6 +499,7 @@
 				C36522A527BE594200E6AF39 /* AppCoordinator.swift in Sources */,
 				C36522BD27BE9C3800E6AF39 /* SearchViewController.swift in Sources */,
 				C365225E27BE438400E6AF39 /* AppDelegate.swift in Sources */,
+				C348A54A27F4C951006787C3 /* CoordinatesPresenting.swift in Sources */,
 				C365231927D4C71600E6AF39 /* WeakRouter.swift in Sources */,
 				C365231527D4C68800E6AF39 /* Router.swift in Sources */,
 				C365230627C51C1C00E6AF39 /* APIResource.swift in Sources */,
