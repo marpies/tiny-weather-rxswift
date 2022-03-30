@@ -20,7 +20,7 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
     private let scrollView: UIScrollView = UIScrollView()
     private let contentView: UIView = UIView()
     private let searchField: SearchTextField = SearchTextField()
-    private let disposeBag: DisposeBag = DisposeBag()
+    private var disposeBag: DisposeBag! = DisposeBag()
     
     private let viewModel: SearchViewModelProtocol
     
@@ -232,6 +232,18 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
                 UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
                     self?.view.layoutIfNeeded()
                 }, completion: nil)
+            })
+            .disposed(by: self.disposeBag)
+        
+        // Dispose the bag when the scene is about to disappear to avoid
+        // modifying constraints during UINavigationController transition
+        // The constraints are not animated during that and results in jumpy UI
+        outputs.sceneWillHide
+            .filter({ [weak self] in
+                self?.searchField.isFirstResponder ?? false
+            })
+            .subscribe(onNext: { [weak self] in
+                self?.disposeBag = nil
             })
             .disposed(by: self.disposeBag)
         

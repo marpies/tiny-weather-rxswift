@@ -29,6 +29,7 @@ protocol SearchViewModelOutputs {
     var animationState: Search.AnimationState { get }
     var searchHints: Observable<Search.SearchHints?> { get }
     var sceneDidHide: Observable<Void> { get }
+    var sceneWillHide: Observable<Void> { get }
 }
 
 protocol SearchViewModelProtocol: ThemeProviding {
@@ -78,6 +79,11 @@ class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchVie
     }
     
     init(apiService: RequestExecuting, theme: Theme) {
+    private let _sceneWillHide: PublishRelay<Void> = PublishRelay()
+    var sceneWillHide: Observable<Void> {
+        return _sceneWillHide.asObservable()
+    }
+    
         self.theme = theme
         self.apiService = apiService
         
@@ -133,7 +139,9 @@ class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchVie
             .compactMap({ [weak self] in
                 self?.model.getCity(at: $0)
             })
-            .subscribe(onNext: { city in
+            .subscribe(onNext: { [weak self] (city) in
+                self?._sceneWillHide.accept(())
+                
                 // todo process tap
             })
             .disposed(by: self.disposeBag)
