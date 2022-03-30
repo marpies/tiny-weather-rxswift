@@ -55,6 +55,12 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
         self.setupConstraints()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        self.viewModel.inputs.viewDidDisappear.accept(())
+    }
+    
     //
     // MARK: - Public
     //

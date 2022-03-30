@@ -17,6 +17,7 @@ import UIKit
 protocol SearchViewModelInputs {
     var animationDidStart: PublishRelay<Void> { get }
     var animationDidComplete: PublishRelay<Bool> { get }
+    var viewDidDisappear: PublishRelay<Void> { get }
     
     var searchValue: BehaviorRelay<String?> { get }
     var performSearch: PublishSubject<Void> { get }
@@ -53,6 +54,7 @@ class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchVie
     let animationDidStart: PublishRelay<Void> = PublishRelay()
     let animationDidComplete: PublishRelay<Bool> = PublishRelay()
     let cityHintTap: PublishRelay<Int> = PublishRelay()
+    let viewDidDisappear: PublishRelay<Void> = PublishRelay()
     
     // Outputs
     private let _searchPlaceholder: BehaviorRelay<String> = BehaviorRelay(value: NSLocalizedString("searchInputPlaceholder", comment: ""))
@@ -142,6 +144,10 @@ class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchVie
             .subscribe(onNext: { [weak self] _ in
                 self?._sceneDidHide.accept(())
             })
+            .disposed(by: self.disposeBag)
+        
+        self.viewDidDisappear
+            .bind(to: self._sceneDidHide)
             .disposed(by: self.disposeBag)
     }
     
