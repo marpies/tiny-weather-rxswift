@@ -103,7 +103,7 @@ class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchVie
             .flatMapLatest({ searchTerm in
                 apiService.execute(request: APIResource.geo(location: searchTerm))
             })
-            .map({ try $0.map(to: [Search.City.Response].self) })
+            .map({ try $0.map(to: [Search.Location.Response].self) })
             .share()
 
         searchResults
@@ -114,7 +114,7 @@ class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchVie
         searchResults
             .map({ [weak self] in
                 $0.compactMap {
-                    self?.getCity(response: $0)
+                    self?.getLocation(response: $0)
                 }
             })
             .map({ (cities) -> Search.SearchHints in
@@ -139,7 +139,7 @@ class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchVie
             .compactMap({ [weak self] in
                 self?.model.getCity(at: $0)
             })
-            .subscribe(onNext: { [weak self] (city) in
+            .subscribe(onNext: { [weak self] (location) in
                 self?._sceneWillHide.accept(())
                 
                 // todo process tap
@@ -159,14 +159,14 @@ class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchVie
             .disposed(by: self.disposeBag)
     }
     
-    private func getCity(response: Search.City.Response) -> Search.City.ViewModel {
+    private func getLocation(response: Search.Location.Response) -> Search.Location.ViewModel {
         var title: String = response.name
         if let state = response.state, state.isEmpty == false {
             title = "\(title), \(state)"
         }
         
         let subtitle: String = self.getCoords(lat: response.lat, lon: response.lon)
-        return Search.City.ViewModel(flag: UIImage(named: response.country), title: title, subtitle: subtitle)
+        return Search.Location.ViewModel(flag: UIImage(named: response.country), title: title, subtitle: subtitle)
     }
     
     private func updateAnimationState(finished: Bool) {

@@ -43,7 +43,7 @@
 		C365230827C51F3100E6AF39 /* URLSessions+RequestExecuting.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365230727C51F3100E6AF39 /* URLSessions+RequestExecuting.swift */; };
 		C365230A27C522C800E6AF39 /* SearchModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365230927C522C800E6AF39 /* SearchModels.swift */; };
 		C365230C27C524DD00E6AF39 /* SearchHintsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365230B27C524DD00E6AF39 /* SearchHintsView.swift */; };
-		C365230E27C5276100E6AF39 /* SearchHintCityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365230D27C5276100E6AF39 /* SearchHintCityView.swift */; };
+		C365230E27C5276100E6AF39 /* SearchHintLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365230D27C5276100E6AF39 /* SearchHintLocationView.swift */; };
 		C365231027C52D2000E6AF39 /* NetworkingAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365230F27C52D2000E6AF39 /* NetworkingAssembly.swift */; };
 		C365231227C6778100E6AF39 /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365231127C6778100E6AF39 /* SearchCoordinator.swift */; };
 		C365231527D4C68800E6AF39 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365231427D4C68700E6AF39 /* Router.swift */; };
@@ -106,7 +106,7 @@
 		C365230727C51F3100E6AF39 /* URLSessions+RequestExecuting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSessions+RequestExecuting.swift"; sourceTree = "<group>"; };
 		C365230927C522C800E6AF39 /* SearchModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModels.swift; sourceTree = "<group>"; };
 		C365230B27C524DD00E6AF39 /* SearchHintsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHintsView.swift; sourceTree = "<group>"; };
-		C365230D27C5276100E6AF39 /* SearchHintCityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHintCityView.swift; sourceTree = "<group>"; };
+		C365230D27C5276100E6AF39 /* SearchHintLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHintLocationView.swift; sourceTree = "<group>"; };
 		C365230F27C52D2000E6AF39 /* NetworkingAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingAssembly.swift; sourceTree = "<group>"; };
 		C365231127C6778100E6AF39 /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
 		C365231427D4C68700E6AF39 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
@@ -287,7 +287,7 @@
 			children = (
 				C36522C527C107F100E6AF39 /* SearchTextField.swift */,
 				C365230B27C524DD00E6AF39 /* SearchHintsView.swift */,
-				C365230D27C5276100E6AF39 /* SearchHintCityView.swift */,
+				C365230D27C5276100E6AF39 /* SearchHintLocationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -506,7 +506,7 @@
 				C36522A327BE591D00E6AF39 /* Coordinator.swift in Sources */,
 				C36522B927BE679700E6AF39 /* ThemeAssembly.swift in Sources */,
 				C365230827C51F3100E6AF39 /* URLSessions+RequestExecuting.swift in Sources */,
-				C365230E27C5276100E6AF39 /* SearchHintCityView.swift in Sources */,
+				C365230E27C5276100E6AF39 /* SearchHintLocationView.swift in Sources */,
 				C365231D27D6021F00E6AF39 /* RoutePanAnimation.swift in Sources */,
 				C365230027C51B9100E6AF39 /* RequestExecuting.swift in Sources */,
 				C36522AB27BE5A0B00E6AF39 /* SetupViewModel.swift in Sources */,

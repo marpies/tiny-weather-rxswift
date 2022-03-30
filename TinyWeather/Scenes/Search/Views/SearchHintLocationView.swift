@@ -1,5 +1,5 @@
 //
-//  SearchHintCityView.swift
+//  SearchHintLocationView.swift
 //  TinyWeather
 //
 //  Created by Marcel Piešťanský.
@@ -11,7 +11,7 @@
 
 import UIKit
 
-class SearchHintCityView: UIButton {
+class SearchHintLocationView: UIButton {
     
     private let theme: Theme
     
@@ -49,7 +49,7 @@ class SearchHintCityView: UIButton {
     // MARK: - Public
     //
     
-    func update(viewModel: Search.City.ViewModel) {
+    func update(viewModel: Search.Location.ViewModel) {
         self.flagView.image = viewModel.flag
         self.headerLabel.text = viewModel.title
         self.subtitleLabel.text = viewModel.subtitle

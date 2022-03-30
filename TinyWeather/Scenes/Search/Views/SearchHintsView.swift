@@ -88,7 +88,7 @@ class SearchHintsView: UIView {
         }
     }
     
-    private func addCities(_ cities: [Search.City.ViewModel]) {
+    private func addCities(_ locations: [Search.Location.ViewModel]) {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.spacing = 16
@@ -100,8 +100,8 @@ class SearchHintsView: UIView {
             make.bottom.equalToSuperview().inset(16)
         }
         
-        for (index, viewModel) in cities.enumerated() {
-            let view: SearchHintCityView = SearchHintCityView(theme: self.theme)
+        for (index, viewModel) in locations.enumerated() {
+            let view: SearchHintLocationView = SearchHintLocationView(theme: self.theme)
             view.tag = index
             view.update(viewModel: viewModel)
             view.rx.tap

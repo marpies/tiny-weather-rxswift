@@ -16,9 +16,9 @@ import RxCocoa
 enum Search {
     
     struct Model {
-        let hintCities: BehaviorRelay<[Search.City.Response]?> = BehaviorRelay(value: nil)
+        let hintCities: BehaviorRelay<[Search.Location.Response]?> = BehaviorRelay(value: nil)
         
-        func getCity(at index: Int) -> Search.City.Response? {
+        func getCity(at index: Int) -> Search.Location.Response? {
             if index >= 0, let cities = self.hintCities.value, index < cities.count {
                 return cities[index]
             }
@@ -44,7 +44,7 @@ enum Search {
         }
     }
     
-    enum City {
+    enum Location {
         struct Response: Codable {
             let name: String
             let state: String?
@@ -63,7 +63,7 @@ enum Search {
     enum SearchHints {
         case loading
         case empty(message: String)
-        case results(cities: [Search.City.ViewModel])
+        case results(cities: [Search.Location.ViewModel])
         case error(message: String)
     }
     
