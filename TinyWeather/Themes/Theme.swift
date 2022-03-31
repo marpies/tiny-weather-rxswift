@@ -31,6 +31,12 @@ protocol ThemeColors {
 
 protocol ThemeFonts {
     func primary(style: UIFont.TextStyle) -> UIFont
+    func iconLight(style: UIFont.TextStyle) -> UIFont
+    func iconSolid(style: UIFont.TextStyle) -> UIFont
+    func iconDuotone(style: UIFont.TextStyle) -> UIFont
+    func iconLight(size: CGFloat) -> UIFont
+    func iconSolid(size: CGFloat) -> UIFont
+    func iconDuotone(size: CGFloat) -> UIFont
 }
 
 protocol ThemeProviding {

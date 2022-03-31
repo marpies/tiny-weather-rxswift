@@ -62,10 +62,46 @@ struct AppColors: ThemeColors {
 }
 
 struct AppFonts: ThemeFonts {
+    
+    private let iconsDuotone: ScaledFont
+    private let iconsSolid: ScaledFont
+    private let iconsLight: ScaledFont
+    
+    init() {
+        self.iconsDuotone = ScaledFont(fontName: "icons_duotone")
+        self.iconsSolid = ScaledFont(fontName: "icons_solid")
+        self.iconsLight = ScaledFont(fontName: "icons_light")
+    }
+    
     func primary(style: UIFont.TextStyle) -> UIFont {
         if let descriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: style).withDesign(.rounded) {
             return UIFont(descriptor: descriptor, size: 0)
         }
         return UIFont.preferredFont(forTextStyle: style)
     }
+    
+    func iconLight(style: UIFont.TextStyle) -> UIFont {
+        return self.iconsLight.font(forTextStyle: style)
+    }
+    
+    func iconSolid(style: UIFont.TextStyle) -> UIFont {
+        return self.iconsSolid.font(forTextStyle: style)
+    }
+    
+    func iconDuotone(style: UIFont.TextStyle) -> UIFont {
+        return self.iconsDuotone.font(forTextStyle: style)
+    }
+    
+    func iconLight(size: CGFloat) -> UIFont {
+        return self.iconsLight.font(forSize: size)
+    }
+    
+    func iconSolid(size: CGFloat) -> UIFont {
+        return self.iconsSolid.font(forSize: size)
+    }
+    
+    func iconDuotone(size: CGFloat) -> UIFont {
+        return self.iconsDuotone.font(forSize: size)
+    }
+    
 }
