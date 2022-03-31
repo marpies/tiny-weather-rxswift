@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		C348A54A27F4C951006787C3 /* CoordinatesPresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348A54927F4C951006787C3 /* CoordinatesPresenting.swift */; };
+		C348A55527F5ABCA006787C3 /* icons_light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C348A55227F5ABCA006787C3 /* icons_light.ttf */; };
+		C348A55627F5ABCA006787C3 /* icons_solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C348A55327F5ABCA006787C3 /* icons_solid.ttf */; };
+		C348A55A27F5B060006787C3 /* icons_duotone.plist in Resources */ = {isa = PBXBuildFile; fileRef = C348A55727F5B060006787C3 /* icons_duotone.plist */; };
+		C348A55B27F5B060006787C3 /* icons_light.plist in Resources */ = {isa = PBXBuildFile; fileRef = C348A55827F5B060006787C3 /* icons_light.plist */; };
+		C348A55C27F5B060006787C3 /* icons_solid.plist in Resources */ = {isa = PBXBuildFile; fileRef = C348A55927F5B060006787C3 /* icons_solid.plist */; };
+		C348A56427F5B6F6006787C3 /* icons_duotone.otf in Resources */ = {isa = PBXBuildFile; fileRef = C348A56327F5B6F6006787C3 /* icons_duotone.otf */; };
 		C365225E27BE438400E6AF39 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365225D27BE438400E6AF39 /* AppDelegate.swift */; };
 		C365226427BE438500E6AF39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C365226327BE438500E6AF39 /* Assets.xcassets */; };
 		C365226727BE438500E6AF39 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C365226527BE438500E6AF39 /* LaunchScreen.storyboard */; };
@@ -72,6 +78,12 @@
 
 /* Begin PBXFileReference section */
 		C348A54927F4C951006787C3 /* CoordinatesPresenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatesPresenting.swift; sourceTree = "<group>"; };
+		C348A55227F5ABCA006787C3 /* icons_light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icons_light.ttf; sourceTree = "<group>"; };
+		C348A55327F5ABCA006787C3 /* icons_solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icons_solid.ttf; sourceTree = "<group>"; };
+		C348A55727F5B060006787C3 /* icons_duotone.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = icons_duotone.plist; sourceTree = "<group>"; };
+		C348A55827F5B060006787C3 /* icons_light.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = icons_light.plist; sourceTree = "<group>"; };
+		C348A55927F5B060006787C3 /* icons_solid.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = icons_solid.plist; sourceTree = "<group>"; };
+		C348A56327F5B6F6006787C3 /* icons_duotone.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icons_duotone.otf; sourceTree = "<group>"; };
 		C365225A27BE438400E6AF39 /* TinyWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinyWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C365225D27BE438400E6AF39 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C365226327BE438500E6AF39 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -162,6 +174,19 @@
 				C348A54927F4C951006787C3 /* CoordinatesPresenting.swift */,
 			);
 			path = Presenters;
+			sourceTree = "<group>";
+		};
+		C348A55027F5ABCA006787C3 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				C348A56327F5B6F6006787C3 /* icons_duotone.otf */,
+				C348A55727F5B060006787C3 /* icons_duotone.plist */,
+				C348A55827F5B060006787C3 /* icons_light.plist */,
+				C348A55927F5B060006787C3 /* icons_solid.plist */,
+				C348A55227F5ABCA006787C3 /* icons_light.ttf */,
+				C348A55327F5ABCA006787C3 /* icons_solid.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		C365225127BE438400E6AF39 = {
@@ -295,6 +320,7 @@
 		C36522CA27C4E3B900E6AF39 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C348A55027F5ABCA006787C3 /* Fonts */,
 				C36522CF27C4E3FE00E6AF39 /* Localizable.strings */,
 			);
 			path = Resources;
@@ -469,7 +495,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				C365226427BE438500E6AF39 /* Assets.xcassets in Resources */,
+				C348A55627F5ABCA006787C3 /* icons_solid.ttf in Resources */,
+				C348A55A27F5B060006787C3 /* icons_duotone.plist in Resources */,
 				C36522CD27C4E3FE00E6AF39 /* Localizable.strings in Resources */,
+				C348A55527F5ABCA006787C3 /* icons_light.ttf in Resources */,
+				C348A56427F5B6F6006787C3 /* icons_duotone.otf in Resources */,
+				C348A55C27F5B060006787C3 /* icons_solid.plist in Resources */,
+				C348A55B27F5B060006787C3 /* icons_light.plist in Resources */,
 				C365226727BE438500E6AF39 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
