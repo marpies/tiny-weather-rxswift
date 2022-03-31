@@ -14,6 +14,7 @@
 		C348A55B27F5B060006787C3 /* icons_light.plist in Resources */ = {isa = PBXBuildFile; fileRef = C348A55827F5B060006787C3 /* icons_light.plist */; };
 		C348A55C27F5B060006787C3 /* icons_solid.plist in Resources */ = {isa = PBXBuildFile; fileRef = C348A55927F5B060006787C3 /* icons_solid.plist */; };
 		C348A55F27F5B168006787C3 /* ScaledFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348A55E27F5B168006787C3 /* ScaledFont.swift */; };
+		C348A56227F5B51A006787C3 /* DuotoneLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348A56127F5B51A006787C3 /* DuotoneLabel.swift */; };
 		C348A56427F5B6F6006787C3 /* icons_duotone.otf in Resources */ = {isa = PBXBuildFile; fileRef = C348A56327F5B6F6006787C3 /* icons_duotone.otf */; };
 		C365225E27BE438400E6AF39 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365225D27BE438400E6AF39 /* AppDelegate.swift */; };
 		C365226427BE438500E6AF39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C365226327BE438500E6AF39 /* Assets.xcassets */; };
@@ -85,6 +86,7 @@
 		C348A55827F5B060006787C3 /* icons_light.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = icons_light.plist; sourceTree = "<group>"; };
 		C348A55927F5B060006787C3 /* icons_solid.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = icons_solid.plist; sourceTree = "<group>"; };
 		C348A55E27F5B168006787C3 /* ScaledFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaledFont.swift; sourceTree = "<group>"; };
+		C348A56127F5B51A006787C3 /* DuotoneLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuotoneLabel.swift; sourceTree = "<group>"; };
 		C348A56327F5B6F6006787C3 /* icons_duotone.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icons_duotone.otf; sourceTree = "<group>"; };
 		C365225A27BE438400E6AF39 /* TinyWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinyWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C365225D27BE438400E6AF39 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 		C348A54727F4C936006787C3 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				C348A56027F5B510006787C3 /* Views */,
 				C348A54827F4C942006787C3 /* Presenters */,
 			);
 			path = Common;
@@ -197,6 +200,14 @@
 				C348A55E27F5B168006787C3 /* ScaledFont.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		C348A56027F5B510006787C3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C348A56127F5B51A006787C3 /* DuotoneLabel.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		C365225127BE438400E6AF39 = {
@@ -551,6 +562,7 @@
 				C348A55F27F5B168006787C3 /* ScaledFont.swift in Sources */,
 				C365230E27C5276100E6AF39 /* SearchHintLocationView.swift in Sources */,
 				C365231D27D6021F00E6AF39 /* RoutePanAnimation.swift in Sources */,
+				C348A56227F5B51A006787C3 /* DuotoneLabel.swift in Sources */,
 				C365230027C51B9100E6AF39 /* RequestExecuting.swift in Sources */,
 				C36522AB27BE5A0B00E6AF39 /* SetupViewModel.swift in Sources */,
 				C36522C027BE9C5200E6AF39 /* SearchAssembly.swift in Sources */,
