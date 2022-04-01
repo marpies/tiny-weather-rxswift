@@ -33,6 +33,21 @@ class DuotoneLabel: UIView {
     // MARK: - Public
     //
     
+    func updateIcon(viewModel: DuotoneIcon.ViewModel) {
+        self.setIcon(viewModel.icon)
+        
+        if viewModel.isUnicolor {
+            self.setColor(viewModel.primaryColor)
+        } else {
+            self.setColors(primary: viewModel.primaryColor, secondary: viewModel.secondaryColor)
+        }
+    }
+    
+    func setIcon(_ icon: FontIcon) {
+        self.primaryLabel.text = icon.primary
+        self.secondaryLabel.text = icon.secondary
+    }
+    
     func setIconCode(_ value: UInt32) {
         let primary: UnicodeScalar = UnicodeScalar(value)!
         let secondary: UnicodeScalar = UnicodeScalar(0x100000 | value)!
