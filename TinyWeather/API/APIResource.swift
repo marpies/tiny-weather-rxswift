@@ -77,7 +77,7 @@ extension APIResource: RequestProviding {
         case .weather(let lat, let lon):
             let lat: String = String(format: "%.4f", lat)
             let lon: String = String(format: "%.4f", lon)
-            params = ["lat": lat, "lon": lon]
+            params = ["lat": lat, "lon": lon, "units": "metric"]
         }
         
         params["appid"] = APISecrets.apiKey
