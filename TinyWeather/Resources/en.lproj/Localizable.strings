@@ -25,3 +25,9 @@
 "latitudeSouthAbbreviation" = "S";
 "longitudeEastAbbreviation" = "E";
 "longitudeWestAbbreviation" = "W";
+
+//
+// MARK: - Weather
+//
+
+"currentWeatherLastUpdateTimeTitle" = "Last updated:";
