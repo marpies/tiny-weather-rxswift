@@ -78,12 +78,12 @@ class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchVie
         return _sceneDidHide.asObservable()
     }
     
-    init(apiService: RequestExecuting, theme: Theme) {
     private let _sceneWillHide: PublishRelay<Void> = PublishRelay()
     var sceneWillHide: Observable<Void> {
         return _sceneWillHide.asObservable()
     }
     
+    init(apiService: RequestExecuting, theme: Theme, router: WeakRouter<AppRoute>) {
         self.theme = theme
         self.apiService = apiService
         
@@ -142,7 +142,7 @@ class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchVie
             .subscribe(onNext: { [weak self] (location) in
                 self?._sceneWillHide.accept(())
                 
-                // todo process tap
+                router.route(to: .weather(location))
             })
             .disposed(by: self.disposeBag)
 

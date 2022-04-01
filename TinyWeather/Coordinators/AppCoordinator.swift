@@ -48,6 +48,8 @@ class AppCoordinator: Coordinator, Router {
             self.routeToSetup()
         case .search(let animation):
             self.routeToSearch(animation: animation)
+        case .weather(let location):
+            self.routeToWeather(forLocation: location)
         }
     }
     
@@ -68,7 +70,7 @@ class AppCoordinator: Coordinator, Router {
         if let coord = self.children.first(where: { $0 is SearchCoordinator }) as? SearchCoordinator {
             coordinator = coord
         } else {
-            coordinator = SearchCoordinator(navigationController: self.navigationController, resolver: self.resolver)
+            coordinator = SearchCoordinator(navigationController: self.navigationController, router: self.weakRouter, resolver: self.resolver)
             coordinator.parent = self
             self.children.append(coordinator)
             
@@ -91,11 +93,28 @@ class AppCoordinator: Coordinator, Router {
         }
     }
     
+    private func routeToWeather(forLocation location: Search.Location.Response) {
+        let coordinator: WeatherCoordinator
+        
+        if let coord = self.children.first(where: { $0 is WeatherCoordinator }) as? WeatherCoordinator {
+            coordinator = coord
+        } else {
+            coordinator = WeatherCoordinator(navigationController: self.navigationController, router: self.weakRouter, resolver: self.resolver)
+            coordinator.parent = self
+            self.children.append(coordinator)
+            
+            coordinator.start()
+        }
+        
+        coordinator.displayWeather(forLocation: location)
+    }
+    
     private func setupAssembler(_ assembler: Assembler) {
         assembler.apply(assemblies: [
             ThemeAssembly(),
             SetupAssembly(),
             SearchAssembly(),
+            WeatherAssembly(),
             NetworkingAssembly()
         ])
     }

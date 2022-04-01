@@ -21,6 +21,7 @@ class SearchCoordinator: Coordinator {
     private var viewController: SearchViewController?
     
     private let disposeBag: DisposeBag = DisposeBag()
+    private let router: WeakRouter<AppRoute>
     
     // Outputs
     private let _sceneDidHide: PublishRelay<Void> = PublishRelay()
@@ -32,13 +33,14 @@ class SearchCoordinator: Coordinator {
     var children: [Coordinator] = []
     let navigationController: UINavigationController
 
-    init(navigationController: UINavigationController, resolver: Resolver) {
+    init(navigationController: UINavigationController, router: WeakRouter<AppRoute>, resolver: Resolver) {
         self.navigationController = navigationController
+        self.router = router
         self.resolver = resolver
     }
     
     @discardableResult func start() -> UIViewController {
-        let vm: SearchViewModelProtocol = self.resolver.resolve(SearchViewModelProtocol.self)!
+        let vm: SearchViewModelProtocol = self.resolver.resolve(SearchViewModelProtocol.self, argument: self.router)!
         self.viewController = self.resolver.resolve(SearchViewController.self, argument: vm)
         
         vm.outputs.sceneDidHide
