@@ -59,6 +59,73 @@ struct AppColors: ThemeColors {
         }
         return UIColor(rgb: 0x3A1B00)
     }
+    
+    let weather: WeatherColors = AppWeatherColors()
+}
+
+struct AppWeatherColors: WeatherColors {
+    let rain: UIColor = UIColor { trait in
+        if trait.userInterfaceStyle == .dark {
+            return UIColor(rgb: 0x6FAEE9)
+        }
+        return UIColor(rgb: 0x67C1F3)
+    }
+    
+    let wind: UIColor = UIColor { trait in
+        if trait.userInterfaceStyle == .dark {
+            return UIColor(rgb: 0x727272)
+        }
+        return UIColor(rgb: 0x8D8D8D)
+    }
+    
+    let sun: UIColor = UIColor { trait in
+        if trait.userInterfaceStyle == .dark {
+            return UIColor(rgb: 0xFFB199)
+        }
+        return UIColor(rgb: 0xFF9776)
+    }
+    
+    let moon: UIColor = UIColor { trait in
+        if trait.userInterfaceStyle == .dark {
+            return UIColor(rgb: 0xFFDCA7)
+        }
+        return UIColor(rgb: 0xFFDEAC)
+    }
+    
+    let stars: UIColor = UIColor { trait in
+        if trait.userInterfaceStyle == .dark {
+            return UIColor(rgb: 0x6FAEE9)
+        }
+        return UIColor(rgb: 0xC1DDFE)
+    }
+    
+    let cloud: UIColor = UIColor { trait in
+        if trait.userInterfaceStyle == .dark {
+            return UIColor(rgb: 0x607596)
+        }
+        return UIColor(rgb: 0xE8D2BF)
+    }
+    
+    let bolt: UIColor = UIColor { trait in
+        if trait.userInterfaceStyle == .dark {
+            return UIColor(rgb: 0xFCE098)
+        }
+        return UIColor(rgb: 0xFFD390)
+    }
+    
+    let fog: UIColor = UIColor { trait in
+        if trait.userInterfaceStyle == .dark {
+            return UIColor(rgb: 0x8B8B8B)
+        }
+        return UIColor(rgb: 0xA9A9A9)
+    }
+    
+    let snow: UIColor = UIColor { trait in
+        if trait.userInterfaceStyle == .dark {
+            return UIColor(rgb: 0x8DBDE0)
+        }
+        return UIColor(rgb: 0x9DC7E7)
+    }
 }
 
 struct AppFonts: ThemeFonts {

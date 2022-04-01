@@ -27,6 +27,20 @@ protocol ThemeColors {
     var separator: UIColor { get }
     
     var shadow: UIColor { get }
+    
+    var weather: WeatherColors { get }
+}
+
+protocol WeatherColors {
+    var rain: UIColor { get }
+    var sun: UIColor { get }
+    var wind: UIColor { get }
+    var moon: UIColor { get }
+    var stars: UIColor { get }
+    var cloud: UIColor { get }
+    var bolt: UIColor { get }
+    var fog: UIColor { get }
+    var snow: UIColor { get }
 }
 
 protocol ThemeFonts {
