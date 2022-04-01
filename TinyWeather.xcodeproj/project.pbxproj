@@ -16,6 +16,7 @@
 		C348A55F27F5B168006787C3 /* ScaledFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348A55E27F5B168006787C3 /* ScaledFont.swift */; };
 		C348A56227F5B51A006787C3 /* DuotoneLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348A56127F5B51A006787C3 /* DuotoneLabel.swift */; };
 		C348A56427F5B6F6006787C3 /* icons_duotone.otf in Resources */ = {isa = PBXBuildFile; fileRef = C348A56327F5B6F6006787C3 /* icons_duotone.otf */; };
+		C348A56827F6189D006787C3 /* String+Capitalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348A56727F6189D006787C3 /* String+Capitalization.swift */; };
 		C348A56A27F619CE006787C3 /* Numbers+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348A56927F619CE006787C3 /* Numbers+Format.swift */; };
 		C348A58027F6E1E0006787C3 /* DuotoneIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348A57F27F6E1E0006787C3 /* DuotoneIcon.swift */; };
 		C348A58227F6E265006787C3 /* FontIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348A58127F6E265006787C3 /* FontIcon.swift */; };
@@ -91,6 +92,7 @@
 		C348A55E27F5B168006787C3 /* ScaledFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaledFont.swift; sourceTree = "<group>"; };
 		C348A56127F5B51A006787C3 /* DuotoneLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuotoneLabel.swift; sourceTree = "<group>"; };
 		C348A56327F5B6F6006787C3 /* icons_duotone.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icons_duotone.otf; sourceTree = "<group>"; };
+		C348A56727F6189D006787C3 /* String+Capitalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Capitalization.swift"; sourceTree = "<group>"; };
 		C348A56927F619CE006787C3 /* Numbers+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Numbers+Format.swift"; sourceTree = "<group>"; };
 		C348A57F27F6E1E0006787C3 /* DuotoneIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuotoneIcon.swift; sourceTree = "<group>"; };
 		C348A58127F6E265006787C3 /* FontIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontIcon.swift; sourceTree = "<group>"; };
@@ -327,6 +329,7 @@
 			isa = PBXGroup;
 			children = (
 				C36522B627BE630900E6AF39 /* UIColor+RGB.swift */,
+				C348A56727F6189D006787C3 /* String+Capitalization.swift */,
 				C348A56927F619CE006787C3 /* Numbers+Format.swift */,
 			);
 			path = Extensions;
@@ -575,6 +578,7 @@
 				C365230627C51C1C00E6AF39 /* APIResource.swift in Sources */,
 				C36522A327BE591D00E6AF39 /* Coordinator.swift in Sources */,
 				C36522B927BE679700E6AF39 /* ThemeAssembly.swift in Sources */,
+				C348A56827F6189D006787C3 /* String+Capitalization.swift in Sources */,
 				C348A56A27F619CE006787C3 /* Numbers+Format.swift in Sources */,
 				C365230827C51F3100E6AF39 /* URLSessions+RequestExecuting.swift in Sources */,
 				C348A55F27F5B168006787C3 /* ScaledFont.swift in Sources */,
