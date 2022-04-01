@@ -14,4 +14,5 @@ import Foundation
 enum AppRoute {
     case setup
     case search(RoutePanAnimation?)
+    case weather(Search.Location.Response)
 }
