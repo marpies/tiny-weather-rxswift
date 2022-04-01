@@ -80,6 +80,27 @@ struct AppFonts: ThemeFonts {
         return UIFont.preferredFont(forTextStyle: style)
     }
     
+    func primaryBold(style: UIFont.TextStyle) -> UIFont {
+        if let descriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: style).withDesign(.rounded)?.withSymbolicTraits(.traitBold) {
+            return UIFont(descriptor: descriptor, size: 0)
+        }
+        return UIFont.preferredFont(forTextStyle: style)
+    }
+    
+    func primary(size: CGFloat) -> UIFont {
+        if let descriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .body).withDesign(.rounded) {
+            return UIFont(descriptor: descriptor, size: size)
+        }
+        return UIFont.systemFont(ofSize: size)
+    }
+    
+    func primaryBold(size: CGFloat) -> UIFont {
+        if let descriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .body).withDesign(.rounded)?.withSymbolicTraits(.traitBold) {
+            return UIFont(descriptor: descriptor, size: size)
+        }
+        return UIFont.systemFont(ofSize: size, weight: .bold)
+    }
+    
     func iconLight(style: UIFont.TextStyle) -> UIFont {
         return self.iconsLight.font(forTextStyle: style)
     }
