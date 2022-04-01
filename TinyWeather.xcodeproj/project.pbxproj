@@ -19,6 +19,9 @@
 		C348A56427F5B6F6006787C3 /* icons_duotone.otf in Resources */ = {isa = PBXBuildFile; fileRef = C348A56327F5B6F6006787C3 /* icons_duotone.otf */; };
 		C348A56827F6189D006787C3 /* String+Capitalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348A56727F6189D006787C3 /* String+Capitalization.swift */; };
 		C348A56A27F619CE006787C3 /* Numbers+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348A56927F619CE006787C3 /* Numbers+Format.swift */; };
+		C348A56C27F61BA8006787C3 /* TemperaturePresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348A56B27F61BA8006787C3 /* TemperaturePresenting.swift */; };
+		C348A56E27F61D2A006787C3 /* WindSpeedPresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348A56D27F61D2A006787C3 /* WindSpeedPresenting.swift */; };
+		C348A57027F61D95006787C3 /* RainAmountPresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348A56F27F61D95006787C3 /* RainAmountPresenting.swift */; };
 		C348A58027F6E1E0006787C3 /* DuotoneIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348A57F27F6E1E0006787C3 /* DuotoneIcon.swift */; };
 		C348A58227F6E265006787C3 /* FontIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348A58127F6E265006787C3 /* FontIcon.swift */; };
 		C365225E27BE438400E6AF39 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365225D27BE438400E6AF39 /* AppDelegate.swift */; };
@@ -96,6 +99,9 @@
 		C348A56327F5B6F6006787C3 /* icons_duotone.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icons_duotone.otf; sourceTree = "<group>"; };
 		C348A56727F6189D006787C3 /* String+Capitalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Capitalization.swift"; sourceTree = "<group>"; };
 		C348A56927F619CE006787C3 /* Numbers+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Numbers+Format.swift"; sourceTree = "<group>"; };
+		C348A56B27F61BA8006787C3 /* TemperaturePresenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperaturePresenting.swift; sourceTree = "<group>"; };
+		C348A56D27F61D2A006787C3 /* WindSpeedPresenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindSpeedPresenting.swift; sourceTree = "<group>"; };
+		C348A56F27F61D95006787C3 /* RainAmountPresenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RainAmountPresenting.swift; sourceTree = "<group>"; };
 		C348A57F27F6E1E0006787C3 /* DuotoneIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuotoneIcon.swift; sourceTree = "<group>"; };
 		C348A58127F6E265006787C3 /* FontIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontIcon.swift; sourceTree = "<group>"; };
 		C365225A27BE438400E6AF39 /* TinyWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinyWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -188,6 +194,9 @@
 			isa = PBXGroup;
 			children = (
 				C348A54927F4C951006787C3 /* CoordinatesPresenting.swift */,
+				C348A56B27F61BA8006787C3 /* TemperaturePresenting.swift */,
+				C348A56D27F61D2A006787C3 /* WindSpeedPresenting.swift */,
+				C348A56F27F61D95006787C3 /* RainAmountPresenting.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
@@ -581,6 +590,7 @@
 				C365231527D4C68800E6AF39 /* Router.swift in Sources */,
 				C365230627C51C1C00E6AF39 /* APIResource.swift in Sources */,
 				C36522A327BE591D00E6AF39 /* Coordinator.swift in Sources */,
+				C348A56E27F61D2A006787C3 /* WindSpeedPresenting.swift in Sources */,
 				C36522B927BE679700E6AF39 /* ThemeAssembly.swift in Sources */,
 				C348A56827F6189D006787C3 /* String+Capitalization.swift in Sources */,
 				C348A56A27F619CE006787C3 /* Numbers+Format.swift in Sources */,
@@ -600,9 +610,11 @@
 				C36522BE27BE9C3800E6AF39 /* SearchViewModel.swift in Sources */,
 				C36522B727BE630900E6AF39 /* UIColor+RGB.swift in Sources */,
 				C365231027C52D2000E6AF39 /* NetworkingAssembly.swift in Sources */,
+				C348A57027F61D95006787C3 /* RainAmountPresenting.swift in Sources */,
 				C365230A27C522C800E6AF39 /* SearchModels.swift in Sources */,
 				C36522AA27BE5A0B00E6AF39 /* SetupViewController.swift in Sources */,
 				C365230227C51BAE00E6AF39 /* HTTPResponse.swift in Sources */,
+				C348A56C27F61BA8006787C3 /* TemperaturePresenting.swift in Sources */,
 				C36522B427BE624D00E6AF39 /* AppTheme.swift in Sources */,
 				C36522C627C107F100E6AF39 /* SearchTextField.swift in Sources */,
 				C36522AD27BE5AFC00E6AF39 /* SetupAssembly.swift in Sources */,
