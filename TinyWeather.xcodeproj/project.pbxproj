@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C333415E27F6F2EA003CF850 /* WeatherIconsDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C333415D27F6F2EA003CF850 /* WeatherIconsDemoView.swift */; };
 		C348A54A27F4C951006787C3 /* CoordinatesPresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348A54927F4C951006787C3 /* CoordinatesPresenting.swift */; };
 		C348A55527F5ABCA006787C3 /* icons_light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C348A55227F5ABCA006787C3 /* icons_light.ttf */; };
 		C348A55627F5ABCA006787C3 /* icons_solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C348A55327F5ABCA006787C3 /* icons_solid.ttf */; };
@@ -83,6 +84,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C333415D27F6F2EA003CF850 /* WeatherIconsDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherIconsDemoView.swift; sourceTree = "<group>"; };
 		C348A54927F4C951006787C3 /* CoordinatesPresenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatesPresenting.swift; sourceTree = "<group>"; };
 		C348A55227F5ABCA006787C3 /* icons_light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icons_light.ttf; sourceTree = "<group>"; };
 		C348A55327F5ABCA006787C3 /* icons_solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icons_solid.ttf; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				C348A56127F5B51A006787C3 /* DuotoneLabel.swift */,
+				C333415D27F6F2EA003CF850 /* WeatherIconsDemoView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -574,6 +577,7 @@
 				C365225E27BE438400E6AF39 /* AppDelegate.swift in Sources */,
 				C348A54A27F4C951006787C3 /* CoordinatesPresenting.swift in Sources */,
 				C365231927D4C71600E6AF39 /* WeakRouter.swift in Sources */,
+				C333415E27F6F2EA003CF850 /* WeatherIconsDemoView.swift in Sources */,
 				C365231527D4C68800E6AF39 /* Router.swift in Sources */,
 				C365230627C51C1C00E6AF39 /* APIResource.swift in Sources */,
 				C36522A327BE591D00E6AF39 /* Coordinator.swift in Sources */,
