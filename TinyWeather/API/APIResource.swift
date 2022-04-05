@@ -14,13 +14,14 @@ import Foundation
 enum APIResource {
     case geo(location: String)
     case weather(lat: Double, lon: Double)
+    case currentAndDaily(lat: Double, lon: Double)
 }
 
 extension APIResource: RequestProviding {
     
     var request: URLRequest? {
         switch self {
-        case .geo, .weather:
+        case .geo, .weather, .currentAndDaily:
             if var comps = URLComponents(string: self.url.absoluteString) {
                 comps.queryItems = self.queryItems
                 
@@ -53,7 +54,7 @@ extension APIResource: RequestProviding {
         case .geo:
             return "geo/1.0"
             
-        case .weather:
+        case .weather, .currentAndDaily:
             return "data/2.5"
         }
     }
@@ -65,6 +66,9 @@ extension APIResource: RequestProviding {
             
         case .weather:
             return "weather"
+            
+        case .currentAndDaily:
+            return "onecall"
         }
     }
     
@@ -75,9 +79,18 @@ extension APIResource: RequestProviding {
         case .geo(let location):
             params = ["q": location, "limit": "5"]
         case .weather(let lat, let lon):
-            let lat: String = String(format: "%.4f", lat)
-            let lon: String = String(format: "%.4f", lon)
+            let lat: String = lat.format(".4")
+            let lon: String = lon.format(".4")
             params = ["lat": lat, "lon": lon, "units": "metric"]
+        case .currentAndDaily(let lat, let lon):
+            let lat: String = lat.format(".4")
+            let lon: String = lon.format(".4")
+            params = [
+                "lat": lat,
+                "lon": lon,
+                "units": "metric",
+                "exclude": "minutely,hourly,alerts"
+            ]
         }
         
         params["appid"] = APISecrets.apiKey
