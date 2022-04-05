@@ -18,8 +18,11 @@ protocol RainAmountPresenting {
 extension RainAmountPresenting {
     
     func getRainAmount(_ value: Float) -> String {
-        let rounded: String = value.rounded().format(".0")
-        return "\(rounded) mm"
+        if value > 0 {
+            let rounded: String = value.rounded().format(".0")
+            return "\(rounded) mm"
+        }
+        return "-"
     }
     
 }
