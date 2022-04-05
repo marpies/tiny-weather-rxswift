@@ -10,6 +10,7 @@
 		C326653127F9A6CB00DF83E8 /* UIView+Fade.swift in Sources */ = {isa = PBXBuildFile; fileRef = C326653027F9A6CB00DF83E8 /* UIView+Fade.swift */; };
 		C326653B27FAE07300DF83E8 /* UIColor+ColorTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C326653A27FAE07300DF83E8 /* UIColor+ColorTransition.swift */; };
 		C333415E27F6F2EA003CF850 /* WeatherIconsDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C333415D27F6F2EA003CF850 /* WeatherIconsDemoView.swift */; };
+		C333416827F774C6003CF850 /* SnowAmountPresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = C333416727F774C6003CF850 /* SnowAmountPresenting.swift */; };
 		C348A53E27F4814B006787C3 /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348A53C27F4814B006787C3 /* WeatherViewController.swift */; };
 		C348A53F27F4814B006787C3 /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348A53D27F4814B006787C3 /* WeatherViewModel.swift */; };
 		C348A54227F484BF006787C3 /* WeatherModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348A54127F484BF006787C3 /* WeatherModels.swift */; };
@@ -106,6 +107,7 @@
 		C326653027F9A6CB00DF83E8 /* UIView+Fade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Fade.swift"; sourceTree = "<group>"; };
 		C326653A27FAE07300DF83E8 /* UIColor+ColorTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+ColorTransition.swift"; sourceTree = "<group>"; };
 		C333415D27F6F2EA003CF850 /* WeatherIconsDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherIconsDemoView.swift; sourceTree = "<group>"; };
+		C333416727F774C6003CF850 /* SnowAmountPresenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnowAmountPresenting.swift; sourceTree = "<group>"; };
 		C348A53C27F4814B006787C3 /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
 		C348A53D27F4814B006787C3 /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
 		C348A54127F484BF006787C3 /* WeatherModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModels.swift; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 				C348A56B27F61BA8006787C3 /* TemperaturePresenting.swift */,
 				C348A56D27F61D2A006787C3 /* WindSpeedPresenting.swift */,
 				C348A56F27F61D95006787C3 /* RainAmountPresenting.swift */,
+				C333416727F774C6003CF850 /* SnowAmountPresenting.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
@@ -702,6 +705,7 @@
 				C348A57027F61D95006787C3 /* RainAmountPresenting.swift in Sources */,
 				C365230A27C522C800E6AF39 /* SearchModels.swift in Sources */,
 				C348A57927F62B8B006787C3 /* WeatherAttributeView.swift in Sources */,
+				C333416827F774C6003CF850 /* SnowAmountPresenting.swift in Sources */,
 				C348A57D27F62DEF006787C3 /* WeatherAttributesView.swift in Sources */,
 				C326653B27FAE07300DF83E8 /* UIColor+ColorTransition.swift in Sources */,
 				C36522AA27BE5A0B00E6AF39 /* SetupViewController.swift in Sources */,
