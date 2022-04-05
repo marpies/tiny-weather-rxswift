@@ -128,7 +128,7 @@ enum Weather {
             }
             
             var isNight: Bool {
-                return self.icon.contains("n.")
+                return self.icon.contains("n")
             }
         }
     }
