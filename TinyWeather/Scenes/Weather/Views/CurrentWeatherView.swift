@@ -21,7 +21,7 @@ class CurrentWeatherView: UIStackView {
     init(theme: Theme) {
         self.theme = theme
         self.headerView = CurrentWeatherHeaderView(theme: theme)
-        self.attributesView = WeatherAttributesView(theme: theme)
+        self.attributesView = WeatherAttributesView(theme: theme, style: .large)
         self.timeView = WeatherUpdateTimeView(theme: theme)
         
         super.init(frame: .zero)

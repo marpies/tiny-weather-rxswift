@@ -14,9 +14,11 @@ import UIKit
 class WeatherAttributesView: UIStackView {
     
     private let theme: Theme
+    private let style: WeatherAttributeView.Style
 
-    init(theme: Theme) {
+    init(theme: Theme, style: WeatherAttributeView.Style) {
         self.theme = theme
+        self.style = style
         
         super.init(frame: .zero)
         
@@ -32,8 +34,12 @@ class WeatherAttributesView: UIStackView {
     //
     
     func update(viewModel: [Weather.Attribute.ViewModel]) {
+        for view in self.arrangedSubviews {
+            view.removeFromSuperview()
+        }
+        
         for vm in viewModel {
-            let view: WeatherAttributeView = WeatherAttributeView(theme: self.theme)
+            let view: WeatherAttributeView = WeatherAttributeView(theme: self.theme, style: self.style)
             view.update(viewModel: vm)
             self.addArrangedSubview(view)
         }
@@ -44,8 +50,16 @@ class WeatherAttributesView: UIStackView {
     //
     
     private func setupView() {
-        self.axis = .horizontal
-        self.spacing = 24
+        switch self.style {
+        case .small:
+            self.spacing = 8
+            self.axis = .vertical
+            self.alignment = .center
+            
+        case .large:
+            self.axis = .horizontal
+            self.spacing = 24
+        }
     }
 
 }

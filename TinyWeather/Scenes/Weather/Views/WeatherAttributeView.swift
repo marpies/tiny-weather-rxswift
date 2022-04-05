@@ -13,17 +13,21 @@ import UIKit
 
 class WeatherAttributeView: UIStackView {
     
+    enum Style {
+        case small, large
+    }
+    
     private let theme: Theme
     private let titleLabel: UILabel = UILabel()
     private let iconView: DuotoneLabel
 
-    init(theme: Theme) {
+    init(theme: Theme, style: Style) {
         self.theme = theme
         self.iconView = DuotoneLabel(theme: theme)
         
         super.init(frame: .zero)
         
-        self.setupView()
+        self.setupView(style: style)
     }
     
     required init(coder: NSCoder) {
@@ -43,19 +47,28 @@ class WeatherAttributeView: UIStackView {
     // MARK: - Private
     //
     
-    private func setupView() {
-        self.axis = .vertical
-        self.spacing = 4
+    private func setupView(style: Style) {
         self.alignment = .center
         
-        self.iconView.setStyle(.title1)
         self.iconView.backgroundColor = self.theme.colors.background
         self.addArrangedSubview(self.iconView)
         
-        self.titleLabel.font = self.theme.fonts.primary(style: .body)
         self.titleLabel.textColor = self.theme.colors.label
         self.titleLabel.backgroundColor = self.theme.colors.background
         self.addArrangedSubview(self.titleLabel)
+        
+        switch style {
+        case .small:
+            self.spacing = 8
+            self.axis = .horizontal
+            self.iconView.setStyle(.subheadline)
+            self.titleLabel.font = self.theme.fonts.primary(style: .subheadline)
+        case .large:
+            self.spacing = 4
+            self.axis = .vertical
+            self.iconView.setStyle(.title1)
+            self.titleLabel.font = self.theme.fonts.primary(style: .body)
+        }
     }
 
 }
