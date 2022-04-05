@@ -28,7 +28,7 @@ enum Weather {
     }
     
     enum Attribute {
-        case rain(Float), wind(Float), sunrise(Date), sunset(Date)
+        case rain(Float), snow(Float), wind(Float), sunrise(TimeInterval), sunset(TimeInterval)
         
         struct ViewModel {
             let title: String
@@ -75,6 +75,13 @@ enum Weather {
         
         /// Code group 803 - 804
         case clouds
+    }
+    
+    enum Temperature {
+        struct ViewModel {
+            let title: String
+            let color: UIColor
+        }
     }
     
     enum Info {
@@ -136,21 +143,16 @@ enum Weather {
     enum Current {
         struct Response: Codable {
             let weather: Weather.Info.Response
-            let lastUpdate: Date
-            let sunrise: Date
-            let sunset: Date
+            let lastUpdate: TimeInterval
+            let sunrise: TimeInterval
+            let sunset: TimeInterval
             let temperature: Float
-            let wind: Float
+            let windSpeed: Float
             let rain: Float
+            let snow: Float
             
             init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: RootKeys.self)
-                let sys = try container.nestedContainer(keyedBy: SysKeys.self, forKey: .sys)
-                let main = try container.nestedContainer(keyedBy: MainKeys.self, forKey: .main)
-                let wind = try container.nestedContainer(keyedBy: WindKeys.self, forKey: .wind)
-                let lastUpdateRaw = try container.decode(TimeInterval.self, forKey: .dt)
-                let sunriseRaw = try sys.decode(TimeInterval.self, forKey: .sunrise)
-                let sunsetRaw = try sys.decode(TimeInterval.self, forKey: .sunset)
                 let weathers = try container.decode([Weather.Info.Response].self, forKey: .weather)
                 
                 guard let weather = weathers.first else {
@@ -158,38 +160,53 @@ enum Weather {
                 }
                 
                 self.weather = weather
-                self.lastUpdate = Date(timeIntervalSince1970: lastUpdateRaw)
-                self.sunrise = Date(timeIntervalSince1970: sunriseRaw)
-                self.sunset = Date(timeIntervalSince1970: sunsetRaw)
-                self.temperature = try main.decode(Float.self, forKey: .temp)
-                self.wind = (try wind.decode(Float.self, forKey: .speed)) * 3.6 // km/h
+                self.lastUpdate = try container.decode(TimeInterval.self, forKey: .time)
+                self.sunrise = try container.decode(TimeInterval.self, forKey: .sunrise)
+                self.sunset = try container.decode(TimeInterval.self, forKey: .sunset)
+                self.temperature = try container.decode(Float.self, forKey: .temp)
+                self.windSpeed = (try container.decode(Float.self, forKey: .windSpeed)) * 3.6 // km/h
                 
                 if container.contains(.rain) {
                     let rain = try container.nestedContainer(keyedBy: RainKeys.self, forKey: .rain)
-                    self.rain = (try rain.decode(Float?.self, forKey: .oneHour)) ?? 0
+                    if rain.contains(.oneHour) {
+                        self.rain = try rain.decode(Float.self, forKey: .oneHour).rounded()
+                    } else if rain.contains(.threeHour) {
+                        self.rain = try rain.decode(Float.self, forKey: .threeHour).rounded()
+                    } else {
+                        self.rain = 0
+                    }
                 } else {
                     self.rain = 0
+                }
+                
+                if container.contains(.snow) {
+                    let snow = try container.nestedContainer(keyedBy: SnowKeys.self, forKey: .snow)
+                    if snow.contains(.oneHour) {
+                        self.snow = try snow.decode(Float.self, forKey: .oneHour).rounded()
+                    } else if snow.contains(.threeHour) {
+                        self.snow = try snow.decode(Float.self, forKey: .threeHour).rounded()
+                    } else {
+                        self.snow = 0
+                    }
+                } else {
+                    self.snow = 0
                 }
             }
             
             enum RootKeys: String, CodingKey {
-                case main, weather, dt, sys, wind, rain, timezone
-            }
-            
-            enum SysKeys: String, CodingKey {
-                case sunrise, sunset
-            }
-            
-            enum MainKeys: String, CodingKey {
-                case temp
-            }
-            
-            enum WindKeys: String, CodingKey {
-                case speed
+                case weather, rain, snow, timezone, temp, sunrise, sunset
+                case windSpeed = "wind_speed"
+                case time = "dt"
             }
             
             enum RainKeys: String, CodingKey {
                 case oneHour = "1h"
+                case threeHour = "3h"
+            }
+            
+            enum SnowKeys: String, CodingKey {
+                case oneHour = "1h"
+                case threeHour = "3h"
             }
         }
         
@@ -200,6 +217,102 @@ enum Weather {
             let temperature: String
             let description: String
             let attributes: [Weather.Attribute.ViewModel]
+        }
+    }
+    
+    enum Day {
+        struct Response: Codable {
+            let date: TimeInterval
+            let weather: Weather.Info.Response
+            let tempMin: Float
+            let tempMax: Float
+            let rain: Float
+            let snow: Float
+            let windSpeed: Float
+            
+            init(from decoder: Decoder) throws {
+                let container = try decoder.container(keyedBy: RootKeys.self)
+                
+                let weathers = try container.decode([Weather.Info.Response].self, forKey: .weather)
+                
+                guard let weather = weathers.first else {
+                    throw Weather.Error.invalidData
+                }
+                
+                self.weather = weather
+                self.date = try container.decode(TimeInterval.self, forKey: .date)
+                
+                let temps = try container.nestedContainer(keyedBy: TempKeys.self, forKey: .temp)
+                self.tempMin = try temps.decode(Float.self, forKey: .min)
+                self.tempMax = try temps.decode(Float.self, forKey: .max)
+                
+                self.windSpeed = try container.decode(Float.self, forKey: .windSpeed)
+                
+                if container.contains(.rain) {
+                    self.rain = try container.decode(Float.self, forKey: .rain).rounded()
+                } else {
+                    self.rain = 0
+                }
+                
+                if container.contains(.snow) {
+                    self.snow = try container.decode(Float.self, forKey: .snow).rounded()
+                } else {
+                    self.snow = 0
+                }
+            }
+            
+            enum RootKeys: String, CodingKey {
+                case weather, rain, snow, timezone, temp
+                case windSpeed = "wind_speed"
+                case date = "dt"
+            }
+            
+            enum TempKeys: String, CodingKey {
+                case min, max
+            }
+        }
+        
+        struct ViewModel: Hashable {
+            let id: UUID
+            let dayOfWeek: String
+            let date: String
+            let conditionIcon: DuotoneIcon.ViewModel
+            let tempMin: Weather.Temperature.ViewModel
+            let tempMax: Weather.Temperature.ViewModel
+            let attributes: [Weather.Attribute.ViewModel]
+            
+            static func == (lhs: Weather.Day.ViewModel, rhs: Weather.Day.ViewModel) -> Bool {
+                return lhs.id == rhs.id
+            }
+            
+            func hash(into hasher: inout Hasher) {
+                hasher.combine(self.id)
+            }
+        }
+    }
+    
+    enum Overview {
+        struct Response: Codable {
+            let timezoneOffset: TimeInterval
+            let current: Weather.Current.Response
+            let daily: [Weather.Day.Response]
+            
+            init(from decoder: Decoder) throws {
+                let container = try decoder.container(keyedBy: RootKeys.self)
+                
+                self.timezoneOffset = try container.decode(TimeInterval.self, forKey: .timezoneOffset)
+                self.current = try container.decode(Weather.Current.Response.self, forKey: .current)
+                self.daily = try container.decode([Weather.Day.Response].self, forKey: .daily)
+            }
+            
+            enum RootKeys: String, CodingKey {
+                case current, daily, timezoneOffset = "timezone_offset"
+            }
+        }
+        
+        struct ViewModel {
+            let current: Weather.Current.ViewModel
+            let daily: [Weather.Day.ViewModel]
         }
     }
     

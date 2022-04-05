@@ -10,22 +10,19 @@ import UIKit
 import RxSwift
 import SnapKit
 
-class WeatherViewController: UIViewController {
+class WeatherViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate {
     
     private let viewModel: WeatherViewModelProtocol
     private let disposeBag: DisposeBag = DisposeBag()
     
-    private let scrollView: UIScrollView = UIScrollView()
-    private let contentView: UIView = UIView()
-    private let contentStack: UIStackView = UIStackView()
+    private let tableViewHeader: WeatherTableHeaderView
+    private let tableView: UITableView = UITableView(frame: .zero, style: .plain)
+    private let dataSource: DailyWeatherTableDataSource
     
-    private let locationView: WeatherLocationView
-    private let currentWeatherView: CurrentWeatherView
-
     init(viewModel: WeatherViewModelProtocol) {
         self.viewModel = viewModel
-        self.locationView = WeatherLocationView(theme: viewModel.theme)
-        self.currentWeatherView = CurrentWeatherView(theme: viewModel.theme)
+        self.tableViewHeader = WeatherTableHeaderView(theme: viewModel.theme)
+        self.dataSource = DailyWeatherTableDataSource(tableView: self.tableView, theme: viewModel.theme)
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -43,44 +40,42 @@ class WeatherViewController: UIViewController {
         self.bindViewModel()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if let headerView = self.tableView.tableHeaderView {
+            let sizeToFit: CGSize = CGSize(width: headerView.bounds.width, height: 0)
+            let layoutSize: CGSize = headerView.systemLayoutSizeFitting(sizeToFit, withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
+            
+            if headerView.frame.size.height != layoutSize.height {
+                var frame: CGRect = headerView.frame
+                frame.size.height = layoutSize.height
+                headerView.frame = frame
+                self.tableView.tableHeaderView = headerView
+            }
+        }
+    }
+    
     //
     // MARK: - Private
     //
     
     private func setupViews() {
-        // Scroll view
-        self.scrollView.alwaysBounceVertical = true
-        self.scrollView.backgroundColor = self.viewModel.theme.colors.background
-        self.scrollView.showsVerticalScrollIndicator = false
-        self.view.addSubview(self.scrollView)
-        self.scrollView.snp.makeConstraints { make in
+        // Table view
+        self.tableView.showsVerticalScrollIndicator = false
+        self.tableView.alwaysBounceVertical = true
+        self.tableView.allowsMultipleSelection = false
+        self.tableView.allowsSelection = true
+        self.tableView.tableHeaderView = self.tableViewHeader
+        self.tableView.tableFooterView = UIView()
+        self.tableView.rowHeight = UITableView.automaticDimension
+        self.tableView.estimatedRowHeight = 88
+        self.tableView.backgroundColor = self.viewModel.theme.colors.background
+        self.tableView.separatorColor = self.viewModel.theme.colors.separator
+        self.view.addSubview(self.tableView)
+        self.tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
-        self.contentView.backgroundColor = self.viewModel.theme.colors.background
-        self.scrollView.addSubview(self.contentView)
-        self.contentView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
-            make.width.equalTo(self.view)
-            make.height.equalTo(self.scrollView.safeAreaLayoutGuide).priority(.high)
-            make.top.bottom.equalToSuperview()
-        }
-        
-        self.contentStack.axis = .vertical
-        self.contentStack.spacing = 32
-        self.contentView.addSubview(self.contentStack)
-        self.contentStack.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(self.contentView.layoutMarginsGuide)
-            make.top.greaterThanOrEqualToSuperview().offset(16)
-            make.bottom.lessThanOrEqualToSuperview().inset(16)
-            make.centerY.equalToSuperview()
-        }
-        
-        // Location info
-        self.contentStack.addArrangedSubview(self.locationView)
-        
-        // Current weather
-        self.contentStack.addArrangedSubview(self.currentWeatherView)
     }
 
     //
@@ -91,13 +86,26 @@ class WeatherViewController: UIViewController {
         let outputs: WeatherViewModelOutputs = self.viewModel.outputs
         
         outputs.locationInfo
-            .compactMap({ $0 })
-            .drive(self.locationView.rx.locationInfo)
+            .drive(self.tableViewHeader.rx.location)
             .disposed(by: self.disposeBag)
         
-        outputs.currentWeather
-            .compactMap({ $0 })
-            .drive(self.currentWeatherView.rx.weather)
+        outputs.weatherInfo
+            .map({ $0.current })
+            .drive(self.tableViewHeader.rx.weather)
+            .disposed(by: self.disposeBag)
+        
+        let locationInfo = outputs.locationInfo.map({ _ in })
+        
+        let weatherInfo = outputs.weatherInfo.map({ _ in })
+        
+        Observable.merge(locationInfo.asObservable(), weatherInfo.asObservable())
+            .subscribe(onNext: { [weak self] in
+                self?.view.setNeedsLayout()
+            })
+            .disposed(by: self.disposeBag)
+        
+        outputs.newDailyWeather
+            .drive(self.dataSource.rx.newDailyWeather)
             .disposed(by: self.disposeBag)
     }
     

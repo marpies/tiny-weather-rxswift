@@ -16,9 +16,10 @@ protocol WeatherViewModelInputs {
 }
 
 protocol WeatherViewModelOutputs {
-    var locationInfo: Driver<Weather.Location.ViewModel?> { get }
+    var locationInfo: Driver<Weather.Location.ViewModel> { get }
     var state: Driver<Weather.State> { get }
-    var currentWeather: Driver<Weather.Current.ViewModel?> { get }
+    var weatherInfo: Driver<Weather.Overview.ViewModel> { get }
+    var newDailyWeather: Driver<Weather.Day.ViewModel> { get }
 }
 
 protocol WeatherViewModelProtocol {
@@ -29,7 +30,8 @@ protocol WeatherViewModelProtocol {
     func displayWeather(forLocation location: Search.Location.Response)
 }
 
-class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, WeatherViewModelOutputs, WeatherConditionPresenting, TemperaturePresenting, WindSpeedPresenting, RainAmountPresenting {
+class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, WeatherViewModelOutputs, WeatherConditionPresenting, TemperaturePresenting, WindSpeedPresenting,
+                        RainAmountPresenting, SnowAmountPresenting {
     
     private let disposeBag: DisposeBag = DisposeBag()
     private let dateFormatter: DateFormatter = DateFormatter()
@@ -46,8 +48,8 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
 
     // Outputs
     private let _locationInfo: BehaviorRelay<Weather.Location.ViewModel?> = BehaviorRelay(value: nil)
-    var locationInfo: Driver<Weather.Location.ViewModel?> {
-        return _locationInfo.asDriver()
+    var locationInfo: Driver<Weather.Location.ViewModel> {
+        return _locationInfo.asDriver().compactMap({ $0 })
     }
     
     private let _state: BehaviorRelay<Weather.State> = BehaviorRelay(value: .loading)
@@ -55,9 +57,22 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
         return _state.asDriver()
     }
     
-    private let _currentWeather: BehaviorRelay<Weather.Current.ViewModel?> = BehaviorRelay(value: nil)
-    var currentWeather: Driver<Weather.Current.ViewModel?> {
-        return _currentWeather.asDriver()
+    private let _weatherInfo: BehaviorRelay<Weather.Overview.ViewModel?> = BehaviorRelay(value: nil)
+    var weatherInfo: Driver<Weather.Overview.ViewModel> {
+        return _weatherInfo.asDriver().compactMap({ $0 })
+    }
+    
+    private let _dailyWeather: BehaviorRelay<[Weather.Day.ViewModel?]?> = BehaviorRelay(value: nil)
+    var newDailyWeather: Driver<Weather.Day.ViewModel> {
+        return _dailyWeather
+            .compactMap({ $0 })
+            .flatMap({
+                Observable.from($0)
+                    .with(interval: .milliseconds(60))
+                    .observe(on: MainScheduler.instance)
+            })
+            .asDriver(onErrorJustReturn: nil)
+            .compactMap({ $0 })
     }
 
     init(theme: Theme, apiService: RequestExecuting, router: WeakRouter<AppRoute>) {
@@ -67,6 +82,8 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
         
         self.dateFormatter.timeStyle = .short
         self.dateFormatter.dateStyle = .none
+        self.dateFormatter.timeZone = TimeZone(abbreviation: "UTC")!
+        self.dateFormatter.locale = Locale.current
     }
     
     func displayWeather(forLocation location: Search.Location.Response) {
@@ -74,17 +91,17 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
         self._locationInfo.accept(info)
         
         // Load current weather
-        self.apiService.execute(request: APIResource.weather(lat: location.lat, lon: location.lon))
+        self.apiService.execute(request: APIResource.currentAndDaily(lat: location.lat, lon: location.lon))
             .map({ (response: HTTPResponse) in
-                try response.map(to: Weather.Current.Response.self)
+                try response.map(to: Weather.Overview.Response.self)
             })
-            .compactMap({ [weak self] (weather: Weather.Current.Response) in
-                print(weather)
-                return self?.getWeather(response: weather)
+            .compactMap({ [weak self] (weather: Weather.Overview.Response) in
+                return self?.getWeatherOverview(response: weather)
             })
-            .subscribe(onSuccess: { [weak self] (weather: Weather.Current.ViewModel) in
+            .subscribe(onSuccess: { [weak self] (weather: Weather.Overview.ViewModel) in
                 self?._state.accept(.loaded)
-                self?._currentWeather.accept(weather)
+                self?._weatherInfo.accept(weather)
+                self?._dailyWeather.accept(weather.daily)
             }, onError: { [weak self] _ in
                 self?._state.accept(.error)
             })
@@ -104,16 +121,90 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
         return Weather.Location.ViewModel(title: title, subtitle: subtitle, flag: UIImage(named: response.country), favoriteIcon: "")
     }
     
-    private func getWeather(response: Weather.Current.Response) -> Weather.Current.ViewModel {
-        let lastUpdate: String = self.dateFormatter.string(from: response.lastUpdate)
-        let temperature: String = self.getTemperature(response.temperature)
+    private func getWeatherOverview(response: Weather.Overview.Response) -> Weather.Overview.ViewModel {
+        let timezoneOffset: TimeInterval = response.timezoneOffset
+        let current: Weather.Current.ViewModel = self.getCurrentWeather(response: response.current, timezoneOffset: timezoneOffset)
+        let daily: [Weather.Day.ViewModel] = response.daily.map({ self.getDailyWeather(response: $0, timezoneOffset: timezoneOffset) })
+        return Weather.Overview.ViewModel(current: current, daily: daily)
+    }
+    
+    private func getCurrentWeather(response: Weather.Current.Response, timezoneOffset: TimeInterval) -> Weather.Current.ViewModel {
+        let lastUpdate: String = self.getTime(timestamp: response.lastUpdate + timezoneOffset)
+        let temperature: String = self.getTemperatureText(response.temperature)
         let description: String = response.weather.description.capitalizeFirstLetter()
         let icon: DuotoneIcon.ViewModel = self.getConditionIcon(weather: response.weather, colors: self.theme.colors.weather)
-        let attributesRaw: [Weather.Attribute] = [.sunrise(response.sunrise), .sunset(response.sunset), .rain(response.rain), .wind(response.wind)]
+        
+        // Show sunrise, sunset, snow OR rain, wind speed
+        var attributesRaw: [Weather.Attribute] = [.sunrise(response.sunrise + timezoneOffset), .sunset(response.sunset + timezoneOffset)]
+        
+        // If we have snow info, show snow, otherwise show rain
+        if response.snow > 0 {
+            attributesRaw.append(.snow(response.snow))
+        } else {
+            attributesRaw.append(.rain(response.rain))
+        }
+        
+        attributesRaw.append(.wind(response.windSpeed))
+        
         let attributes: [Weather.Attribute.ViewModel] = attributesRaw.map(self.getAttribute)
         let lastUpdateIcon: DuotoneIcon.ViewModel = DuotoneIcon.ViewModel(icon: .clock, color: self.theme.colors.label)
         
         return Weather.Current.ViewModel(conditionIcon: icon, lastUpdate: lastUpdate, lastUpdateIcon: lastUpdateIcon, temperature: temperature, description: description, attributes: attributes)
+    }
+    
+    private func getDailyWeather(response: Weather.Day.Response, timezoneOffset: TimeInterval) -> Weather.Day.ViewModel {
+        let dayOfWeek: String = self.getDayOfWeek(timestamp: response.date + timezoneOffset)
+        let date: String = self.getDate(timestamp: response.date + timezoneOffset)
+        let icon: DuotoneIcon.ViewModel = self.getConditionIcon(weather: response.weather, colors: self.theme.colors.weather)
+        let tempMin: Weather.Temperature.ViewModel = self.getTemperature(response.tempMin, theme: self.theme)
+        let tempMax: Weather.Temperature.ViewModel = self.getTemperature(response.tempMax, theme: self.theme)
+        
+        // Show snow OR rain and wind speed
+        var attributesRaw: [Weather.Attribute] = []
+        
+        // If we have snow info, show snow, otherwise show rain
+        if response.snow > 0 {
+            attributesRaw.append(.snow(response.snow))
+        } else {
+            attributesRaw.append(.rain(response.rain))
+        }
+        
+        attributesRaw.append(.wind(response.windSpeed))
+        
+        let attributes: [Weather.Attribute.ViewModel] = attributesRaw.map(self.getAttribute)
+        
+        return Weather.Day.ViewModel(id: UUID(), dayOfWeek: dayOfWeek, date: date, conditionIcon: icon, tempMin: tempMin, tempMax: tempMax, attributes: attributes)
+    }
+    
+    private func getDate(timestamp: TimeInterval) -> String {
+        let date: Date = Date(timeIntervalSince1970: timestamp)
+        
+        self.dateFormatter.dateStyle = .medium
+        self.dateFormatter.timeStyle = .none
+        
+        return self.dateFormatter.string(from: date)
+    }
+    
+    private func getTime(timestamp: TimeInterval) -> String {
+        let date: Date = Date(timeIntervalSince1970: timestamp)
+        
+        self.dateFormatter.dateStyle = .none
+        self.dateFormatter.timeStyle = .short
+        
+        return self.dateFormatter.string(from: date)
+    }
+    
+    private func getDayOfWeek(timestamp: TimeInterval) -> String {
+        let date: Date = Date(timeIntervalSince1970: timestamp)
+        
+        let oldFormat: String = self.dateFormatter.dateFormat
+        
+        self.dateFormatter.dateFormat = "EE"
+        let dayOfWeek: String = self.dateFormatter.string(from: date)
+        
+        self.dateFormatter.dateFormat = oldFormat
+        
+        return dayOfWeek
     }
     
     private func getAttribute(_ attribute: Weather.Attribute) -> Weather.Attribute.ViewModel {
@@ -122,12 +213,14 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
         switch attribute {
         case .rain(let amount):
             return Weather.Attribute.ViewModel(title: self.getRainAmount(amount), icon: DuotoneIcon.ViewModel(icon: .raindrops, color: colors.rain))
+        case .snow(let amount):
+            return Weather.Attribute.ViewModel(title: self.getSnowAmount(amount), icon: DuotoneIcon.ViewModel(icon: .snowflake, color: colors.snow))
         case .wind(let speed):
             return Weather.Attribute.ViewModel(title: self.getWindSpeed(speed), icon: DuotoneIcon.ViewModel(icon: .wind, color: colors.wind))
         case .sunrise(let time):
-            return Weather.Attribute.ViewModel(title: self.dateFormatter.string(from: time), icon: DuotoneIcon.ViewModel(icon: .sunrise, color: colors.sun))
+            return Weather.Attribute.ViewModel(title: self.getTime(timestamp: time), icon: DuotoneIcon.ViewModel(icon: .sunrise, color: colors.sun))
         case .sunset(let time):
-            return Weather.Attribute.ViewModel(title: self.dateFormatter.string(from: time), icon: DuotoneIcon.ViewModel(icon: .sunset, color: colors.sun))
+            return Weather.Attribute.ViewModel(title: self.getTime(timestamp: time), icon: DuotoneIcon.ViewModel(icon: .sunset, color: colors.sun))
         }
     }
 
