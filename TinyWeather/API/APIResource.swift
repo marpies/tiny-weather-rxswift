@@ -95,6 +95,11 @@ extension APIResource: RequestProviding {
         
         params["appid"] = APISecrets.apiKey
         
+        // Set language
+        if let lang = Locale.current.languageCode {
+            params["lang"] = lang.lowercased()
+        }
+        
         return params
     }
     
