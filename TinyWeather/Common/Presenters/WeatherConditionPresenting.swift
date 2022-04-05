@@ -26,7 +26,7 @@ extension WeatherConditionPresenting {
                 return DuotoneIcon.ViewModel(icon: .thunderstormMoon, primaryColor: colors.cloud, secondaryColor: colors.moon)
             }
             return DuotoneIcon.ViewModel(icon: .thunderstorm, primaryColor: colors.cloud, secondaryColor: colors.bolt)
-        case .drizzle:
+        case .drizzle, .lightRain:
             return DuotoneIcon.ViewModel(icon: .cloudDrizzle, primaryColor: colors.cloud, secondaryColor: colors.rain)
         case .rain:
             if isNight {

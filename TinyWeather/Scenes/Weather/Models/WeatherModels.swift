@@ -43,7 +43,10 @@ enum Weather {
         /// Code group 3xx
         case drizzle
         
-        /// Code group 500 - 504
+        /// Code 500
+        case lightRain
+        
+        /// Code group 501 - 504
         case rain
         
         /// Code group 520 - 522 + 531
@@ -88,7 +91,10 @@ enum Weather {
                 case 300...399:
                     return .drizzle
                     
-                case 500...504:
+                case 500:
+                    return .lightRain
+                    
+                case 501...504:
                     return .rain
                     
                 case 531, 520...522:
