@@ -130,54 +130,13 @@ struct AppWeatherColors: WeatherColors {
 }
 
 struct AppTemperatureColors: TemperatureColors {
-    let superHot: UIColor = UIColor { trait in
-        if trait.userInterfaceStyle == .dark {
-            return UIColor(rgb: 0xE85E5E)
-        }
-        return UIColor(rgb: 0xE85E5E)
-    }
-    
-    let hot: UIColor = UIColor { trait in
-        if trait.userInterfaceStyle == .dark {
-            return UIColor(rgb: 0xE2C374)
-        }
-        return UIColor(rgb: 0xE4A80C)
-    }
-    
-    let warm: UIColor = UIColor { trait in
-        if trait.userInterfaceStyle == .dark {
-            return UIColor(rgb: 0x8BF896)
-        }
-        return UIColor(rgb: 0x4DB958)
-    }
-    
-    let neutral: UIColor = UIColor { trait in
-        if trait.userInterfaceStyle == .dark {
-            return UIColor(rgb: 0x90D6B8)
-        }
-        return UIColor(rgb: 0x78B199)
-    }
-    
-    let zero: UIColor = UIColor { trait in
-        if trait.userInterfaceStyle == .dark {
-            return UIColor(rgb: 0x78C6DF)
-        }
-        return UIColor(rgb: 0x39B4DB)
-    }
-    
-    let cold: UIColor = UIColor { trait in
-        if trait.userInterfaceStyle == .dark {
-            return UIColor(rgb: 0x6A8FEF)
-        }
-        return UIColor(rgb: 0x4696F5)
-    }
-    
-    let superCold: UIColor = UIColor { trait in
-        if trait.userInterfaceStyle == .dark {
-            return UIColor(rgb: 0x5956F9)
-        }
-        return UIColor(rgb: 0x6764E7)
-    }
+    let superHot: DynamicColor = DynamicColor(lightColor: UIColor(rgb: 0xE85E5E), darkColor: UIColor(rgb: 0xE85E5E))
+    let hot: DynamicColor = DynamicColor(lightColor: UIColor(rgb: 0xE4A80C), darkColor: UIColor(rgb: 0xE2C374))
+    let warm: DynamicColor = DynamicColor(lightColor: UIColor(rgb: 0x4DB958), darkColor: UIColor(rgb: 0x8BF896))
+    let neutral: DynamicColor = DynamicColor(lightColor: UIColor(rgb: 0x78B199), darkColor: UIColor(rgb: 0x90D6B8))
+    let zero: DynamicColor = DynamicColor(lightColor: UIColor(rgb: 0x39B4DB), darkColor: UIColor(rgb: 0x78C6DF))
+    let cold: DynamicColor = DynamicColor(lightColor: UIColor(rgb: 0x4696F5), darkColor: UIColor(rgb: 0x6A8FEF))
+    let superCold: DynamicColor = DynamicColor(lightColor: UIColor(rgb: 0x6764E7), darkColor: UIColor(rgb: 0x5956F9))
 }
 
 struct AppFonts: ThemeFonts {

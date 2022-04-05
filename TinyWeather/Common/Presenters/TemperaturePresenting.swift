@@ -44,7 +44,7 @@ extension TemperaturePresenting {
         
         switch value {
         case ..<(-25):
-            color = colors.superCold
+            color = colors.superCold.color
             
         case -25..<(-10):
             color = self.getTransitionColor(temp: value, minTemp: -25, maxTemp: -10, minColor: colors.superCold, maxColor: colors.cold)
@@ -53,7 +53,7 @@ extension TemperaturePresenting {
             color = self.getTransitionColor(temp: value, minTemp: -10, maxTemp: 0, minColor: colors.cold, maxColor: colors.zero)
         
         case 0..<4:
-            color = colors.zero
+            color = colors.zero.color
             
         // Zero to neutral
         case 4..<10:
@@ -72,10 +72,10 @@ extension TemperaturePresenting {
             color = self.getTransitionColor(temp: value, minTemp: 30, maxTemp: 36, minColor: colors.hot, maxColor: colors.superHot)
             
         case 36...:
-            color = colors.superHot
+            color = colors.superHot.color
             
         default:
-            color = colors.neutral
+            color = colors.neutral.color
             assertionFailure("Invalid temperature")
         }
         
@@ -86,7 +86,7 @@ extension TemperaturePresenting {
     // MARK: - Private
     //
     
-    private func getTransitionColor(temp: Float, minTemp: Float, maxTemp: Float, minColor: UIColor, maxColor: UIColor) -> UIColor {
+    private func getTransitionColor(temp: Float, minTemp: Float, maxTemp: Float, minColor: DynamicColor, maxColor: DynamicColor) -> UIColor {
         let diff: Float = maxTemp - minTemp
         let progress: Float = (temp - minTemp) / diff
         return minColor.toColor(maxColor, percentage: CGFloat(progress))

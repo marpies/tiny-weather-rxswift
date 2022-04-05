@@ -46,25 +46,25 @@ protocol WeatherColors {
 
 protocol TemperatureColors {
     /// 36°C and above
-    var superHot: UIColor { get }
+    var superHot: DynamicColor { get }
     
     /// 30°C and above
-    var hot: UIColor { get }
+    var hot: DynamicColor { get }
     
     /// 20°C and above
-    var warm: UIColor { get }
+    var warm: DynamicColor { get }
     
     /// 10°C and above
-    var neutral: UIColor { get }
+    var neutral: DynamicColor { get }
     
     /// 0°C and above
-    var zero: UIColor { get }
+    var zero: DynamicColor { get }
     
     /// -10°C and above
-    var cold: UIColor { get }
+    var cold: DynamicColor { get }
     
     /// Below -25°C
-    var superCold: UIColor { get }
+    var superCold: DynamicColor { get }
 }
 
 protocol ThemeFonts {
