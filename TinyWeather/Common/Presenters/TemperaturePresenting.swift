@@ -50,7 +50,7 @@ extension TemperaturePresenting {
             color = self.getTransitionColor(temp: value, minTemp: -25, maxTemp: -10, minColor: colors.superCold, maxColor: colors.cold)
             
         case -10..<0:
-            color = self.getTransitionColor(temp: value, minTemp: 10, maxTemp: 0, minColor: colors.cold, maxColor: colors.zero)
+            color = self.getTransitionColor(temp: value, minTemp: -10, maxTemp: 0, minColor: colors.cold, maxColor: colors.zero)
         
         case 0..<4:
             color = colors.zero
