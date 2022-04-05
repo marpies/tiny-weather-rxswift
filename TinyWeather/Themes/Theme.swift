@@ -29,6 +29,7 @@ protocol ThemeColors {
     var shadow: UIColor { get }
     
     var weather: WeatherColors { get }
+    var temperatures: TemperatureColors { get }
 }
 
 protocol WeatherColors {
@@ -41,6 +42,29 @@ protocol WeatherColors {
     var bolt: UIColor { get }
     var fog: UIColor { get }
     var snow: UIColor { get }
+}
+
+protocol TemperatureColors {
+    /// 36°C and above
+    var superHot: UIColor { get }
+    
+    /// 30°C and above
+    var hot: UIColor { get }
+    
+    /// 20°C and above
+    var warm: UIColor { get }
+    
+    /// 10°C and above
+    var neutral: UIColor { get }
+    
+    /// 0°C and above
+    var zero: UIColor { get }
+    
+    /// -10°C and above
+    var cold: UIColor { get }
+    
+    /// Below -25°C
+    var superCold: UIColor { get }
 }
 
 protocol ThemeFonts {

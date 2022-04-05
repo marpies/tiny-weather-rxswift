@@ -61,6 +61,7 @@ struct AppColors: ThemeColors {
     }
     
     let weather: WeatherColors = AppWeatherColors()
+    let temperatures: TemperatureColors = AppTemperatureColors()
 }
 
 struct AppWeatherColors: WeatherColors {
@@ -125,6 +126,57 @@ struct AppWeatherColors: WeatherColors {
             return UIColor(rgb: 0x8DBDE0)
         }
         return UIColor(rgb: 0x9DC7E7)
+    }
+}
+
+struct AppTemperatureColors: TemperatureColors {
+    let superHot: UIColor = UIColor { trait in
+        if trait.userInterfaceStyle == .dark {
+            return UIColor(rgb: 0xE85E5E)
+        }
+        return UIColor(rgb: 0xE85E5E)
+    }
+    
+    let hot: UIColor = UIColor { trait in
+        if trait.userInterfaceStyle == .dark {
+            return UIColor(rgb: 0xE2C374)
+        }
+        return UIColor(rgb: 0xE4A80C)
+    }
+    
+    let warm: UIColor = UIColor { trait in
+        if trait.userInterfaceStyle == .dark {
+            return UIColor(rgb: 0x8BF896)
+        }
+        return UIColor(rgb: 0x4DB958)
+    }
+    
+    let neutral: UIColor = UIColor { trait in
+        if trait.userInterfaceStyle == .dark {
+            return UIColor(rgb: 0x90D6B8)
+        }
+        return UIColor(rgb: 0x78B199)
+    }
+    
+    let zero: UIColor = UIColor { trait in
+        if trait.userInterfaceStyle == .dark {
+            return UIColor(rgb: 0x78C6DF)
+        }
+        return UIColor(rgb: 0x39B4DB)
+    }
+    
+    let cold: UIColor = UIColor { trait in
+        if trait.userInterfaceStyle == .dark {
+            return UIColor(rgb: 0x6A8FEF)
+        }
+        return UIColor(rgb: 0x4696F5)
+    }
+    
+    let superCold: UIColor = UIColor { trait in
+        if trait.userInterfaceStyle == .dark {
+            return UIColor(rgb: 0x5956F9)
+        }
+        return UIColor(rgb: 0x6764E7)
     }
 }
 
