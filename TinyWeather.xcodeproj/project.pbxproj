@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C326653127F9A6CB00DF83E8 /* UIView+Fade.swift in Sources */ = {isa = PBXBuildFile; fileRef = C326653027F9A6CB00DF83E8 /* UIView+Fade.swift */; };
+		C326653327F9ACDB00DF83E8 /* Observable+Interval.swift in Sources */ = {isa = PBXBuildFile; fileRef = C326653227F9ACDB00DF83E8 /* Observable+Interval.swift */; };
 		C326653B27FAE07300DF83E8 /* UIColor+ColorTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C326653A27FAE07300DF83E8 /* UIColor+ColorTransition.swift */; };
 		C333415E27F6F2EA003CF850 /* WeatherIconsDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C333415D27F6F2EA003CF850 /* WeatherIconsDemoView.swift */; };
 		C333416827F774C6003CF850 /* SnowAmountPresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = C333416727F774C6003CF850 /* SnowAmountPresenting.swift */; };
@@ -105,6 +106,7 @@
 
 /* Begin PBXFileReference section */
 		C326653027F9A6CB00DF83E8 /* UIView+Fade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Fade.swift"; sourceTree = "<group>"; };
+		C326653227F9ACDB00DF83E8 /* Observable+Interval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Interval.swift"; sourceTree = "<group>"; };
 		C326653A27FAE07300DF83E8 /* UIColor+ColorTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+ColorTransition.swift"; sourceTree = "<group>"; };
 		C333415D27F6F2EA003CF850 /* WeatherIconsDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherIconsDemoView.swift; sourceTree = "<group>"; };
 		C333416727F774C6003CF850 /* SnowAmountPresenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnowAmountPresenting.swift; sourceTree = "<group>"; };
@@ -427,6 +429,7 @@
 				C348A56727F6189D006787C3 /* String+Capitalization.swift */,
 				C348A56927F619CE006787C3 /* Numbers+Format.swift */,
 				C326653027F9A6CB00DF83E8 /* UIView+Fade.swift */,
+				C326653227F9ACDB00DF83E8 /* Observable+Interval.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -702,6 +705,7 @@
 				C36522BE27BE9C3800E6AF39 /* SearchViewModel.swift in Sources */,
 				C36522B727BE630900E6AF39 /* UIColor+RGB.swift in Sources */,
 				C365231027C52D2000E6AF39 /* NetworkingAssembly.swift in Sources */,
+				C326653327F9ACDB00DF83E8 /* Observable+Interval.swift in Sources */,
 				C348A57027F61D95006787C3 /* RainAmountPresenting.swift in Sources */,
 				C365230A27C522C800E6AF39 /* SearchModels.swift in Sources */,
 				C348A57927F62B8B006787C3 /* WeatherAttributeView.swift in Sources */,
