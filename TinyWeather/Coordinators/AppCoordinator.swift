@@ -99,6 +99,11 @@ class AppCoordinator: Coordinator, Router {
         
         if let coord = self.children.first(where: { $0 is WeatherCoordinator }) as? WeatherCoordinator {
             coordinator = coord
+            
+            // Hide search if needed
+            if let searchCoord = self.children.first(where: { $0 is SearchCoordinator }) as? SearchCoordinator {
+                searchCoord.animateOut()
+            }
         } else {
             coordinator = WeatherCoordinator(navigationController: self.navigationController, router: self.weakRouter, resolver: self.resolver)
             coordinator.parent = self

@@ -66,6 +66,10 @@ class SearchCoordinator: Coordinator {
         self.viewController?.animateIn()
     }
     
+    func animateOut() {
+        self.viewController?.animateOut()
+    }
+    
     func dispose() {
         if self.viewController?.parent != nil {
             self.viewController?.willMove(toParent: nil)
