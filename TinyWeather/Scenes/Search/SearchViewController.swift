@@ -242,6 +242,35 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
             .map({ $0 == .end })
             .bind(to: inputs.animationDidComplete)
             .disposed(by: self.disposeBag)
+        
+        // Enable panning animation only when needed
+        guard outputs.isInteractiveAnimationEnabled else { return }
+        
+        self.view.rx.panGesture()
+            .when(.began)
+            .map({ _ in })
+            .subscribe(onNext: { [weak self] in
+                self?.startScrubbingAnimation()
+            })
+            .disposed(by: self.disposeBag)
+        
+        self.view.rx.panGesture()
+            .when(.changed)
+            .asTranslation()
+            .map({ (translation, _) in translation })
+            .subscribe(onNext: { [weak self] translation in
+                self?.updateAnimationProgress(translation: translation)
+            })
+            .disposed(by: self.disposeBag)
+        
+        self.view.rx.panGesture()
+            .when(.ended)
+            .asTranslation()
+            .map({ (_, velocity) in velocity })
+            .subscribe(onNext: { [weak self] velocity in
+                self?.finishAnimation(velocity: velocity)
+            })
+            .disposed(by: self.disposeBag)
     }
     
     //

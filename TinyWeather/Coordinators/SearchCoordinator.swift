@@ -29,6 +29,9 @@ class SearchCoordinator: Coordinator {
         return _sceneDidHide.asObservable()
     }
     
+    /// Set to `true` before starting the coordinator to allow for interactive pan animation.
+    var interactiveAnimation: Bool = false
+    
     weak var parent: Coordinator?
     var children: [Coordinator] = []
     let navigationController: UINavigationController
@@ -40,7 +43,7 @@ class SearchCoordinator: Coordinator {
     }
     
     @discardableResult func start() -> UIViewController {
-        let vm: SearchViewModelProtocol = self.resolver.resolve(SearchViewModelProtocol.self, argument: self.router)!
+        let vm: SearchViewModelProtocol = self.resolver.resolve(SearchViewModelProtocol.self, arguments: self.router, self.interactiveAnimation)!
         self.viewController = self.resolver.resolve(SearchViewController.self, argument: vm)
         
         vm.outputs.sceneDidHide

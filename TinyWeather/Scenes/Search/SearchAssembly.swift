@@ -15,10 +15,10 @@ import Swinject
 struct SearchAssembly: Assembly {
     
     func assemble(container: Container) {
-        container.register(SearchViewModelProtocol.self) { (r: Resolver, router: WeakRouter<AppRoute>) in
+        container.register(SearchViewModelProtocol.self) { (r: Resolver, router: WeakRouter<AppRoute>, isInteractiveAnimationEnabled: Bool) in
             let theme: Theme = r.resolve(Theme.self)!
             let apiService: RequestExecuting = r.resolve(RequestExecuting.self)!
-            return SearchViewModel(apiService: apiService, theme: theme, router: router)
+            return SearchViewModel(apiService: apiService, theme: theme, router: router, isInteractiveAnimationEnabled: isInteractiveAnimationEnabled)
         }
         container.register(SearchViewController.self) { (r: Resolver, viewModel: SearchViewModelProtocol) in
             return SearchViewController(viewModel: viewModel)

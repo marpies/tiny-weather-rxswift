@@ -30,6 +30,7 @@ protocol SearchViewModelOutputs {
     var searchHints: Observable<Search.SearchHints?> { get }
     var sceneDidHide: Observable<Void> { get }
     var sceneWillHide: Observable<Void> { get }
+    var isInteractiveAnimationEnabled: Bool { get }
 }
 
 protocol SearchViewModelProtocol: ThemeProviding {
@@ -58,6 +59,8 @@ class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchVie
     let viewDidDisappear: PublishRelay<Void> = PublishRelay()
     
     // Outputs
+    let isInteractiveAnimationEnabled: Bool
+    
     private let _searchPlaceholder: BehaviorRelay<String> = BehaviorRelay(value: NSLocalizedString("searchInputPlaceholder", comment: ""))
     var searchPlaceholder: Observable<String> {
         return _searchPlaceholder.asObservable()
@@ -83,9 +86,10 @@ class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchVie
         return _sceneWillHide.asObservable()
     }
     
-    init(apiService: RequestExecuting, theme: Theme, router: WeakRouter<AppRoute>) {
+    init(apiService: RequestExecuting, theme: Theme, router: WeakRouter<AppRoute>, isInteractiveAnimationEnabled: Bool) {
         self.theme = theme
         self.apiService = apiService
+        self.isInteractiveAnimationEnabled = isInteractiveAnimationEnabled
         
         self.performSearch.withLatestFrom(self.searchValue)
             .subscribe(onNext: { [weak self] (searchTerm) in

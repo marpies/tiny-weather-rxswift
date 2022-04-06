@@ -72,6 +72,7 @@ class AppCoordinator: Coordinator, Router {
         } else {
             coordinator = SearchCoordinator(navigationController: self.navigationController, router: self.weakRouter, resolver: self.resolver)
             coordinator.parent = self
+            coordinator.interactiveAnimation = animation != nil
             self.children.append(coordinator)
             
             // Dispose the scene when it is hidden
