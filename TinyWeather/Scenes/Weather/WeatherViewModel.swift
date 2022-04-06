@@ -12,7 +12,9 @@ import RxCocoa
 import UIKit
 
 protocol WeatherViewModelInputs {
-
+    var panGestureDidBegin: PublishRelay<Void> { get }
+    var panGestureDidChange: PublishRelay<CGFloat> { get }
+    var panGestureDidEnd: PublishRelay<CGPoint> { get }
 }
 
 protocol WeatherViewModelOutputs {
@@ -38,6 +40,9 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
     
     private let apiService: RequestExecuting
     private let router: WeakRouter<AppRoute>
+    
+    private var didBeginPan: BehaviorRelay<Bool> = BehaviorRelay(value: false)
+    private var panTranslation: BehaviorRelay<CGFloat> = BehaviorRelay(value: 0)
 
     var inputs: WeatherViewModelInputs { return self }
     var outputs: WeatherViewModelOutputs { return self }
@@ -45,6 +50,9 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
     let theme: Theme
 
     // Inputs
+    let panGestureDidBegin: PublishRelay<Void> = PublishRelay()
+    let panGestureDidChange: PublishRelay<CGFloat> = PublishRelay()
+    let panGestureDidEnd: PublishRelay<CGPoint> = PublishRelay()
 
     // Outputs
     private let _locationInfo: BehaviorRelay<Weather.Location.ViewModel?> = BehaviorRelay(value: nil)
@@ -84,6 +92,50 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
         self.dateFormatter.dateStyle = .none
         self.dateFormatter.timeZone = TimeZone(abbreviation: "UTC")!
         self.dateFormatter.locale = Locale.current
+        
+        self.panGestureDidBegin
+            .map({ true })
+            .bind(to: self.didBeginPan)
+            .disposed(by: self.disposeBag)
+        
+        self.panGestureDidBegin
+            .subscribe(onNext: {
+                router.route(to: .search(.began))
+            })
+            .disposed(by: self.disposeBag)
+        
+        self.panGestureDidChange
+            .bind(to: self.panTranslation)
+            .disposed(by: self.disposeBag)
+        
+        Observable.combineLatest(self.panGestureDidChange, self.didBeginPan)
+            .filter({ _, didBeginPan in
+                didBeginPan
+            })
+            .map({ translation, _ in
+                translation
+            })
+            .map({ CGPoint(x: 0, y: $0) })
+            .subscribe(onNext: { translation in
+                router.route(to: .search(.changed(translation: translation)))
+            })
+            .disposed(by: self.disposeBag)
+        
+        self.panGestureDidEnd
+            .withLatestFrom(Observable.combineLatest(self.panGestureDidEnd, self.panTranslation))
+            .subscribe(onNext: { (velocity, translation) in
+                if translation > 0 {
+                    router.route(to: .search(.ended(velocity: velocity)))
+                } else {
+                    router.route(to: .search(.ended(velocity: CGPoint(x: 0, y: -1))))
+                }
+            })
+            .disposed(by: self.disposeBag)
+        
+        self.panGestureDidEnd
+            .map({ _ in false })
+            .bind(to: self.didBeginPan)
+            .disposed(by: self.disposeBag)
     }
     
     func displayWeather(forLocation location: Search.Location.Response) {

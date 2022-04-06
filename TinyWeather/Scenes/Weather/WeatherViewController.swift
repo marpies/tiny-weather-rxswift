@@ -83,6 +83,7 @@ class WeatherViewController: UIViewController, UIScrollViewDelegate, UITableView
     //
 
     private func bindViewModel() {
+        let inputs: WeatherViewModelInputs = self.viewModel.inputs
         let outputs: WeatherViewModelOutputs = self.viewModel.outputs
         
         outputs.locationInfo
@@ -96,8 +97,11 @@ class WeatherViewController: UIViewController, UIScrollViewDelegate, UITableView
         
         let locationInfo = outputs.locationInfo.map({ _ in })
         let weatherInfo = outputs.weatherInfo.map({ _ in })
+        let loadingStart = outputs.state
+            .filter({ $0 == .loading })
+            .map({ _ in })
         
-        Observable.merge(locationInfo.asObservable(), weatherInfo.asObservable())
+        Observable.merge(locationInfo.asObservable(), weatherInfo.asObservable(), loadingStart.asObservable())
             .subscribe(onNext: { [weak self] in
                 self?.view.setNeedsLayout()
             })
@@ -106,10 +110,6 @@ class WeatherViewController: UIViewController, UIScrollViewDelegate, UITableView
         outputs.newDailyWeather
             .drive(self.dataSource.rx.newDailyWeather)
             .disposed(by: self.disposeBag)
-        
-        let loadingStart = outputs.state
-            .filter({ $0 == .loading })
-            .map({ _ in })
         
         loadingStart
             .drive(self.tableViewHeader.rx.showLoading)
@@ -123,6 +123,29 @@ class WeatherViewController: UIViewController, UIScrollViewDelegate, UITableView
             .filter({ $0 != .loading })
             .map({ _ in })
             .drive(self.tableViewHeader.rx.hideLoading)
+            .disposed(by: self.disposeBag)
+        
+        self.tableView.rx
+            .willBeginDragging
+            .bind(to: inputs.panGestureDidBegin)
+            .disposed(by: self.disposeBag)
+        
+        self.tableView.rx
+            .didScroll
+            .compactMap({ [weak self] () -> CGFloat? in
+                guard let weakSelf = self else { return nil }
+                
+                return -(weakSelf.view.safeAreaInsets.top + weakSelf.tableView.contentOffset.y)
+            })
+            .bind(to: inputs.panGestureDidChange)
+            .disposed(by: self.disposeBag)
+        
+        self.tableView.rx
+            .willEndDragging
+            .compactMap({ [weak self] _ -> CGPoint? in
+                self?.tableView.panGestureRecognizer.velocity(in: self?.view)
+            })
+            .bind(to: inputs.panGestureDidEnd)
             .disposed(by: self.disposeBag)
     }
     
