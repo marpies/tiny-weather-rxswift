@@ -52,6 +52,9 @@ enum Weather {
         /// Code group 520 - 522 + 531
         case showerRain
         
+        /// Codes 302, 312, 314, 502 - 504, 522
+        case heavyRain
+        
         /// Code 511
         case freezingRain
         
@@ -95,16 +98,19 @@ enum Weather {
                 case 200...299:
                     return .thunderstorm
                     
+                case 302, 312, 314, 502...504, 522:
+                    return .heavyRain
+                    
                 case 300...399:
                     return .drizzle
                     
                 case 500:
                     return .lightRain
                     
-                case 501...504:
+                case 501:
                     return .rain
                     
-                case 531, 520...522:
+                case 520, 521, 531:
                     return .showerRain
                     
                 case 511:

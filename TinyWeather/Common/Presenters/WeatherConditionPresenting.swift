@@ -37,6 +37,8 @@ extension WeatherConditionPresenting {
             return DuotoneIcon.ViewModel(icon: .cloudShowers, primaryColor: colors.cloud, secondaryColor: colors.rain)
         case .freezingRain:
             return DuotoneIcon.ViewModel(icon: .cloudHailMixed, primaryColor: colors.cloud, secondaryColor: colors.snow)
+        case .heavyRain:
+            return DuotoneIcon.ViewModel(icon: .cloudShowersHeavy, primaryColor: colors.cloud, secondaryColor: colors.rain)
         case .snow:
             return DuotoneIcon.ViewModel(icon: .snowflakes, color: colors.snow)
         case .lightSnow:
