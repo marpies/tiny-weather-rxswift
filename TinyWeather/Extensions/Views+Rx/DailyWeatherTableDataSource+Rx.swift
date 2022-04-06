@@ -29,4 +29,10 @@ extension Reactive where Base: DailyWeatherTableDataSource {
         }
     }
     
+    var removeAll: Binder<Void> {
+        return Binder(self.base) { ds, _ in
+            ds.removeAll()
+        }
+    }
+    
 }

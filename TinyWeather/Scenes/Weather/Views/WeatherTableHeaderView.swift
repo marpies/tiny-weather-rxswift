@@ -19,6 +19,7 @@ class WeatherTableHeaderView: UIView {
     private let borderView: UIView = UIView()
     private var locationView: WeatherLocationView?
     private var currentWeatherView: CurrentWeatherView?
+    private var spinnerView: UIActivityIndicatorView?
 
     init(theme: Theme) {
         self.theme = theme
@@ -64,6 +65,25 @@ class WeatherTableHeaderView: UIView {
         
         self.currentWeatherView?.update(viewModel: viewModel)
         self.addBorderView()
+    }
+    
+    func showLoading() {
+        if self.spinnerView == nil {
+            self.spinnerView = UIActivityIndicatorView()
+        }
+        
+        self.currentWeatherView?.removeFromSuperview()
+        self.currentWeatherView = nil
+        
+        self.spinnerView?.startAnimating()
+        self.stackView.addArrangedSubview(self.spinnerView!)
+        
+        self.addBorderView()
+    }
+    
+    func hideLoading() {
+        self.spinnerView?.stopAnimating()
+        self.spinnerView?.removeFromSuperview()
     }
     
     //

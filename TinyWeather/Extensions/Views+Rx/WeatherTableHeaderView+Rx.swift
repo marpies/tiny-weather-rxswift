@@ -27,4 +27,16 @@ extension Reactive where Base: WeatherTableHeaderView {
         }
     }
     
+    var showLoading: Binder<Void> {
+        return Binder(self.base) { view, _ in
+            view.showLoading()
+        }
+    }
+    
+    var hideLoading: Binder<Void> {
+        return Binder(self.base) { view, _ in
+            view.hideLoading()
+        }
+    }
+    
 }

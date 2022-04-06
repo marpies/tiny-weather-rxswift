@@ -50,4 +50,12 @@ class DailyWeatherTableDataSource {
         self.dataSource.apply(snapshot, animatingDifferences: true, completion: nil)
     }
     
+    func removeAll() {
+        var snapshot = self.dataSource.snapshot()
+        if snapshot.numberOfSections > 0 {
+            snapshot.deleteAllItems()
+            self.dataSource.apply(snapshot, animatingDifferences: true, completion: nil)
+        }
+    }
+    
 }

@@ -95,7 +95,6 @@ class WeatherViewController: UIViewController, UIScrollViewDelegate, UITableView
             .disposed(by: self.disposeBag)
         
         let locationInfo = outputs.locationInfo.map({ _ in })
-        
         let weatherInfo = outputs.weatherInfo.map({ _ in })
         
         Observable.merge(locationInfo.asObservable(), weatherInfo.asObservable())
@@ -106,6 +105,24 @@ class WeatherViewController: UIViewController, UIScrollViewDelegate, UITableView
         
         outputs.newDailyWeather
             .drive(self.dataSource.rx.newDailyWeather)
+            .disposed(by: self.disposeBag)
+        
+        let loadingStart = outputs.state
+            .filter({ $0 == .loading })
+            .map({ _ in })
+        
+        loadingStart
+            .drive(self.tableViewHeader.rx.showLoading)
+            .disposed(by: self.disposeBag)
+        
+        loadingStart
+            .drive(self.dataSource.rx.removeAll)
+            .disposed(by: self.disposeBag)
+        
+        outputs.state
+            .filter({ $0 != .loading })
+            .map({ _ in })
+            .drive(self.tableViewHeader.rx.hideLoading)
             .disposed(by: self.disposeBag)
     }
     

@@ -90,6 +90,8 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
         let info: Weather.Location.ViewModel = self.getLocationInfo(response: location)
         self._locationInfo.accept(info)
         
+        self._state.accept(.loading)
+        
         // Load current weather
         self.apiService.execute(request: APIResource.currentAndDaily(lat: location.lat, lon: location.lon))
             .map({ (response: HTTPResponse) in
