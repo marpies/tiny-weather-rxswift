@@ -12,6 +12,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RxGesture
 
 class SearchViewController: UIViewController, UIScrollViewDelegate {
     
@@ -20,7 +21,7 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
     private let scrollView: UIScrollView = UIScrollView()
     private let contentView: UIView = UIView()
     private let searchField: SearchTextField = SearchTextField()
-    private var disposeBag: DisposeBag! = DisposeBag()
+    private let disposeBag: DisposeBag = DisposeBag()
     
     private let viewModel: SearchViewModelProtocol
     
@@ -68,7 +69,11 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
     func animateIn() {
         self.loadViewIfNeeded()
         
-        self.animation?.start()
+        self.animation?.animateIn()
+    }
+    
+    func animateOut() {
+        self.animation?.animateOut(hintsView: self.searchHintsView)
     }
     
     func startScrubbingAnimation() {
@@ -140,13 +145,7 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
             }
             make.height.equalTo(44)
             make.centerX.equalToSuperview()
-            
-            if self.searchField.isFirstResponder {
-                make.top.equalTo(self.contentView).offset(8)
-            } else {
-                make.centerY.equalTo(self.scrollView).multipliedBy(0.5)
-            }
-            
+            make.top.equalTo(self.contentView).offset(8)
             make.bottom.equalToSuperview().priority(.high)
         }
     }
@@ -218,14 +217,7 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
         
         let editEvents = Observable.merge([editBegin.asObservable(), editEnd.asObservable(), editEndExit.asObservable()]).share()
         
-        editEvents
-            .map({ [weak self] in
-                self?.searchField.isFirstResponder ?? false
-            })
-            .bind(to: self.scrollView.rx.alwaysBounceVertical)
-            .disposed(by: self.disposeBag)
-        
-        editEvents
+        let disposable: Disposable = editEvents
             .subscribe(onNext: { [weak self] in
                 self?.setupConstraints()
                 
@@ -233,17 +225,16 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
                     self?.view.layoutIfNeeded()
                 }, completion: nil)
             })
-            .disposed(by: self.disposeBag)
         
-        // Dispose the bag when the scene is about to disappear to avoid
+        // Dispose search field edit observers when the scene is about to disappear to avoid
         // modifying constraints during UINavigationController transition
         // The constraints are not animated during that and results in jumpy UI
         outputs.sceneWillHide
             .filter({ [weak self] in
                 self?.searchField.isFirstResponder ?? false
             })
-            .subscribe(onNext: { [weak self] in
-                self?.disposeBag = nil
+            .subscribe(onNext: {
+                disposable.dispose()
             })
             .disposed(by: self.disposeBag)
         

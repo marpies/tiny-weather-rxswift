@@ -40,7 +40,7 @@ class SearchPanAnimation {
     // MARK: - Public
     //
     
-    func start() {
+    func animateIn() {
         self.animator = UIViewPropertyAnimator(duration: 1 / 3, curve: .easeOut)
         
         self.visualView.effect = nil
@@ -53,8 +53,29 @@ class SearchPanAnimation {
         }
         
         self.animator?.addCompletion { [weak self] position in
-            self?.animationDidComplete.accept(position)
             self?.visualView.effect = self?.effect
+            self?.animationDidComplete.accept(position)
+            self?.animator = nil
+            self?.searchField.becomeFirstResponder()
+        }
+        
+        self.animator?.startAnimation()
+    }
+    
+    func animateOut(hintsView: UIView?) {
+        self.animator = UIViewPropertyAnimator(duration: 1 / 3, curve: .easeOut)
+        
+        self.animator?.addAnimations { [weak self] in
+            hintsView?.transform = CGAffineTransform(scaleX: 0.8, y: 0.8).translatedBy(x: 0, y: -40)
+            hintsView?.alpha = 0
+            self?.searchField.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+            self?.searchField.alpha = 0
+            self?.visualView.effect = nil
+        }
+        
+        self.animator?.addCompletion { [weak self] position in
+            self?.visualView.effect = nil
+            self?.animationDidComplete.accept(position)
         }
         
         self.animator?.startAnimation()
@@ -72,7 +93,7 @@ class SearchPanAnimation {
         self.animator?.pauseAnimation()
         
         if self.animator == nil {
-            self.animator = UIViewPropertyAnimator(duration: 2 / 3, curve: .easeOut)
+            self.animator = UIViewPropertyAnimator(duration: 1 / 3, curve: .easeOut)
             
             self.animator?.addAnimations { [weak self] in
                 guard let weakSelf = self else { return }
@@ -81,18 +102,22 @@ class SearchPanAnimation {
                 case .hidden:
                     weakSelf.visualView.effect = nil
                     weakSelf.searchField.alpha = 0
-                    weakSelf.searchField.transform = CGAffineTransform(scaleX: 0.8, y: 0.8).translatedBy(x: 0, y: -50)
                 case .visible:
                     weakSelf.visualView.effect = weakSelf.effect
                     weakSelf.searchField.alpha = 1
-                    weakSelf.searchField.transform = .identity
                 }
             }
             
             self.animator?.addCompletion({ [weak self] position in
                 guard let weakSelf = self else { return }
                 
+                // Focus the search field (if it is not already) once it becomes fully visible
+                if position == .end && state == .visible && !weakSelf.searchField.isFirstResponder {
+                    weakSelf.searchField.becomeFirstResponder()
+                }
+                
                 weakSelf.animator = nil
+                weakSelf.searchField.transform = .identity
                 weakSelf.animationDidComplete.accept(position)
             })
         }
@@ -122,36 +147,39 @@ class SearchPanAnimation {
             animator.pauseAnimation()
         }
         
+        let shouldHide: Bool = velocity.y < 0
+        
+        // Update the search field's transform during the final animation
+        animator.addAnimations { [weak self] in
+            if shouldHide {
+                self?.searchField.transform = CGAffineTransform(translationX: 0, y: max(-100, velocity.y)).scaledBy(x: 0.8, y: 0.8)
+            } else {
+                self?.searchField.transform = .identity
+            }
+        }
+        
         if velocity.y == 0 {
             animator.continueAnimation(withTimingParameters: nil, durationFactor: 0)
             return
         }
         
-        let shouldHide: Bool = velocity.y < 0
-        
         switch self.animationState {
         case .hidden:
             if shouldHide && !animator.isReversed {
                 animator.isReversed = true
-            }
-            
-            if !shouldHide && animator.isReversed {
+            } else if !shouldHide && animator.isReversed {
                 animator.isReversed = false
             }
             
         case .visible:
             if shouldHide && animator.isReversed {
                 animator.isReversed = false
-            }
-            
-            if !shouldHide && !animator.isReversed {
+            } else if !shouldHide && !animator.isReversed {
                 animator.isReversed = true
             }
         }
         
-        let params: UISpringTimingParameters = UISpringTimingParameters(dampingRatio: 1, initialVelocity: CGVector(dx: 0, dy: velocity.y))
-        
-        animator.continueAnimation(withTimingParameters: params, durationFactor: 0)
+        animator.continueAnimation(withTimingParameters: nil, durationFactor: 0)
     }
     
     //
@@ -162,6 +190,39 @@ class SearchPanAnimation {
         let total: CGFloat = self.fractionComplete + value
         let progress: CGFloat = max(0.001, min(0.999, total))
         self.animator?.fractionComplete = progress
+        
+        // Add translation to the search field according to the pan gesture
+        let translationY: CGFloat = translation.y
+        var offsetY: CGFloat
+        if translationY < 0 {
+            offsetY = -pow(abs(translationY), 0.85)
+        } else {
+            offsetY = pow(translationY, 0.85)
+        }
+        
+        var scale: CGFloat = 1
+        
+        // Focus in/out the search field depending on the animation progress
+        switch self.animationState {
+        case .hidden:
+            offsetY -= 20
+            
+            let minScale: CGFloat = 0.8
+            scale = (progress * (1 - minScale)) + minScale
+            
+            if progress > 0.4 && !self.searchField.isFirstResponder {
+                self.searchField.becomeFirstResponder()
+            } else if progress < 0.3 && self.searchField.isFirstResponder {
+                self.searchField.endEditing(true)
+            }
+            
+        case .visible:
+            if progress > 0.1 && self.searchField.isFirstResponder {
+                self.searchField.endEditing(true)
+            }
+        }
+        
+        self.searchField.transform = CGAffineTransform(translationX: 0, y: offsetY).scaledBy(x: scale, y: scale)
     }
     
 }
