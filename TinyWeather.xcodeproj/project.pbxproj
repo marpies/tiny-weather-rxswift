@@ -15,8 +15,12 @@
 		C326653B27FAE07300DF83E8 /* UIColor+ColorTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C326653A27FAE07300DF83E8 /* UIColor+ColorTransition.swift */; };
 		C326653D27FB395600DF83E8 /* TemperaturePillsDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C326653C27FB395600DF83E8 /* TemperaturePillsDemoView.swift */; };
 		C326653F27FC9E5D00DF83E8 /* DynamicColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C326653E27FC9E5D00DF83E8 /* DynamicColor.swift */; };
+		C326654627FED10C00DF83E8 /* DefaultLocationStorageManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = C326654527FED10C00DF83E8 /* DefaultLocationStorageManaging.swift */; };
 		C326654827FED19C00DF83E8 /* WeatherLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C326654727FED19C00DF83E8 /* WeatherLocation.swift */; };
+		C326654B27FED2BB00DF83E8 /* TinyWeather.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C326654927FED2BB00DF83E8 /* TinyWeather.xcdatamodeld */; };
 		C326654E27FED40E00DF83E8 /* DefaultLocationDb.swift in Sources */ = {isa = PBXBuildFile; fileRef = C326654D27FED40E00DF83E8 /* DefaultLocationDb.swift */; };
+		C326655227FED54100DF83E8 /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C326655127FED54100DF83E8 /* CoreDataStore.swift */; };
+		C326655427FED57400DF83E8 /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C326655327FED57400DF83E8 /* CoreDataService.swift */; };
 		C326655627FED67B00DF83E8 /* URL+Backup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C326655527FED67B00DF83E8 /* URL+Backup.swift */; };
 		C333415E27F6F2EA003CF850 /* WeatherIconsDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C333415D27F6F2EA003CF850 /* WeatherIconsDemoView.swift */; };
 		C333416027F71B68003CF850 /* WeatherTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C333415F27F71B68003CF850 /* WeatherTableHeaderView.swift */; };
@@ -25,7 +29,11 @@
 		C333416627F724A3003CF850 /* DailyWeatherTableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C333416527F724A3003CF850 /* DailyWeatherTableDataSource.swift */; };
 		C333416827F774C6003CF850 /* SnowAmountPresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = C333416727F774C6003CF850 /* SnowAmountPresenting.swift */; };
 		C333416A27F78290003CF850 /* DailyWeatherTableCellProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C333416927F78290003CF850 /* DailyWeatherTableCellProvider.swift */; };
+		C336A47627FEDB07008DC090 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C336A47527FEDB07008DC090 /* StorageService.swift */; };
+		C336A47827FEDB73008DC090 /* CoreDataAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C336A47727FEDB73008DC090 /* CoreDataAssembly.swift */; };
+		C336A47A27FEDC13008DC090 /* CoreDataService+DefaultLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C336A47927FEDC13008DC090 /* CoreDataService+DefaultLocation.swift */; };
 		C336A47C27FF01C4008DC090 /* NSManagedObjectContext+PerformWith.swift in Sources */ = {isa = PBXBuildFile; fileRef = C336A47B27FF01C4008DC090 /* NSManagedObjectContext+PerformWith.swift */; };
+		C336A47E27FF49C5008DC090 /* CoreDataService+StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C336A47D27FF49C5008DC090 /* CoreDataService+StorageService.swift */; };
 		C336A48027FF4D81008DC090 /* DailyWeatherDb.swift in Sources */ = {isa = PBXBuildFile; fileRef = C336A47F27FF4D81008DC090 /* DailyWeatherDb.swift */; };
 		C336A48227FF4E00008DC090 /* LocationWeatherDb.swift in Sources */ = {isa = PBXBuildFile; fileRef = C336A48127FF4E00008DC090 /* LocationWeatherDb.swift */; };
 		C348A53E27F4814B006787C3 /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348A53C27F4814B006787C3 /* WeatherViewController.swift */; };
@@ -129,8 +137,12 @@
 		C326653A27FAE07300DF83E8 /* UIColor+ColorTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+ColorTransition.swift"; sourceTree = "<group>"; };
 		C326653C27FB395600DF83E8 /* TemperaturePillsDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperaturePillsDemoView.swift; sourceTree = "<group>"; };
 		C326653E27FC9E5D00DF83E8 /* DynamicColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicColor.swift; sourceTree = "<group>"; };
+		C326654527FED10C00DF83E8 /* DefaultLocationStorageManaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLocationStorageManaging.swift; sourceTree = "<group>"; };
 		C326654727FED19C00DF83E8 /* WeatherLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLocation.swift; sourceTree = "<group>"; };
+		C326654A27FED2BB00DF83E8 /* TinyWeather.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TinyWeather.xcdatamodel; sourceTree = "<group>"; };
 		C326654D27FED40E00DF83E8 /* DefaultLocationDb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLocationDb.swift; sourceTree = "<group>"; };
+		C326655127FED54100DF83E8 /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
+		C326655327FED57400DF83E8 /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
 		C326655527FED67B00DF83E8 /* URL+Backup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Backup.swift"; sourceTree = "<group>"; };
 		C333415D27F6F2EA003CF850 /* WeatherIconsDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherIconsDemoView.swift; sourceTree = "<group>"; };
 		C333415F27F71B68003CF850 /* WeatherTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTableHeaderView.swift; sourceTree = "<group>"; };
@@ -139,7 +151,11 @@
 		C333416527F724A3003CF850 /* DailyWeatherTableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherTableDataSource.swift; sourceTree = "<group>"; };
 		C333416727F774C6003CF850 /* SnowAmountPresenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnowAmountPresenting.swift; sourceTree = "<group>"; };
 		C333416927F78290003CF850 /* DailyWeatherTableCellProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherTableCellProvider.swift; sourceTree = "<group>"; };
+		C336A47527FEDB07008DC090 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
+		C336A47727FEDB73008DC090 /* CoreDataAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataAssembly.swift; sourceTree = "<group>"; };
+		C336A47927FEDC13008DC090 /* CoreDataService+DefaultLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataService+DefaultLocation.swift"; sourceTree = "<group>"; };
 		C336A47B27FF01C4008DC090 /* NSManagedObjectContext+PerformWith.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+PerformWith.swift"; sourceTree = "<group>"; };
+		C336A47D27FF49C5008DC090 /* CoreDataService+StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataService+StorageService.swift"; sourceTree = "<group>"; };
 		C336A47F27FF4D81008DC090 /* DailyWeatherDb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherDb.swift; sourceTree = "<group>"; };
 		C336A48127FF4E00008DC090 /* LocationWeatherDb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationWeatherDb.swift; sourceTree = "<group>"; };
 		C348A53C27F4814B006787C3 /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
@@ -251,6 +267,8 @@
 		C326654427FED05700DF83E8 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				C336A47527FEDB07008DC090 /* StorageService.swift */,
+				C326654527FED10C00DF83E8 /* DefaultLocationStorageManaging.swift */,
 				C326654C27FED3D900DF83E8 /* Core Data */,
 			);
 			path = Storage;
@@ -259,7 +277,9 @@
 		C326654C27FED3D900DF83E8 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				C336A47727FEDB73008DC090 /* CoreDataAssembly.swift */,
 				C326654F27FED52500DF83E8 /* Models */,
+				C326655027FED52B00DF83E8 /* Services */,
 			);
 			path = "Core Data";
 			sourceTree = "<group>";
@@ -272,6 +292,17 @@
 				C336A48127FF4E00008DC090 /* LocationWeatherDb.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		C326655027FED52B00DF83E8 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				C326655127FED54100DF83E8 /* CoreDataStore.swift */,
+				C326655327FED57400DF83E8 /* CoreDataService.swift */,
+				C336A47D27FF49C5008DC090 /* CoreDataService+StorageService.swift */,
+				C336A47927FEDC13008DC090 /* CoreDataService+DefaultLocation.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		C348A53B27F48139006787C3 /* Weather */ = {
@@ -418,6 +449,7 @@
 				C36522A127BE590800E6AF39 /* Coordinators */,
 				C36522A627BE59F400E6AF39 /* Scenes */,
 				C348A54727F4C936006787C3 /* Common */,
+				C326654427FED05700DF83E8 /* Storage */,
 				C36522F927C5193E00E6AF39 /* API */,
 				C36522FC27C51B7F00E6AF39 /* Networking */,
 				C36522AE27BE60B900E6AF39 /* Themes */,
@@ -739,6 +771,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C336A47827FEDB73008DC090 /* CoreDataAssembly.swift in Sources */,
 				C36522FE27C51B8B00E6AF39 /* RequestProviding.swift in Sources */,
 				C348A57527F625C4006787C3 /* WeatherLocationView+Rx.swift in Sources */,
 				C36522A527BE594200E6AF39 /* AppCoordinator.swift in Sources */,
@@ -746,8 +779,10 @@
 				C348A56627F60DBA006787C3 /* WeatherConditionPresenting.swift in Sources */,
 				C36522BD27BE9C3800E6AF39 /* SearchViewController.swift in Sources */,
 				C326654E27FED40E00DF83E8 /* DefaultLocationDb.swift in Sources */,
+				C336A47627FEDB07008DC090 /* StorageService.swift in Sources */,
 				C365225E27BE438400E6AF39 /* AppDelegate.swift in Sources */,
 				C326653D27FB395600DF83E8 /* TemperaturePillsDemoView.swift in Sources */,
+				C326654627FED10C00DF83E8 /* DefaultLocationStorageManaging.swift in Sources */,
 				C333416627F724A3003CF850 /* DailyWeatherTableDataSource.swift in Sources */,
 				C326655627FED67B00DF83E8 /* URL+Backup.swift in Sources */,
 				C348A54A27F4C951006787C3 /* CoordinatesPresenting.swift in Sources */,
@@ -766,11 +801,13 @@
 				C348A56A27F619CE006787C3 /* Numbers+Format.swift in Sources */,
 				C365230827C51F3100E6AF39 /* URLSessions+RequestExecuting.swift in Sources */,
 				C348A55F27F5B168006787C3 /* ScaledFont.swift in Sources */,
+				C336A47E27FF49C5008DC090 /* CoreDataService+StorageService.swift in Sources */,
 				C365230E27C5276100E6AF39 /* SearchHintLocationView.swift in Sources */,
 				C365231D27D6021F00E6AF39 /* RoutePanAnimation.swift in Sources */,
 				C333416227F71FD8003CF850 /* WeatherTableHeaderView+Rx.swift in Sources */,
 				C348A56227F5B51A006787C3 /* DuotoneLabel.swift in Sources */,
 				C326653927F9C60000DF83E8 /* WeatherDayOverviewView.swift in Sources */,
+				C326655427FED57400DF83E8 /* CoreDataService.swift in Sources */,
 				C348A58227F6E265006787C3 /* FontIcon.swift in Sources */,
 				C365230027C51B9100E6AF39 /* RequestExecuting.swift in Sources */,
 				C36522AB27BE5A0B00E6AF39 /* SetupViewModel.swift in Sources */,
@@ -810,9 +847,11 @@
 				C326654B27FED2BB00DF83E8 /* TinyWeather.xcdatamodeld in Sources */,
 				C36522C627C107F100E6AF39 /* SearchTextField.swift in Sources */,
 				C36522AD27BE5AFC00E6AF39 /* SetupAssembly.swift in Sources */,
+				C326655227FED54100DF83E8 /* CoreDataStore.swift in Sources */,
 				C36522FB27C51A0B00E6AF39 /* APISecrets.swift in Sources */,
 				C348A57727F62A05006787C3 /* WeatherUpdateTimeView.swift in Sources */,
 				C37724BD27DFB8C900C50450 /* SearchAnimations.swift in Sources */,
+				C336A47A27FEDC13008DC090 /* CoreDataService+DefaultLocation.swift in Sources */,
 				C336A48227FF4E00008DC090 /* LocationWeatherDb.swift in Sources */,
 				C36522B027BE60C500E6AF39 /* Theme.swift in Sources */,
 				C365231F27D6057300E6AF39 /* AppRoute.swift in Sources */,
