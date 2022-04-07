@@ -31,6 +31,8 @@ protocol SetupViewModelProtocol {
 class SetupViewModel: SetupViewModelProtocol, SetupViewModelInputs, SetupViewModelOutputs {
     
     private let disposeBag: DisposeBag = DisposeBag()
+    private let storage: StorageService
+    private let router: WeakRouter<AppRoute>
     
     let theme: Theme
 
@@ -40,13 +42,42 @@ class SetupViewModel: SetupViewModelProtocol, SetupViewModelInputs, SetupViewMod
     // Inputs
     let viewDidLoad: PublishRelay<Void> = PublishRelay()
     
-    init(theme: Theme, router: WeakRouter<AppRoute>) {
+    init(theme: Theme, router: WeakRouter<AppRoute>, storage: StorageService) {
         self.theme = theme
+        self.storage = storage
+        self.router = router
         
         self.viewDidLoad
             .take(1)
-            .subscribe(onNext: {
-                router.route(to: .search(nil))
+            .subscribe(onNext: { [weak self] in
+                self?.initialize()
+            })
+            .disposed(by: self.disposeBag)
+    }
+    
+    //
+    // MARK: - Private
+    //
+    
+    private func initialize() {
+        self.storage.initialize
+            .subscribe(onCompleted: { [weak self] in
+                self?.loadDefaultLocation()
+            }, onError: { error in
+                print(" Init error \(error)")
+                // todo show alert
+            })
+            .disposed(by: self.disposeBag)
+    }
+    
+    private func loadDefaultLocation() {
+        self.storage.defaultLocation
+            .subscribe(onSuccess: { [weak self] (location) in
+                if let location = location {
+                    self?.router.route(to: .weather(location))
+                } else {
+                    self?.router.route(to: .search(nil))
+                }
             })
             .disposed(by: self.disposeBag)
     }
