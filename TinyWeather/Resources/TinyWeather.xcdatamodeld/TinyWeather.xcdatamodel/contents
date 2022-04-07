@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="20G417" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="DailyWeatherDb" representedClassName=".DailyWeatherDb" syncable="YES">
+        <attribute name="condition" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="maxTemperature" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="minTemperature" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="rainAmount" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="windSpeed" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="DefaultLocationDb" representedClassName=".DefaultLocationDb" syncable="YES">
+        <attribute name="country" attributeType="String"/>
+        <attribute name="lat" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="lon" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="state" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="LocationWeatherDb" representedClassName=".LocationWeatherDb" syncable="YES">
+        <attribute name="condition" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="conditionDescription" attributeType="String"/>
+        <attribute name="country" attributeType="String"/>
+        <attribute name="lastUpdate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="lat" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="lon" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="rainAmount" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="state" optional="YES" attributeType="String"/>
+        <attribute name="sunrise" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="sunset" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="temperature" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="windSpeed" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="daily" toMany="YES" deletionRule="Nullify" destinationEntity="DailyWeatherDb"/>
+    </entity>
+    <elements>
+        <element name="DefaultLocationDb" positionX="-63" positionY="-18" width="128" height="104"/>
+        <element name="DailyWeatherDb" positionX="-63" positionY="18" width="128" height="119"/>
+        <element name="LocationWeatherDb" positionX="-54" positionY="54" width="128" height="239"/>
+    </elements>
+</model>
