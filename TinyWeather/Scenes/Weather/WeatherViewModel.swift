@@ -43,6 +43,7 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
     
     private let apiService: RequestExecuting
     private let router: WeakRouter<AppRoute>
+    private let storage: DefaultLocationStorageManaging
     
     private var didBeginPan: BehaviorRelay<Bool> = BehaviorRelay(value: false)
     private var panTranslation: BehaviorRelay<CGFloat> = BehaviorRelay(value: 0)
@@ -86,10 +87,11 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
             .compactMap({ $0 })
     }
 
-    init(theme: Theme, apiService: RequestExecuting, router: WeakRouter<AppRoute>) {
+    init(theme: Theme, apiService: RequestExecuting, router: WeakRouter<AppRoute>, storage: DefaultLocationStorageManaging) {
         self.theme = theme
         self.apiService = apiService
         self.router = router
+        self.storage = storage
         
         self.dateFormatter.timeStyle = .short
         self.dateFormatter.dateStyle = .none
@@ -145,6 +147,10 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
         let info: Weather.Location.ViewModel = self.getLocationInfo(response: location)
         self._locationInfo.accept(info)
         
+        // Save this location as default now (i.e. last one shown)
+        self.storage.saveDefaultLocation(location)
+        
+        // Set loading state
         self._state.accept(.loading)
         
         // Load current weather
