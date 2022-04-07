@@ -1,5 +1,5 @@
 //
-//  AppRoute.swift
+//  WeatherLocation.swift
 //  TinyWeather
 //
 //  Created by Marcel Piešťanský.
@@ -11,8 +11,10 @@
 
 import Foundation
 
-enum AppRoute {
-    case setup
-    case search(RoutePanAnimation?)
-    case weather(WeatherLocation)
+protocol WeatherLocation {
+    var name: String { get }
+    var state: String? { get }
+    var country: String { get }
+    var lon: Double { get }
+    var lat: Double { get }
 }

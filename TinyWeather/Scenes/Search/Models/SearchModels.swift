@@ -45,7 +45,7 @@ enum Search {
     }
     
     enum Location {
-        struct Response: Codable {
+        struct Response: Codable, WeatherLocation {
             let name: String
             let state: String?
             let country: String

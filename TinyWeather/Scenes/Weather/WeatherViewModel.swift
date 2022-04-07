@@ -32,7 +32,7 @@ protocol WeatherViewModelProtocol {
     var inputs: WeatherViewModelInputs { get }
     var outputs: WeatherViewModelOutputs { get }
     
-    func displayWeather(forLocation location: Search.Location.Response)
+    func displayWeather(forLocation location: WeatherLocation)
 }
 
 class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, WeatherViewModelOutputs, WeatherConditionPresenting, TemperaturePresenting, WindSpeedPresenting,
@@ -141,7 +141,7 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
             .disposed(by: self.disposeBag)
     }
     
-    func displayWeather(forLocation location: Search.Location.Response) {
+    func displayWeather(forLocation location: WeatherLocation) {
         let info: Weather.Location.ViewModel = self.getLocationInfo(response: location)
         self._locationInfo.accept(info)
         
@@ -169,7 +169,7 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
     // MARK: - Private
     //
     
-    private func getLocationInfo(response: Search.Location.Response) -> Weather.Location.ViewModel {
+    private func getLocationInfo(response: WeatherLocation) -> Weather.Location.ViewModel {
         let title: String = response.name
         var subtitle: String = response.country
         if let state = response.state, state.isEmpty == false {

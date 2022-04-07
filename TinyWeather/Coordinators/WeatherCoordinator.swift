@@ -43,7 +43,7 @@ class WeatherCoordinator: Coordinator {
         return self.viewController
     }
     
-    func displayWeather(forLocation location: Search.Location.Response) {
+    func displayWeather(forLocation location: WeatherLocation) {
         self.viewModel.displayWeather(forLocation: location)
     }
     

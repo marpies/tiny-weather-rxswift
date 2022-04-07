@@ -94,7 +94,7 @@ class AppCoordinator: Coordinator, Router {
         }
     }
     
-    private func routeToWeather(forLocation location: Search.Location.Response) {
+    private func routeToWeather(forLocation location: WeatherLocation) {
         let coordinator: WeatherCoordinator
         
         if let coord = self.children.first(where: { $0 is WeatherCoordinator }) as? WeatherCoordinator {
