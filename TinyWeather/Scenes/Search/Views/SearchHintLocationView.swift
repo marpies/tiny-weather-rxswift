@@ -17,7 +17,7 @@ class SearchHintLocationView: UIButton {
     
     private let flagView: UIImageView = UIImageView()
     private let headerLabel: UILabel = UILabel()
-    private let subtitleLabel: UILabel = UILabel()
+    private let subheaderLabel: UILabel = UILabel()
     
     init(theme: Theme) {
         self.theme = theme
@@ -40,7 +40,7 @@ class SearchHintLocationView: UIButton {
             UIView.animate(withDuration: 0.3) {
                 self.flagView.alpha = alpha
                 self.headerLabel.alpha = alpha
-                self.subtitleLabel.alpha = alpha
+                self.subheaderLabel.alpha = alpha
             }
         }
     }
@@ -52,7 +52,7 @@ class SearchHintLocationView: UIButton {
     func update(viewModel: Search.Location.ViewModel) {
         self.flagView.image = viewModel.flag
         self.headerLabel.text = viewModel.title
-        self.subtitleLabel.text = viewModel.subtitle
+        self.subheaderLabel.text = viewModel.subtitle
     }
     
     //
@@ -82,9 +82,9 @@ class SearchHintLocationView: UIButton {
         self.headerLabel.textColor = self.theme.colors.label
         stack.addArrangedSubview(self.headerLabel)
         
-        self.subtitleLabel.font = self.theme.fonts.primary(style: .subheadline)
-        self.subtitleLabel.textColor = self.theme.colors.secondaryLabel
-        stack.addArrangedSubview(self.subtitleLabel)
+        self.subheaderLabel.font = self.theme.fonts.primary(style: .subheadline)
+        self.subheaderLabel.textColor = self.theme.colors.secondaryLabel
+        stack.addArrangedSubview(self.subheaderLabel)
     }
 
 }
