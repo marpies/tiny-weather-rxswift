@@ -24,6 +24,7 @@
 		C333416627F724A3003CF850 /* DailyWeatherTableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C333416527F724A3003CF850 /* DailyWeatherTableDataSource.swift */; };
 		C333416827F774C6003CF850 /* SnowAmountPresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = C333416727F774C6003CF850 /* SnowAmountPresenting.swift */; };
 		C333416A27F78290003CF850 /* DailyWeatherTableCellProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C333416927F78290003CF850 /* DailyWeatherTableCellProvider.swift */; };
+		C336A47C27FF01C4008DC090 /* NSManagedObjectContext+PerformWith.swift in Sources */ = {isa = PBXBuildFile; fileRef = C336A47B27FF01C4008DC090 /* NSManagedObjectContext+PerformWith.swift */; };
 		C348A53E27F4814B006787C3 /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348A53C27F4814B006787C3 /* WeatherViewController.swift */; };
 		C348A53F27F4814B006787C3 /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348A53D27F4814B006787C3 /* WeatherViewModel.swift */; };
 		C348A54227F484BF006787C3 /* WeatherModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348A54127F484BF006787C3 /* WeatherModels.swift */; };
@@ -134,6 +135,7 @@
 		C333416527F724A3003CF850 /* DailyWeatherTableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherTableDataSource.swift; sourceTree = "<group>"; };
 		C333416727F774C6003CF850 /* SnowAmountPresenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnowAmountPresenting.swift; sourceTree = "<group>"; };
 		C333416927F78290003CF850 /* DailyWeatherTableCellProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherTableCellProvider.swift; sourceTree = "<group>"; };
+		C336A47B27FF01C4008DC090 /* NSManagedObjectContext+PerformWith.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+PerformWith.swift"; sourceTree = "<group>"; };
 		C348A53C27F4814B006787C3 /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
 		C348A53D27F4814B006787C3 /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
 		C348A54127F484BF006787C3 /* WeatherModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModels.swift; sourceTree = "<group>"; };
@@ -466,6 +468,7 @@
 				C326653027F9A6CB00DF83E8 /* UIView+Fade.swift */,
 				C326653227F9ACDB00DF83E8 /* Observable+Interval.swift */,
 				C326655527FED67B00DF83E8 /* URL+Backup.swift */,
+				C336A47B27FF01C4008DC090 /* NSManagedObjectContext+PerformWith.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -764,6 +767,7 @@
 				C333416A27F78290003CF850 /* DailyWeatherTableCellProvider.swift in Sources */,
 				C348A57B27F62C72006787C3 /* CurrentWeatherHeaderView.swift in Sources */,
 				C333416427F72477003CF850 /* WeatherDayTableViewCell.swift in Sources */,
+				C336A47C27FF01C4008DC090 /* NSManagedObjectContext+PerformWith.swift in Sources */,
 				C348A53F27F4814B006787C3 /* WeatherViewModel.swift in Sources */,
 				C348A56C27F61BA8006787C3 /* TemperaturePresenting.swift in Sources */,
 				C36522B427BE624D00E6AF39 /* AppTheme.swift in Sources */,
