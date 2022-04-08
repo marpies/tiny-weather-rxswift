@@ -31,3 +31,4 @@
 //
 
 "currentWeatherLastUpdateTimeTitle" = "Last updated:";
+"currentWeatherLastUpdateJustNowText" = "Just now";

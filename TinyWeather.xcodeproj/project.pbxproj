@@ -36,6 +36,7 @@
 		C336A47E27FF49C5008DC090 /* CoreDataService+StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C336A47D27FF49C5008DC090 /* CoreDataService+StorageService.swift */; };
 		C336A48027FF4D81008DC090 /* DailyWeatherDb.swift in Sources */ = {isa = PBXBuildFile; fileRef = C336A47F27FF4D81008DC090 /* DailyWeatherDb.swift */; };
 		C336A48227FF4E00008DC090 /* LocationWeatherDb.swift in Sources */ = {isa = PBXBuildFile; fileRef = C336A48127FF4E00008DC090 /* LocationWeatherDb.swift */; };
+		C336A48528002B5A008DC090 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = C336A48728002B5A008DC090 /* Localizable.stringsdict */; };
 		C348A53E27F4814B006787C3 /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348A53C27F4814B006787C3 /* WeatherViewController.swift */; };
 		C348A53F27F4814B006787C3 /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348A53D27F4814B006787C3 /* WeatherViewModel.swift */; };
 		C348A54227F484BF006787C3 /* WeatherModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348A54127F484BF006787C3 /* WeatherModels.swift */; };
@@ -158,6 +159,7 @@
 		C336A47D27FF49C5008DC090 /* CoreDataService+StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataService+StorageService.swift"; sourceTree = "<group>"; };
 		C336A47F27FF4D81008DC090 /* DailyWeatherDb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherDb.swift; sourceTree = "<group>"; };
 		C336A48127FF4E00008DC090 /* LocationWeatherDb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationWeatherDb.swift; sourceTree = "<group>"; };
+		C336A48628002B5A008DC090 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		C348A53C27F4814B006787C3 /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
 		C348A53D27F4814B006787C3 /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
 		C348A54127F484BF006787C3 /* WeatherModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModels.swift; sourceTree = "<group>"; };
@@ -566,6 +568,7 @@
 				C348A55027F5ABCA006787C3 /* Fonts */,
 				C326654927FED2BB00DF83E8 /* TinyWeather.xcdatamodeld */,
 				C36522CF27C4E3FE00E6AF39 /* Localizable.strings */,
+				C336A48728002B5A008DC090 /* Localizable.stringsdict */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -741,6 +744,7 @@
 				C365226427BE438500E6AF39 /* Assets.xcassets in Resources */,
 				C348A55627F5ABCA006787C3 /* icons_solid.ttf in Resources */,
 				C348A55A27F5B060006787C3 /* icons_duotone.plist in Resources */,
+				C336A48528002B5A008DC090 /* Localizable.stringsdict in Resources */,
 				C36522CD27C4E3FE00E6AF39 /* Localizable.strings in Resources */,
 				C348A55527F5ABCA006787C3 /* icons_light.ttf in Resources */,
 				C348A56427F5B6F6006787C3 /* icons_duotone.otf in Resources */,
@@ -890,6 +894,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		C336A48728002B5A008DC090 /* Localizable.stringsdict */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C336A48628002B5A008DC090 /* en */,
+			);
+			name = Localizable.stringsdict;
+			sourceTree = "<group>";
+		};
 		C365226527BE438500E6AF39 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
