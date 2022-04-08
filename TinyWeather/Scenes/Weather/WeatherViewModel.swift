@@ -192,7 +192,7 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
     }
     
     private func getCurrentWeather(response: Weather.Current.Response, timezoneOffset: TimeInterval) -> Weather.Current.ViewModel {
-        let lastUpdate: String = self.getTime(timestamp: response.lastUpdate + timezoneOffset)
+        let lastUpdate: String = self.getLastUpdate(timestamp: response.lastUpdate)
         let temperature: String = self.getTemperatureText(response.temperature)
         let description: String = response.weather.description.capitalizeFirstLetter()
         let icon: DuotoneIcon.ViewModel = self.getConditionIcon(weather: response.weather, colors: self.theme.colors.weather)
@@ -285,6 +285,35 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
         case .sunset(let time):
             return Weather.Attribute.ViewModel(title: self.getTime(timestamp: time), icon: DuotoneIcon.ViewModel(icon: .sunset, color: colors.sun))
         }
+    }
+    
+    private func getLastUpdate(timestamp: TimeInterval) -> String {
+        let now: TimeInterval = Date().timeIntervalSince1970
+        let diff: TimeInterval = now - timestamp
+        let minutes: UInt = UInt(floor(diff / 60))
+        
+        // "Just now"
+        if minutes < 1 {
+            return NSLocalizedString("currentWeatherLastUpdateJustNowText", comment: "")
+        }
+        
+        // "X minutes ago"
+        if minutes < 60 {
+            let format: String = NSLocalizedString("num_minutes_ago", comment: "")
+            return String.localizedStringWithFormat(format, minutes)
+        }
+        
+        // "X hours ago"
+        let hours: UInt = minutes / 60
+        if hours < 24 {
+            let format: String = NSLocalizedString("num_hours_ago", comment: "")
+            return String.localizedStringWithFormat(format, hours)
+        }
+        
+        // "X days ago"
+        let days: UInt = hours / 24
+        let format: String = NSLocalizedString("num_days_ago", comment: "")
+        return String.localizedStringWithFormat(format, days)
     }
 
 }
