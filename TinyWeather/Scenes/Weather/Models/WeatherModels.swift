@@ -91,10 +91,26 @@ enum Weather {
     }
     
     enum Info {
-        struct Response: Codable {
+        struct Response: Decodable {
             let id: Int
             let description: String
-            let icon: String
+            let isNight: Bool
+
+            init(id: Int, description: String, isNight: Bool) {
+                self.id = id
+                self.description = description
+                self.isNight = isNight
+            }
+            
+            init(from decoder: Decoder) throws {
+                let container = try decoder.container(keyedBy: CodingKeys.self)
+                
+                self.id = try container.decode(Int.self, forKey: .id)
+                self.description = try container.decode(String.self, forKey: .description)
+                
+                let icon = try container.decode(String.self, forKey: .icon)
+                self.isNight = icon.contains("n")
+            }
             
             var condition: Weather.Condition {
                 switch self.id {
@@ -143,14 +159,14 @@ enum Weather {
                 }
             }
             
-            var isNight: Bool {
-                return self.icon.contains("n")
+            enum CodingKeys: String, CodingKey {
+                case id, description, icon
             }
         }
     }
     
     enum Current {
-        struct Response: Codable {
+        struct Response: Decodable {
             let weather: Weather.Info.Response
             let lastUpdate: TimeInterval
             let sunrise: TimeInterval
@@ -159,6 +175,17 @@ enum Weather {
             let windSpeed: Float
             let rain: Float
             let snow: Float
+
+            init(weather: Weather.Info.Response, lastUpdate: TimeInterval, sunrise: TimeInterval, sunset: TimeInterval, temperature: Float, windSpeed: Float, rain: Float, snow: Float) {
+                self.weather = weather
+                self.lastUpdate = lastUpdate
+                self.sunrise = sunrise
+                self.sunset = sunset
+                self.temperature = temperature
+                self.windSpeed = windSpeed
+                self.rain = rain
+                self.snow = snow
+            }
             
             init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: RootKeys.self)
@@ -230,7 +257,7 @@ enum Weather {
     }
     
     enum Day {
-        struct Response: Codable {
+        struct Response: Decodable {
             let date: TimeInterval
             let weather: Weather.Info.Response
             let tempMin: Float
@@ -238,6 +265,16 @@ enum Weather {
             let rain: Float
             let snow: Float
             let windSpeed: Float
+
+            init(date: TimeInterval, weather: Weather.Info.Response, tempMin: Float, tempMax: Float, rain: Float, snow: Float, windSpeed: Float) {
+                self.date = date
+                self.weather = weather
+                self.tempMin = tempMin
+                self.tempMax = tempMax
+                self.rain = rain
+                self.snow = snow
+                self.windSpeed = windSpeed
+            }
             
             init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: RootKeys.self)
@@ -301,10 +338,16 @@ enum Weather {
     }
     
     enum Overview {
-        struct Response: Codable {
+        struct Response: Decodable {
             let timezoneOffset: TimeInterval
             let current: Weather.Current.Response
             let daily: [Weather.Day.Response]
+
+            init(timezoneOffset: TimeInterval, current: Weather.Current.Response, daily: [Weather.Day.Response]) {
+                self.timezoneOffset = timezoneOffset
+                self.current = current
+                self.daily = daily
+            }
             
             init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: RootKeys.self)
