@@ -7,6 +7,7 @@
         <attribute name="minTemperature" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="rainAmount" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="windSpeed" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="location" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LocationWeatherDb" inverseName="daily" inverseEntity="LocationWeatherDb"/>
     </entity>
     <entity name="DefaultLocationDb" representedClassName=".DefaultLocationDb" syncable="YES">
         <attribute name="country" attributeType="String"/>
@@ -29,11 +30,11 @@
         <attribute name="sunset" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="temperature" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="windSpeed" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <relationship name="daily" toMany="YES" deletionRule="Nullify" destinationEntity="DailyWeatherDb"/>
+        <relationship name="daily" toMany="YES" deletionRule="Nullify" destinationEntity="DailyWeatherDb" inverseName="location" inverseEntity="DailyWeatherDb"/>
     </entity>
     <elements>
         <element name="DefaultLocationDb" positionX="-63" positionY="-18" width="128" height="104"/>
-        <element name="DailyWeatherDb" positionX="-63" positionY="18" width="128" height="119"/>
+        <element name="DailyWeatherDb" positionX="-63" positionY="18" width="128" height="134"/>
         <element name="LocationWeatherDb" positionX="-54" positionY="54" width="128" height="239"/>
     </elements>
 </model>

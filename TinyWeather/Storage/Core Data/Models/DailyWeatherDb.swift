@@ -25,6 +25,7 @@ class DailyWeatherDb: NSManagedObject {
         let rainAmount: Float
         let minTemperature: Float
         let maxTemperature: Float
+        let location: LocationWeatherDb.Model
     }
     
     @NSManaged var date: Date
@@ -33,9 +34,10 @@ class DailyWeatherDb: NSManagedObject {
     @NSManaged var rainAmount: Float
     @NSManaged var minTemperature: Float
     @NSManaged var maxTemperature: Float
+    @NSManaged var location: LocationWeatherDb
     
     var model: DailyWeatherDb.Model {
-        return DailyWeatherDb.Model(date: self.date, condition: self.condition, windSpeed: self.windSpeed, rainAmount: self.rainAmount, minTemperature: self.minTemperature, maxTemperature: self.maxTemperature)
+        return DailyWeatherDb.Model(date: date, condition: condition, windSpeed: windSpeed, rainAmount: rainAmount, minTemperature: minTemperature, maxTemperature: maxTemperature, location: location.model)
     }
     
 }

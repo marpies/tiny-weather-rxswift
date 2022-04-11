@@ -33,6 +33,7 @@ class LocationWeatherDb: NSManagedObject {
         let state: String?
         let lon: Double
         let lat: Double
+        let daily: [DailyWeatherDb.Model]
     }
     
     @NSManaged var date: Date
@@ -49,9 +50,12 @@ class LocationWeatherDb: NSManagedObject {
     @NSManaged var state: String?
     @NSManaged var lon: Double
     @NSManaged var lat: Double
+    @NSManaged var daily: NSSet
     
     var model: LocationWeatherDb.Model {
-        return LocationWeatherDb.Model(date: date, condition: condition, conditionDescription: conditionDescription, lastUpdate: lastUpdate, sunrise: sunrise, sunset: sunset, windSpeed: windSpeed, rainAmount: rainAmount, temperature: temperature, name: name, country: country, state: state, lon: lon, lat: lat)
+        let set: Set<DailyWeatherDb>? = self.mutableSetValue(forKeyPath: #keyPath(LocationWeatherDb.daily)) as? Set<DailyWeatherDb>
+        let daily: [DailyWeatherDb.Model] = set?.map({ $0.model }).sorted(by: { $0.date < $1.date }) ?? []
+        return LocationWeatherDb.Model(date: date, condition: condition, conditionDescription: conditionDescription, lastUpdate: lastUpdate, sunrise: sunrise, sunset: sunset, windSpeed: windSpeed, rainAmount: rainAmount, temperature: temperature, name: name, country: country, state: state, lon: lon, lat: lat, daily: daily)
     }
     
 }
