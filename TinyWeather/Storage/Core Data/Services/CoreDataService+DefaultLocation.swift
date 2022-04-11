@@ -15,8 +15,8 @@ import RxSwift
 
 extension CoreDataService: DefaultLocationStorageManaging {
     
-    var defaultLocation: Single<WeatherLocation?> {
-        return Single.create { single in
+    var defaultLocation: Maybe<WeatherLocation> {
+        return Maybe.create { maybe in
             self.backgroundContext.performWith { ctx in
                 let request = NSFetchRequest<WeatherLocationDb>(entityName: WeatherLocationDb.Attributes.entityName)
                 request.predicate = NSPredicate(format: "isDefault == true")
@@ -24,15 +24,13 @@ extension CoreDataService: DefaultLocationStorageManaging {
                 
                 do {
                     let results: [WeatherLocationDb] = try ctx.fetch(request)
-                    let model: WeatherLocationDb.Model? = results.first?.model
-                    
-                    DispatchQueue.main.async {
-                        single(.success(model))
+                    if let model = results.first?.model {
+                        maybe(.success(model))
+                    } else {
+                        maybe(.completed)
                     }
                 } catch {
-                    DispatchQueue.main.async {
-                        single(.success(nil))
-                    }
+                    maybe(.error(error))
                 }
             }
             return Disposables.create()

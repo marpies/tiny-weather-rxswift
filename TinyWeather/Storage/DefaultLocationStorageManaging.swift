@@ -13,7 +13,7 @@ import Foundation
 import RxSwift
 
 protocol DefaultLocationStorageManaging {
-    var defaultLocation: Single<WeatherLocation?> { get }
+    var defaultLocation: Maybe<WeatherLocation> { get }
     
     func saveDefaultLocation(_ location: WeatherLocation)
 }

@@ -72,12 +72,15 @@ class SetupViewModel: SetupViewModelProtocol, SetupViewModelInputs, SetupViewMod
     
     private func loadDefaultLocation() {
         self.storage.defaultLocation
+            .observe(on: MainScheduler.instance)
             .subscribe(onSuccess: { [weak self] (location) in
-                if let location = location {
-                    self?.router.route(to: .weather(location))
-                } else {
-                    self?.router.route(to: .search(nil))
-                }
+                self?.router.route(to: .weather(location))
+            }, onError: { [weak self] _ in
+                // Ignore error, start with search
+                self?.router.route(to: .search(nil))
+            }, onCompleted: { [weak self] in
+                // No default location, start with search
+                self?.router.route(to: .search(nil))
             })
             .disposed(by: self.disposeBag)
     }
