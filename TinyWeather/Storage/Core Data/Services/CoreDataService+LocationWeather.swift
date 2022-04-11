@@ -21,11 +21,11 @@ extension CoreDataService: LocationWeatherStorageManaging {
     
     func saveLocationWeather(_ weather: Weather.Overview.Response, location: WeatherLocation) {
         self.backgroundContext.performWith { ctx in
-            let request: NSFetchRequest<LocationWeatherDb> = self.getRequest(latitude: location.lat, longitude: location.lon)
+            let request: NSFetchRequest<WeatherDb> = self.getRequest(latitude: location.lat, longitude: location.lon)
             
             do {
-                let results: [LocationWeatherDb] = try ctx.fetch(request)
-                let model: LocationWeatherDb
+                let results: [WeatherDb] = try ctx.fetch(request)
+                let model: WeatherDb
                 
                 // Update existing model
                 if let m = results.first {
@@ -45,7 +45,7 @@ extension CoreDataService: LocationWeatherStorageManaging {
                 }
                 // Create a new model
                 else {
-                    model = LocationWeatherDb(context: ctx)
+                    model = WeatherDb(context: ctx)
                     model.location = try self.getDefaultWeatherLocation(location, context: ctx)
                 }
                 
@@ -62,10 +62,10 @@ extension CoreDataService: LocationWeatherStorageManaging {
     func loadLocationWeather(latitude: Double, longitude: Double) -> Maybe<Weather.Overview.Response> {
         return Maybe.create { maybe in
             self.backgroundContext.performWith { ctx in
-                let request: NSFetchRequest<LocationWeatherDb> = self.getRequest(latitude: latitude, longitude: longitude)
+                let request: NSFetchRequest<WeatherDb> = self.getRequest(latitude: latitude, longitude: longitude)
                 
                 do {
-                    let results: [LocationWeatherDb] = try ctx.fetch(request)
+                    let results: [WeatherDb] = try ctx.fetch(request)
                     
                     if let model = results.first, let overview = self.getOverview(fromModel: model) {
                         maybe(.success(overview))
@@ -85,14 +85,14 @@ extension CoreDataService: LocationWeatherStorageManaging {
     // MARK: - Private
     //
     
-    private func getRequest(latitude: Double, longitude: Double) -> NSFetchRequest<LocationWeatherDb> {
-        let request = NSFetchRequest<LocationWeatherDb>(entityName: LocationWeatherDb.Attributes.entityName)
+    private func getRequest(latitude: Double, longitude: Double) -> NSFetchRequest<WeatherDb> {
+        let request = NSFetchRequest<WeatherDb>(entityName: WeatherDb.Attributes.entityName)
         request.predicate = self.getPredicate(latitude: latitude, longitude: longitude)
         request.fetchLimit = 1
         return request
     }
     
-    private func getOverview(fromModel model: LocationWeatherDb) -> Weather.Overview.Response? {
+    private func getOverview(fromModel model: WeatherDb) -> Weather.Overview.Response? {
         let weather: Weather.Info.Response = Weather.Info.Response(id: model.condition, description: model.conditionDescription, isNight: model.isNight)
         let current: Weather.Current.Response = Weather.Current.Response(weather: weather, lastUpdate: model.lastUpdate.timeIntervalSince1970, sunrise: model.sunrise.timeIntervalSince1970, sunset: model.sunset.timeIntervalSince1970, temperature: model.temperature, windSpeed: model.windSpeed, rain: model.rainAmount, snow: model.snowAmount)
         
@@ -110,7 +110,7 @@ extension CoreDataService: LocationWeatherStorageManaging {
         return Weather.Overview.Response(timezoneOffset: model.timezoneOffset, current: current, daily: daily)
     }
     
-    private func updateModel(_ model: LocationWeatherDb, weather: Weather.Overview.Response, location: WeatherLocation, context: NSManagedObjectContext) {
+    private func updateModel(_ model: WeatherDb, weather: Weather.Overview.Response, location: WeatherLocation, context: NSManagedObjectContext) {
         model.condition = weather.current.weather.id
         model.conditionDescription = weather.current.weather.description
         model.lastUpdate = Date(timeIntervalSince1970: weather.current.lastUpdate)
@@ -132,7 +132,7 @@ extension CoreDataService: LocationWeatherStorageManaging {
         model.daily = NSSet(array: daily)
     }
     
-    private func updateLocationModel(_ model: WeatherLocationDb, location: WeatherLocation, context: NSManagedObjectContext) {
+    private func updateLocationModel(_ model: LocationDb, location: WeatherLocation, context: NSManagedObjectContext) {
         model.name = location.name
         model.country = location.country
         model.state = location.state
@@ -140,20 +140,20 @@ extension CoreDataService: LocationWeatherStorageManaging {
         model.lat = location.lat
     }
     
-    private func getDefaultWeatherLocation(_ location: WeatherLocation, context: NSManagedObjectContext) throws -> WeatherLocationDb {
-        let model: WeatherLocationDb
+    private func getDefaultWeatherLocation(_ location: WeatherLocation, context: NSManagedObjectContext) throws -> LocationDb {
+        let model: LocationDb
         
         if let existing = try self.loadLocation(latitude: location.lat, longitude: location.lon, context: context) {
             model = existing
         } else {
-            model = WeatherLocationDb(context: context)
+            model = LocationDb(context: context)
             model.isDefault = false
         }
         
         return model
     }
     
-    private func getDailyModel(response: Weather.Day.Response, location: LocationWeatherDb, context: NSManagedObjectContext) -> DailyWeatherDb {
+    private func getDailyModel(response: Weather.Day.Response, location: WeatherDb, context: NSManagedObjectContext) -> DailyWeatherDb {
         let model: DailyWeatherDb = DailyWeatherDb(context: context)
         
         model.date = Date(timeIntervalSince1970: response.date)

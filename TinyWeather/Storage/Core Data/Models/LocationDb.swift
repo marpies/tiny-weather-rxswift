@@ -1,5 +1,5 @@
 //
-//  WeatherLocationDb.swift
+//  LocationDb.swift
 //  TinyWeather
 //
 //  Created by Marcel Piešťanský.
@@ -12,10 +12,10 @@
 import Foundation
 import CoreData
 
-class WeatherLocationDb: NSManagedObject {
+class LocationDb: NSManagedObject {
     
     enum Attributes {
-        static let entityName: String = "WeatherLocationDb"
+        static let entityName: String = "LocationDb"
     }
     
     struct Model: WeatherLocation {
@@ -33,10 +33,10 @@ class WeatherLocationDb: NSManagedObject {
     @NSManaged var lon: Double
     @NSManaged var lat: Double
     @NSManaged var isDefault: Bool
-    @NSManaged var weather: LocationWeatherDb?
+    @NSManaged var weather: WeatherDb?
     
-    var model: WeatherLocationDb.Model {
-        return WeatherLocationDb.Model(name: name, state: state, country: country, lon: lon, lat: lat, isDefault: isDefault)
+    var model: LocationDb.Model {
+        return LocationDb.Model(name: name, state: state, country: country, lon: lon, lat: lat, isDefault: isDefault)
     }
 
 }

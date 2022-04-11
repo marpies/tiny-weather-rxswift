@@ -1,5 +1,5 @@
 //
-//  LocationWeatherDb.swift
+//  WeatherDb.swift
 //  TinyWeather
 //
 //  Created by Marcel Piešťanský.
@@ -12,14 +12,14 @@
 import Foundation
 import CoreData
 
-class LocationWeatherDb: NSManagedObject {
+class WeatherDb: NSManagedObject {
     
     enum Attributes {
-        static let entityName: String = "LocationWeatherDb"
+        static let entityName: String = "WeatherDb"
     }
     
     struct Model {
-        let location: WeatherLocationDb.Model
+        let location: LocationDb.Model
         let condition: Int
         let conditionDescription: String
         let lastUpdate: Date
@@ -34,7 +34,7 @@ class LocationWeatherDb: NSManagedObject {
         let daily: [DailyWeatherDb.Model]
     }
     
-    @NSManaged var location: WeatherLocationDb
+    @NSManaged var location: LocationDb
     @NSManaged var condition: Int
     @NSManaged var conditionDescription: String
     @NSManaged var lastUpdate: Date
@@ -48,10 +48,10 @@ class LocationWeatherDb: NSManagedObject {
     @NSManaged var isNight: Bool
     @NSManaged var daily: NSSet
     
-    var model: LocationWeatherDb.Model {
-        let set: Set<DailyWeatherDb>? = self.mutableSetValue(forKeyPath: #keyPath(LocationWeatherDb.daily)) as? Set<DailyWeatherDb>
+    var model: WeatherDb.Model {
+        let set: Set<DailyWeatherDb>? = self.mutableSetValue(forKeyPath: #keyPath(WeatherDb.daily)) as? Set<DailyWeatherDb>
         let daily: [DailyWeatherDb.Model] = set?.map({ $0.model }).sorted(by: { $0.date < $1.date }) ?? []
-        return LocationWeatherDb.Model(location: location.model, condition: condition, conditionDescription: conditionDescription, lastUpdate: lastUpdate, timezoneOffset: timezoneOffset, sunrise: sunrise, sunset: sunset, windSpeed: windSpeed, rainAmount: rainAmount, snowAmount: snowAmount, temperature: temperature, isNight: isNight, daily: daily)
+        return WeatherDb.Model(location: location.model, condition: condition, conditionDescription: conditionDescription, lastUpdate: lastUpdate, timezoneOffset: timezoneOffset, sunrise: sunrise, sunset: sunset, windSpeed: windSpeed, rainAmount: rainAmount, snowAmount: snowAmount, temperature: temperature, isNight: isNight, daily: daily)
     }
     
 }

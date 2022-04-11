@@ -14,8 +14,8 @@ import CoreData
 
 extension CoreDataService {
     
-    func loadLocation(latitude: Double, longitude: Double, context: NSManagedObjectContext) throws -> WeatherLocationDb? {
-        let request = NSFetchRequest<WeatherLocationDb>(entityName: WeatherLocationDb.Attributes.entityName)
+    func loadLocation(latitude: Double, longitude: Double, context: NSManagedObjectContext) throws -> LocationDb? {
+        let request = NSFetchRequest<LocationDb>(entityName: LocationDb.Attributes.entityName)
         request.predicate = self.getPredicate(latitude: latitude, longitude: longitude)
         request.fetchLimit = 1
         

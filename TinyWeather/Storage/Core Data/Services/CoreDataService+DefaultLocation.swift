@@ -18,12 +18,12 @@ extension CoreDataService: DefaultLocationStorageManaging {
     var defaultLocation: Maybe<WeatherLocation> {
         return Maybe.create { maybe in
             self.backgroundContext.performWith { ctx in
-                let request = NSFetchRequest<WeatherLocationDb>(entityName: WeatherLocationDb.Attributes.entityName)
+                let request = NSFetchRequest<LocationDb>(entityName: LocationDb.Attributes.entityName)
                 request.predicate = NSPredicate(format: "isDefault == true")
                 request.fetchLimit = 1
                 
                 do {
-                    let results: [WeatherLocationDb] = try ctx.fetch(request)
+                    let results: [LocationDb] = try ctx.fetch(request)
                     if let model = results.first?.model {
                         maybe(.success(model))
                     } else {
@@ -45,8 +45,8 @@ extension CoreDataService: DefaultLocationStorageManaging {
                 
                 // Set the default flag on the new location
                 // Update existing model or create a new one
-                let existing: WeatherLocationDb? = try self.loadLocation(latitude: location.lat, longitude: location.lon, context: ctx)
-                let model: WeatherLocationDb = existing ?? WeatherLocationDb(context: ctx)
+                let existing: LocationDb? = try self.loadLocation(latitude: location.lat, longitude: location.lon, context: ctx)
+                let model: LocationDb = existing ?? LocationDb(context: ctx)
                 
                 model.name = location.name
                 model.country = location.country
@@ -68,10 +68,10 @@ extension CoreDataService: DefaultLocationStorageManaging {
     //
     
     private func clearDefaultLocation(context: NSManagedObjectContext) throws {
-        let request = NSFetchRequest<WeatherLocationDb>(entityName: WeatherLocationDb.Attributes.entityName)
+        let request = NSFetchRequest<LocationDb>(entityName: LocationDb.Attributes.entityName)
         request.predicate = NSPredicate(format: "isDefault == true")
         
-        let results: [WeatherLocationDb] = try context.fetch(request)
+        let results: [LocationDb] = try context.fetch(request)
         
         results.forEach { location in
             location.isDefault = false
