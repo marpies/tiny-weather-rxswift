@@ -18,13 +18,22 @@ struct CoreDataAssembly: Assembly {
         container.register(CoreDataStoreProviding.self) { r in
             return CoreDataStore(inMemory: false)
         }
-        container.register(DefaultLocationStorageManaging.self) { r in
-            return r.resolve(StorageService.self)!
-        }
-        container.register(StorageService.self) { r in
+        container.register(CoreDataService.self) { r in
             let store: CoreDataStoreProviding = r.resolve(CoreDataStoreProviding.self)!
             return CoreDataService(store: store)
         }.inObjectScope(.container)
+        container.register(DefaultLocationStorageManaging.self) { r in
+            return r.resolve(CoreDataService.self)!
+        }
+        container.register(LocationWeatherStorageManaging.self) { r in
+            return r.resolve(CoreDataService.self)!
+        }
+        container.register(WeatherStorageManaging.self) { r in
+            return r.resolve(CoreDataService.self)!
+        }
+        container.register(StorageService.self) { r in
+            return r.resolve(CoreDataService.self)!
+        }
     }
     
 }
