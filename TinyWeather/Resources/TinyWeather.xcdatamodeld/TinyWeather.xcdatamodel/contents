@@ -6,6 +6,7 @@
         <attribute name="maxTemperature" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="minTemperature" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="rainAmount" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="snowAmount" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="windSpeed" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="location" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LocationWeatherDb" inverseName="daily" inverseEntity="LocationWeatherDb"/>
     </entity>
@@ -36,7 +37,7 @@
         <relationship name="daily" toMany="YES" deletionRule="Nullify" destinationEntity="DailyWeatherDb" inverseName="location" inverseEntity="DailyWeatherDb"/>
     </entity>
     <elements>
-        <element name="DailyWeatherDb" positionX="-63" positionY="18" width="128" height="134"/>
+        <element name="DailyWeatherDb" positionX="-63" positionY="18" width="128" height="149"/>
         <element name="DefaultLocationDb" positionX="-63" positionY="-18" width="128" height="104"/>
         <element name="LocationWeatherDb" positionX="-54" positionY="54" width="128" height="284"/>
     </elements>
