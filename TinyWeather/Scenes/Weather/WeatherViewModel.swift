@@ -41,9 +41,9 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
     private let disposeBag: DisposeBag = DisposeBag()
     private let dateFormatter: DateFormatter = DateFormatter()
     
-    private let apiService: RequestExecuting
+    private let weatherLoader: WeatherLoading
     private let router: WeakRouter<AppRoute>
-    private let storage: DefaultLocationStorageManaging
+    private let storage: WeatherStorageManaging
     
     private var didBeginPan: BehaviorRelay<Bool> = BehaviorRelay(value: false)
     private var panTranslation: BehaviorRelay<CGFloat> = BehaviorRelay(value: 0)
@@ -87,9 +87,9 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
             .compactMap({ $0 })
     }
 
-    init(theme: Theme, apiService: RequestExecuting, router: WeakRouter<AppRoute>, storage: DefaultLocationStorageManaging) {
+    init(theme: Theme, weatherLoader: WeatherLoading, router: WeakRouter<AppRoute>, storage: WeatherStorageManaging) {
         self.theme = theme
-        self.apiService = apiService
+        self.weatherLoader = weatherLoader
         self.router = router
         self.storage = storage
         
@@ -154,12 +154,12 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
         self._state.accept(.loading)
         
         // Load current weather
-        self.apiService.execute(request: APIResource.currentAndDaily(lat: location.lat, lon: location.lon))
-            .map({ (response: HTTPResponse) in
-                try response.map(to: Weather.Overview.Response.self)
+        self.weatherLoader.loadWeather(latitude: location.lat, longitude: location.lon)
+            .do(onSuccess: { [weak self] (weather: Weather.Overview.Response) in
+                self?.storage.saveLocationWeather(weather, location: location)
             })
             .compactMap({ [weak self] (weather: Weather.Overview.Response) in
-                return self?.getWeatherOverview(response: weather)
+                self?.getWeatherOverview(response: weather)
             })
             .subscribe(onSuccess: { [weak self] (weather: Weather.Overview.ViewModel) in
                 self?._state.accept(.loaded)
