@@ -46,23 +46,10 @@ extension CoreDataService: DefaultLocationStorageManaging {
             do {
                 let results: [DefaultLocationDb] = try ctx.fetch(request)
                 
-                // Update existing model
-                if let model = results.first {
-                    model.name = location.name
-                    model.country = location.country
-                    model.state = location.state
-                    model.lon = location.lon
-                    model.lat = location.lat
-                }
-                // Create a new model
-                else {
-                    let model: DefaultLocationDb = DefaultLocationDb(context: ctx)
-                    model.name = location.name
-                    model.country = location.country
-                    model.state = location.state
-                    model.lon = location.lon
-                    model.lat = location.lat
-                }
+                // Update existing model or create a new one
+                let model: DefaultLocationDb = results.first ?? DefaultLocationDb(context: ctx)
+                
+                self.updateModel(model, with: location)
                 
                 try ctx.save()
             } catch {
@@ -70,6 +57,18 @@ extension CoreDataService: DefaultLocationStorageManaging {
                 print("Error saving default location: \(error)")
             }
         }
+    }
+    
+    //
+    // MARK: - Private
+    //
+    
+    private func updateModel(_ model: DefaultLocationDb, with source: WeatherLocation) {
+        model.name = source.name
+        model.country = source.country
+        model.state = source.state
+        model.lon = source.lon
+        model.lat = source.lat
     }
     
 }
