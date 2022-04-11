@@ -46,6 +46,7 @@ extension CoreDataService: LocationWeatherStorageManaging {
                 // Create a new model
                 else {
                     model = LocationWeatherDb(context: ctx)
+                    model.location = try self.getDefaultWeatherLocation(location, context: ctx)
                 }
                 
                 self.updateModel(model, weather: weather, location: location, context: ctx)
@@ -120,18 +121,36 @@ extension CoreDataService: LocationWeatherStorageManaging {
         model.rainAmount = weather.current.rain
         model.snowAmount = weather.current.snow
         model.temperature = weather.current.temperature
-        model.name = location.name
-        model.country = location.country
-        model.state = location.state
-        model.lon = location.lon
-        model.lat = location.lat
         model.isNight = weather.current.weather.isNight
+        
+        self.updateLocationModel(model.location, location: location, context: context)
         
         let daily: [DailyWeatherDb] = weather.daily.map {
             self.getDailyModel(response: $0, location: model, context: context)
         }
         
         model.daily = NSSet(array: daily)
+    }
+    
+    private func updateLocationModel(_ model: WeatherLocationDb, location: WeatherLocation, context: NSManagedObjectContext) {
+        model.name = location.name
+        model.country = location.country
+        model.state = location.state
+        model.lon = location.lon
+        model.lat = location.lat
+    }
+    
+    private func getDefaultWeatherLocation(_ location: WeatherLocation, context: NSManagedObjectContext) throws -> WeatherLocationDb {
+        let model: WeatherLocationDb
+        
+        if let existing = try self.loadLocation(latitude: location.lat, longitude: location.lon, context: context) {
+            model = existing
+        } else {
+            model = WeatherLocationDb(context: context)
+            model.isDefault = false
+        }
+        
+        return model
     }
     
     private func getDailyModel(response: Weather.Day.Response, location: LocationWeatherDb, context: NSManagedObjectContext) -> DailyWeatherDb {
@@ -147,6 +166,11 @@ extension CoreDataService: LocationWeatherStorageManaging {
         model.location = location
         
         return model
+    }
+    
+    private func getPredicate(latitude: Double, longitude: Double) -> NSPredicate {
+        let e: Double = 0.0001
+        return NSPredicate(format: "(location.lat > %lf AND location.lat < %lf) AND (location.lon > %lf AND location.lon < %lf)", latitude - e, latitude + e, longitude - e, longitude + e)
     }
     
 }

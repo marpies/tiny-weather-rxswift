@@ -44,14 +44,9 @@ extension CoreDataService: DefaultLocationStorageManaging {
                 try self.clearDefaultLocation(context: ctx)
                 
                 // Set the default flag on the new location
-                let request = NSFetchRequest<WeatherLocationDb>(entityName: WeatherLocationDb.Attributes.entityName)
-                request.predicate = self.getPredicate(latitude: location.lat, longitude: location.lon)
-                request.fetchLimit = 1
-                
-                let results: [WeatherLocationDb] = try ctx.fetch(request)
-                
                 // Update existing model or create a new one
-                let model: WeatherLocationDb = results.first ?? WeatherLocationDb(context: ctx)
+                let existing: WeatherLocationDb? = try self.loadLocation(latitude: location.lat, longitude: location.lon, context: ctx)
+                let model: WeatherLocationDb = existing ?? WeatherLocationDb(context: ctx)
                 
                 model.name = location.name
                 model.country = location.country

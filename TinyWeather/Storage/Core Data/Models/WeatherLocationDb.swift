@@ -33,6 +33,7 @@ class WeatherLocationDb: NSManagedObject {
     @NSManaged var lon: Double
     @NSManaged var lat: Double
     @NSManaged var isDefault: Bool
+    @NSManaged var weather: LocationWeatherDb?
     
     var model: WeatherLocationDb.Model {
         return WeatherLocationDb.Model(name: name, state: state, country: country, lon: lon, lat: lat, isDefault: isDefault)
