@@ -18,12 +18,13 @@ extension CoreDataService: DefaultLocationStorageManaging {
     var defaultLocation: Single<WeatherLocation?> {
         return Single.create { single in
             self.backgroundContext.performWith { ctx in
-                let request = NSFetchRequest<DefaultLocationDb>(entityName: DefaultLocationDb.Attributes.entityName)
+                let request = NSFetchRequest<WeatherLocationDb>(entityName: WeatherLocationDb.Attributes.entityName)
+                request.predicate = NSPredicate(format: "isDefault == true")
                 request.fetchLimit = 1
                 
                 do {
-                    let results: [DefaultLocationDb] = try ctx.fetch(request)
-                    let model: DefaultLocationDb.Model? = results.first?.model
+                    let results: [WeatherLocationDb] = try ctx.fetch(request)
+                    let model: WeatherLocationDb.Model? = results.first?.model
                     
                     DispatchQueue.main.async {
                         single(.success(model))
@@ -40,16 +41,26 @@ extension CoreDataService: DefaultLocationStorageManaging {
     
     func saveDefaultLocation(_ location: WeatherLocation) {
         self.backgroundContext.performWith { ctx in
-            let request = NSFetchRequest<DefaultLocationDb>(entityName: DefaultLocationDb.Attributes.entityName)
-            request.fetchLimit = 1
-            
             do {
-                let results: [DefaultLocationDb] = try ctx.fetch(request)
+                // Remove default flag from existing default location model
+                try self.clearDefaultLocation(context: ctx)
+                
+                // Set the default flag on the new location
+                let request = NSFetchRequest<WeatherLocationDb>(entityName: WeatherLocationDb.Attributes.entityName)
+                request.predicate = self.getPredicate(latitude: location.lat, longitude: location.lon)
+                request.fetchLimit = 1
+                
+                let results: [WeatherLocationDb] = try ctx.fetch(request)
                 
                 // Update existing model or create a new one
-                let model: DefaultLocationDb = results.first ?? DefaultLocationDb(context: ctx)
+                let model: WeatherLocationDb = results.first ?? WeatherLocationDb(context: ctx)
                 
-                self.updateModel(model, with: location)
+                model.name = location.name
+                model.country = location.country
+                model.state = location.state
+                model.lon = location.lon
+                model.lat = location.lat
+                model.isDefault = true
                 
                 try ctx.save()
             } catch {
@@ -63,12 +74,15 @@ extension CoreDataService: DefaultLocationStorageManaging {
     // MARK: - Private
     //
     
-    private func updateModel(_ model: DefaultLocationDb, with source: WeatherLocation) {
-        model.name = source.name
-        model.country = source.country
-        model.state = source.state
-        model.lon = source.lon
-        model.lat = source.lat
+    private func clearDefaultLocation(context: NSManagedObjectContext) throws {
+        let request = NSFetchRequest<WeatherLocationDb>(entityName: WeatherLocationDb.Attributes.entityName)
+        request.predicate = NSPredicate(format: "isDefault == true")
+        
+        let results: [WeatherLocationDb] = try context.fetch(request)
+        
+        results.forEach { location in
+            location.isDefault = false
+        }
     }
     
 }
