@@ -85,9 +85,8 @@ extension CoreDataService: LocationWeatherStorageManaging {
     //
     
     private func getRequest(latitude: Double, longitude: Double) -> NSFetchRequest<LocationWeatherDb> {
-        let e: Double = 0.0001
         let request = NSFetchRequest<LocationWeatherDb>(entityName: LocationWeatherDb.Attributes.entityName)
-        request.predicate = NSPredicate(format: "(lat > %lf AND lat < %lf) AND (lon > %lf AND lon < %lf)", latitude - e, latitude + e, longitude - e, longitude + e)
+        request.predicate = self.getPredicate(latitude: latitude, longitude: longitude)
         request.fetchLimit = 1
         return request
     }
