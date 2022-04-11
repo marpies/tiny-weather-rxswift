@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="20G417" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="DailyWeatherDb" representedClassName=".DailyWeatherDb" syncable="YES">
-        <attribute name="condition" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="condition" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="maxTemperature" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="minTemperature" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
@@ -18,7 +18,7 @@
         <attribute name="state" optional="YES" attributeType="String"/>
     </entity>
     <entity name="LocationWeatherDb" representedClassName=".LocationWeatherDb" syncable="YES">
-        <attribute name="condition" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="condition" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="conditionDescription" attributeType="String"/>
         <attribute name="country" attributeType="String"/>
         <attribute name="isNight" attributeType="Boolean" usesScalarValueType="YES"/>
