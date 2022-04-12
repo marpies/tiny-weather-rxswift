@@ -73,7 +73,7 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func animateOut() {
-        self.animation?.animateOut(hintsView: self.searchHintsView)
+        self.animation?.animateOut()
     }
     
     func startScrubbingAnimation() {
@@ -165,11 +165,13 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
         }
         
         self.searchHintsView?.update(viewModel: viewModel)
+        self.animation?.hintsView = self.searchHintsView
     }
     
     private func removeHintsView() {
         self.searchHintsView?.removeFromSuperview()
         self.searchHintsView = nil
+        self.animation?.hintsView = nil
     }
 
     //

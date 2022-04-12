@@ -26,6 +26,8 @@ class SearchPanAnimation {
     private var fractionComplete: CGFloat = 0
     
     let animationDidComplete: PublishRelay<UIViewAnimatingPosition> = PublishRelay()
+    
+    var hintsView: UIView?
 
     init(searchField: UIView, visualView: UIVisualEffectView) {
         self.searchField = searchField
@@ -62,12 +64,12 @@ class SearchPanAnimation {
         self.animator?.startAnimation()
     }
     
-    func animateOut(hintsView: UIView?) {
+    func animateOut() {
         self.animator = UIViewPropertyAnimator(duration: 1 / 3, curve: .easeOut)
         
         self.animator?.addAnimations { [weak self] in
-            hintsView?.transform = CGAffineTransform(scaleX: 0.8, y: 0.8).translatedBy(x: 0, y: -40)
-            hintsView?.alpha = 0
+            self?.hintsView?.transform = CGAffineTransform(scaleX: 0.8, y: 0.8).translatedBy(x: 0, y: -40)
+            self?.hintsView?.alpha = 0
             self?.searchField.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
             self?.searchField.alpha = 0
             self?.visualView.effect = nil
@@ -102,9 +104,11 @@ class SearchPanAnimation {
                 case .hidden:
                     weakSelf.visualView.effect = nil
                     weakSelf.searchField.alpha = 0
+                    weakSelf.hintsView?.alpha = 0
                 case .visible:
                     weakSelf.visualView.effect = weakSelf.effect
                     weakSelf.searchField.alpha = 1
+                    weakSelf.hintsView?.alpha = 1
                 }
             }
             
@@ -118,6 +122,7 @@ class SearchPanAnimation {
                 
                 weakSelf.animator = nil
                 weakSelf.searchField.transform = .identity
+                weakSelf.hintsView?.transform = .identity
                 weakSelf.animationDidComplete.accept(position)
             })
         }
@@ -153,8 +158,10 @@ class SearchPanAnimation {
         animator.addAnimations { [weak self] in
             if shouldHide {
                 self?.searchField.transform = CGAffineTransform(translationX: 0, y: max(-100, velocity.y)).scaledBy(x: 0.8, y: 0.8)
+                self?.hintsView?.transform = CGAffineTransform(translationX: 0, y: max(-100, velocity.y)).scaledBy(x: 0.8, y: 0.8)
             } else {
                 self?.searchField.transform = .identity
+                self?.hintsView?.transform = .identity
             }
         }
         
@@ -223,6 +230,7 @@ class SearchPanAnimation {
         }
         
         self.searchField.transform = CGAffineTransform(translationX: 0, y: offsetY).scaledBy(x: scale, y: scale)
+        self.hintsView?.transform = CGAffineTransform(translationX: 0, y: offsetY).scaledBy(x: scale, y: scale)
     }
     
 }
