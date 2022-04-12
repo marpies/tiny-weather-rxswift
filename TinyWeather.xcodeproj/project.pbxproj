@@ -464,10 +464,7 @@
 		C365225C27BE438400E6AF39 /* TinyWeather */ = {
 			isa = PBXGroup;
 			children = (
-				C365226327BE438500E6AF39 /* Assets.xcassets */,
-				C365226527BE438500E6AF39 /* LaunchScreen.storyboard */,
-				C365226827BE438500E6AF39 /* Info.plist */,
-				C365225D27BE438400E6AF39 /* AppDelegate.swift */,
+				C3B6DA5E2805446A00DD6C10 /* Bootstrap */,
 				C36522A127BE590800E6AF39 /* Coordinators */,
 				C36522A627BE59F400E6AF39 /* Scenes */,
 				C348A54727F4C936006787C3 /* Common */,
@@ -640,6 +637,17 @@
 				C37724BC27DFB8C900C50450 /* SearchAnimations.swift */,
 			);
 			path = Animation;
+			sourceTree = "<group>";
+		};
+		C3B6DA5E2805446A00DD6C10 /* Bootstrap */ = {
+			isa = PBXGroup;
+			children = (
+				C365225D27BE438400E6AF39 /* AppDelegate.swift */,
+				C365226327BE438500E6AF39 /* Assets.xcassets */,
+				C365226527BE438500E6AF39 /* LaunchScreen.storyboard */,
+				C365226827BE438500E6AF39 /* Info.plist */,
+			);
+			path = Bootstrap;
 			sourceTree = "<group>";
 		};
 		C3BCB5E828041C3600D4ED15 /* Services */ = {
@@ -1020,7 +1028,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Q6T2359V7Q;
-				INFOPLIST_FILE = TinyWeather/Info.plist;
+				INFOPLIST_FILE = TinyWeather/Bootstrap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1200,7 +1208,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Q6T2359V7Q;
-				INFOPLIST_FILE = TinyWeather/Info.plist;
+				INFOPLIST_FILE = TinyWeather/Bootstrap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1219,7 +1227,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Q6T2359V7Q;
-				INFOPLIST_FILE = TinyWeather/Info.plist;
+				INFOPLIST_FILE = TinyWeather/Bootstrap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
