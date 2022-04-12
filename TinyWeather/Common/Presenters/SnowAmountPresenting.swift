@@ -10,6 +10,7 @@
 //  
 
 import Foundation
+import TWExtensions
 
 protocol SnowAmountPresenting {
     func getSnowAmount(_ value: Float) -> String

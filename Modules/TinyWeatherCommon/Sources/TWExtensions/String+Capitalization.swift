@@ -1,5 +1,5 @@
 //
-//  RoutePanAnimation.swift
+//  String+Capitalization.swift
 //  TinyWeather
 //
 //  Created by Marcel Piešťanský.
@@ -10,10 +10,11 @@
 //  
 
 import Foundation
-import CoreGraphics
 
-enum RoutePanAnimation {
-    case began
-    case changed(translation: CGPoint)
-    case ended(velocity: CGPoint)
+public extension String {
+    
+    func capitalizeFirstLetter() -> String {
+        return self.prefix(1).uppercased() + self.dropFirst().lowercased()
+    }
+    
 }

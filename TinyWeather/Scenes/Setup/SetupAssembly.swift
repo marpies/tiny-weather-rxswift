@@ -11,6 +11,8 @@
 
 import Foundation
 import Swinject
+import TWThemes
+import TWRoutes
 
 struct SetupAssembly: Assembly {
     

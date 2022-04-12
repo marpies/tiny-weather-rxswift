@@ -11,6 +11,7 @@
 
 import Foundation
 import RxSwift
+import TWModels
 
 protocol DefaultLocationStorageManaging {
     var defaultLocation: Maybe<WeatherLocation> { get }

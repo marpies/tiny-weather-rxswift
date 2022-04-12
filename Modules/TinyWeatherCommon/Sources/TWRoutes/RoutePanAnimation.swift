@@ -1,5 +1,5 @@
 //
-//  AppRoute.swift
+//  RoutePanAnimation.swift
 //  TinyWeather
 //
 //  Created by Marcel Piešťanský.
@@ -10,9 +10,10 @@
 //  
 
 import Foundation
+import CoreGraphics
 
-enum AppRoute {
-    case setup
-    case search(RoutePanAnimation?)
-    case weather(WeatherLocation)
+public enum RoutePanAnimation {
+    case began
+    case changed(translation: CGPoint)
+    case ended(velocity: CGPoint)
 }

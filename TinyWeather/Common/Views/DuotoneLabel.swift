@@ -10,14 +10,17 @@
 //  
 
 import UIKit
+import SnapKit
+import TWThemes
+import TWModels
 
-class DuotoneLabel: UIView {
+public class DuotoneLabel: UIView {
     
     private let theme: Theme
     private let primaryLabel = UILabel()
     private let secondaryLabel = UILabel()
     
-    init(theme: Theme) {
+    public init(theme: Theme) {
         self.theme = theme
         
         super.init(frame: .zero)
@@ -33,7 +36,7 @@ class DuotoneLabel: UIView {
     // MARK: - Public
     //
     
-    func updateIcon(viewModel: DuotoneIcon.ViewModel) {
+    public func updateIcon(viewModel: DuotoneIcon.ViewModel) {
         self.setIcon(viewModel.icon)
         
         if viewModel.isUnicolor {
@@ -43,44 +46,44 @@ class DuotoneLabel: UIView {
         }
     }
     
-    func setIcon(_ icon: FontIcon) {
+    public func setIcon(_ icon: FontIcon) {
         self.primaryLabel.text = icon.primary
         self.secondaryLabel.text = icon.secondary
     }
     
-    func setIconCode(_ value: UInt32) {
+    public func setIconCode(_ value: UInt32) {
         let primary: UnicodeScalar = UnicodeScalar(value)!
         let secondary: UnicodeScalar = UnicodeScalar(0x100000 | value)!
         self.primaryLabel.text = primary.escaped(asASCII: false)
         self.secondaryLabel.text = secondary.escaped(asASCII: false)
     }
     
-    func setColors(primary: UIColor, secondary: UIColor) {
+    public func setColors(primary: UIColor, secondary: UIColor) {
         self.primaryLabel.textColor = primary
         self.secondaryLabel.textColor = secondary
     }
     
-    func setColor(_ color: UIColor) {
+    public func setColor(_ color: UIColor) {
         self.primaryLabel.textColor = color
         self.secondaryLabel.textColor = color.withAlphaComponent(0.5)
     }
     
-    func setStyle(_ style: UIFont.TextStyle) {
+    public func setStyle(_ style: UIFont.TextStyle) {
         self.primaryLabel.font = self.theme.fonts.iconDuotone(style: style)
         self.secondaryLabel.font = self.theme.fonts.iconDuotone(style: style)
     }
     
-    func setSize(_ size: CGFloat) {
+    public func setSize(_ size: CGFloat) {
         self.primaryLabel.font = self.theme.fonts.iconDuotone(size: size)
         self.secondaryLabel.font = self.theme.fonts.iconDuotone(size: size)
     }
     
-    func setTextAlignment(_ alignment: NSTextAlignment) {
+    public func setTextAlignment(_ alignment: NSTextAlignment) {
         self.primaryLabel.textAlignment = alignment
         self.secondaryLabel.textAlignment = alignment
     }
     
-    override var backgroundColor: UIColor? {
+    override public var backgroundColor: UIColor? {
         didSet {
             // Primary label cannot have background color
             self.secondaryLabel.backgroundColor = self.backgroundColor

@@ -11,7 +11,7 @@
 
 import Foundation
 
-extension Int {
+public extension Int {
     
     func format(_ f: String) -> String {
         return String(format: "%\(f)d", self)
@@ -19,7 +19,7 @@ extension Int {
     
 }
 
-extension Double {
+public extension Double {
     
     func format(_ f: String, dropZero: Bool = false) -> String {
         let value = String(format: "%\(f)f", self)
@@ -31,7 +31,7 @@ extension Double {
     
 }
 
-extension Float {
+public extension Float {
     
     func format(_ f: String, dropZero: Bool = false) -> String {
         let value = String(format: "%\(f)f", self)

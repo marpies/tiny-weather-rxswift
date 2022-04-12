@@ -10,6 +10,7 @@
 //  
 
 import Foundation
+import TWExtensions
 
 enum APIResource {
     case geo(location: String)

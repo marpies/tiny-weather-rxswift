@@ -10,6 +10,7 @@
 //
 
 import UIKit
+import TWModels
 
 enum Weather {
     

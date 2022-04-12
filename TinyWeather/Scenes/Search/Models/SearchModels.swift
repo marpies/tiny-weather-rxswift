@@ -12,6 +12,7 @@
 import Foundation
 import UIKit
 import RxCocoa
+import TWModels
 
 enum Search {
     

@@ -11,6 +11,7 @@
 
 import Foundation
 import Swinject
+import TWThemes
 
 struct ThemeAssembly: Assembly {
     

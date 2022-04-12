@@ -13,6 +13,7 @@
 
 import UIKit
 import SnapKit
+import TWThemes
 
 class TemperaturePillsDemoView: UIView, TemperaturePresenting {
     

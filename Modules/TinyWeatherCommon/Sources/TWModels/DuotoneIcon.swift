@@ -12,24 +12,24 @@
 import Foundation
 import UIKit.UIColor
 
-enum DuotoneIcon {
+public enum DuotoneIcon {
     
-    struct ViewModel {
-        let icon: FontIcon
-        let primaryColor: UIColor
-        let secondaryColor: UIColor
+    public struct ViewModel {
+        public let icon: FontIcon
+        public let primaryColor: UIColor
+        public let secondaryColor: UIColor
         
-        var isUnicolor: Bool {
+        public var isUnicolor: Bool {
             return self.primaryColor == self.secondaryColor
         }
 
-        init(icon: FontIcon, primaryColor: UIColor, secondaryColor: UIColor) {
+        public init(icon: FontIcon, primaryColor: UIColor, secondaryColor: UIColor) {
             self.icon = icon
             self.primaryColor = primaryColor
             self.secondaryColor = secondaryColor
         }
         
-        init(icon: FontIcon, color: UIColor) {
+        public init(icon: FontIcon, color: UIColor) {
             self.icon = icon
             self.primaryColor = color
             self.secondaryColor = color

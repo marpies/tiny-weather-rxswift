@@ -11,7 +11,7 @@
 
 import Foundation
 
-enum FontIcon: UInt32 {
+public enum FontIcon: UInt32 {
     case clock = 0xf017
     case cloud = 0xf0c2
     case cloudDrizzle = 0xf738
@@ -55,12 +55,12 @@ enum FontIcon: UInt32 {
     case thunderstormSun = 0xf76e
     case wind = 0xf72e
     
-    var primary: String {
+    public var primary: String {
         let scalar: UnicodeScalar = UnicodeScalar(self.rawValue)!
         return scalar.escaped(asASCII: false)
     }
     
-    var secondary: String {
+    public var secondary: String {
         let scalar: UnicodeScalar = UnicodeScalar(0x100000 | self.rawValue)!
         return scalar.escaped(asASCII: false)
     }

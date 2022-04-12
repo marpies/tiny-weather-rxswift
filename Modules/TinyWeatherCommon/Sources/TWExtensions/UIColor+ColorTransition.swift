@@ -12,7 +12,7 @@
 import Foundation
 import UIKit
 
-extension UIColor {
+public extension UIColor {
     
     func toColor(_ color: UIColor, percentage: CGFloat) -> UIColor {
         let percentage: CGFloat = max(min(percentage, 1), 0)

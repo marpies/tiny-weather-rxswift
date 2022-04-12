@@ -11,6 +11,7 @@
 
 import Foundation
 import RxSwift
+import TWModels
 
 protocol LocationWeatherStorageManaging {
     var cacheDuration: TimeInterval { get }

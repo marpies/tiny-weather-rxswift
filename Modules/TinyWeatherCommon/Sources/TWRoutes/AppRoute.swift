@@ -1,5 +1,5 @@
 //
-//  String+Capitalization.swift
+//  AppRoute.swift
 //  TinyWeather
 //
 //  Created by Marcel Piešťanský.
@@ -10,11 +10,10 @@
 //  
 
 import Foundation
+import TWModels
 
-extension String {
-    
-    func capitalizeFirstLetter() -> String {
-        return self.prefix(1).uppercased() + self.dropFirst().lowercased()
-    }
-    
+public enum AppRoute {
+    case setup
+    case search(RoutePanAnimation?)
+    case weather(WeatherLocation)
 }

@@ -11,7 +11,7 @@
 
 import Foundation
 
-protocol WeatherLocation {
+public protocol WeatherLocation {
     var name: String { get }
     var state: String? { get }
     var country: String { get }

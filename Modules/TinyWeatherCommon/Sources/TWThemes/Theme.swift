@@ -4,20 +4,20 @@
 //
 //  Created by Marcel Piešťanský.
 //  Copyright © 2022 Marcel Piestansky. All rights reserved.
-//  
+//
 //  This program is free software. You can redistribute and/or modify it in
 //  accordance with the terms of the accompanying license agreement.
-//  
+//
 
 import Foundation
 import UIKit
 
-protocol Theme {
+public protocol Theme {
     var colors: ThemeColors { get }
     var fonts: ThemeFonts { get }
 }
 
-protocol ThemeColors {
+public protocol ThemeColors {
     var background: UIColor { get }
     var secondaryBackground: UIColor { get }
     
@@ -32,7 +32,7 @@ protocol ThemeColors {
     var temperatures: TemperatureColors { get }
 }
 
-protocol WeatherColors {
+public protocol WeatherColors {
     var rain: UIColor { get }
     var sun: UIColor { get }
     var wind: UIColor { get }
@@ -44,7 +44,7 @@ protocol WeatherColors {
     var snow: UIColor { get }
 }
 
-protocol TemperatureColors {
+public protocol TemperatureColors {
     /// 36°C and above
     var superHot: DynamicColor { get }
     
@@ -67,7 +67,7 @@ protocol TemperatureColors {
     var superCold: DynamicColor { get }
 }
 
-protocol ThemeFonts {
+public protocol ThemeFonts {
     func primary(style: UIFont.TextStyle) -> UIFont
     func primaryBold(style: UIFont.TextStyle) -> UIFont
     func primary(size: CGFloat) -> UIFont
@@ -80,6 +80,6 @@ protocol ThemeFonts {
     func iconDuotone(size: CGFloat) -> UIFont
 }
 
-protocol ThemeProviding {
+public protocol ThemeProviding {
     var theme: Theme { get }
 }

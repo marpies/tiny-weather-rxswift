@@ -12,6 +12,7 @@
 import Foundation
 import CoreData
 import RxSwift
+import TWModels
 
 extension CoreDataService: DefaultLocationStorageManaging {
     

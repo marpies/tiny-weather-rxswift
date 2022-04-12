@@ -12,6 +12,7 @@
 import Foundation
 import RxSwift
 import CoreData
+import TWModels
 
 extension CoreDataService: LocationWeatherStorageManaging {
     

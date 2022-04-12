@@ -11,7 +11,7 @@
 
 import Foundation
 
-protocol Router {
+public protocol Router {
     associatedtype RouteType
     
     func route(to route: RouteType)

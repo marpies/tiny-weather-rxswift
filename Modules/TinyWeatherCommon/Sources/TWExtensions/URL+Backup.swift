@@ -11,7 +11,7 @@
 
 import Foundation
 
-extension URL {
+public extension URL {
     
     mutating func excludeFromBackup() {
         do {

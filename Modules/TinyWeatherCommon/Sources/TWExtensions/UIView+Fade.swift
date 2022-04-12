@@ -12,7 +12,7 @@
 import Foundation
 import UIKit
 
-extension UIView {
+public extension UIView {
     
     func fadeIn() {
         self.alpha = 0

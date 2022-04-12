@@ -10,6 +10,7 @@
 //  
 
 import Foundation
+import TWExtensions
 
 protocol WindSpeedPresenting {
     func getWindSpeed(_ value: Float) -> String

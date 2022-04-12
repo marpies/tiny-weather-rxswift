@@ -11,17 +11,17 @@
 
 import Foundation
 
-struct WeakRouter<RouteType>: Router {
+public struct WeakRouter<RouteType>: Router {
     
     private let route: (RouteType) -> Void
     
-    init<T: Router & AnyObject>(_ router: T) where T.RouteType == RouteType {
+    public init<T: Router & AnyObject>(_ router: T) where T.RouteType == RouteType {
         self.route = { [weak router] (route) in
             router?.route(to: route)
         }
     }
     
-    func route(to route: RouteType) {
+    public func route(to route: RouteType) {
         self.route(route)
     }
     
