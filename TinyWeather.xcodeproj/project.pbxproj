@@ -96,6 +96,7 @@
 		C3A64ACB2805608A001B0683 /* TWModels in Frameworks */ = {isa = PBXBuildFile; productRef = C3A64ACA2805608A001B0683 /* TWModels */; };
 		C3A64ACD2805608A001B0683 /* TWRoutes in Frameworks */ = {isa = PBXBuildFile; productRef = C3A64ACC2805608A001B0683 /* TWRoutes */; };
 		C3A64ACF2805676C001B0683 /* DuotoneLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A64ACE2805676C001B0683 /* DuotoneLabel.swift */; };
+		C3A64AD128056F0D001B0683 /* UIIconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A64AD028056F0D001B0683 /* UIIconButton.swift */; };
 		C3A64AD328057C88001B0683 /* CLLocationManager+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A64AD228057C88001B0683 /* CLLocationManager+Rx.swift */; };
 		C3B6DA522804875600DD6C10 /* CoreDataService+LoadLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B6DA512804875600DD6C10 /* CoreDataService+LoadLocation.swift */; };
 		C3BCB5EA28041C7100D4ED15 /* WeatherLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3BCB5E928041C7100D4ED15 /* WeatherLoading.swift */; };
@@ -210,6 +211,7 @@
 		C365231127C6778100E6AF39 /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
 		C37724BC27DFB8C900C50450 /* SearchAnimations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAnimations.swift; sourceTree = "<group>"; };
 		C3A64ACE2805676C001B0683 /* DuotoneLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DuotoneLabel.swift; sourceTree = "<group>"; };
+		C3A64AD028056F0D001B0683 /* UIIconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIIconButton.swift; sourceTree = "<group>"; };
 		C3A64AD228057C88001B0683 /* CLLocationManager+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationManager+Rx.swift"; sourceTree = "<group>"; };
 		C3B6DA512804875600DD6C10 /* CoreDataService+LoadLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataService+LoadLocation.swift"; sourceTree = "<group>"; };
 		C3BCB5E928041C7100D4ED15 /* WeatherLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLoading.swift; sourceTree = "<group>"; };
@@ -380,6 +382,7 @@
 		C348A56027F5B510006787C3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C3A64AD028056F0D001B0683 /* UIIconButton.swift */,
 				C3A64ACE2805676C001B0683 /* DuotoneLabel.swift */,
 				C333415D27F6F2EA003CF850 /* WeatherIconsDemoView.swift */,
 				C326653C27FB395600DF83E8 /* TemperaturePillsDemoView.swift */,
@@ -763,6 +766,7 @@
 				C336A47827FEDB73008DC090 /* CoreDataAssembly.swift in Sources */,
 				C36522FE27C51B8B00E6AF39 /* RequestProviding.swift in Sources */,
 				C348A57527F625C4006787C3 /* WeatherLocationView+Rx.swift in Sources */,
+				C3A64AD128056F0D001B0683 /* UIIconButton.swift in Sources */,
 				C36522A527BE594200E6AF39 /* AppCoordinator.swift in Sources */,
 				C348A56627F60DBA006787C3 /* WeatherConditionPresenting.swift in Sources */,
 				C36522BD27BE9C3800E6AF39 /* SearchViewController.swift in Sources */,
