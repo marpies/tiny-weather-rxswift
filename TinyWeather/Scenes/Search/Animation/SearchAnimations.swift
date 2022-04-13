@@ -18,6 +18,7 @@ class SearchPanAnimation {
     
     private let searchField: UIView
     private let visualView: UIVisualEffectView
+    private let locationBtn: UIView
     private let effect: UIBlurEffect = UIBlurEffect(style: .regular)
     
     private var animator: UIViewPropertyAnimator?
@@ -28,10 +29,11 @@ class SearchPanAnimation {
     let animationDidComplete: PublishRelay<UIViewAnimatingPosition> = PublishRelay()
     
     var hintsView: UIView?
-
-    init(searchField: UIView, visualView: UIVisualEffectView) {
+    
+    init(searchField: UIView, visualView: UIVisualEffectView, locationBtn: UIView) {
         self.searchField = searchField
         self.visualView = visualView
+        self.locationBtn = locationBtn
     }
     
     deinit {
@@ -43,22 +45,36 @@ class SearchPanAnimation {
     //
     
     func animateIn() {
-        self.animator = UIViewPropertyAnimator(duration: 1 / 3, curve: .easeOut)
+        self.animator = UIViewPropertyAnimator(duration: 2 / 3, curve: .easeOut)
         
         self.visualView.effect = nil
         self.searchField.transform = CGAffineTransform(scaleX: 0.6, y: 0.6).translatedBy(x: 0, y: -50)
+        self.locationBtn.transform = CGAffineTransform(scaleX: 0.6, y: 0.6).translatedBy(x: 0, y: -100)
         
         self.animator?.addAnimations { [weak self] in
-            self?.searchField.alpha = 1
-            self?.searchField.transform = .identity
-            self?.visualView.effect = self?.effect
+            guard let weakSelf = self else { return }
+            
+            UIView.animateKeyframes(withDuration: 1, delay: 0, options: [], animations: {
+                UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1, animations: {
+                    weakSelf.searchField.alpha = 1
+                    weakSelf.searchField.transform = .identity
+                    weakSelf.visualView.effect = weakSelf.effect
+                })
+                
+                UIView.addKeyframe(withRelativeStartTime: 0.4, relativeDuration: 0.6, animations: {
+                    weakSelf.locationBtn.alpha = 1
+                    weakSelf.locationBtn.transform = .identity
+                })
+            }, completion: nil)
         }
         
         self.animator?.addCompletion { [weak self] position in
-            self?.visualView.effect = self?.effect
-            self?.animationDidComplete.accept(position)
-            self?.animator = nil
-            self?.searchField.becomeFirstResponder()
+            guard let weakSelf = self else { return }
+            
+            weakSelf.visualView.effect = weakSelf.effect
+            weakSelf.animationDidComplete.accept(position)
+            weakSelf.animator = nil
+            weakSelf.searchField.becomeFirstResponder()
         }
         
         self.animator?.startAnimation()
@@ -68,16 +84,22 @@ class SearchPanAnimation {
         self.animator = UIViewPropertyAnimator(duration: 1 / 3, curve: .easeOut)
         
         self.animator?.addAnimations { [weak self] in
-            self?.hintsView?.transform = CGAffineTransform(scaleX: 0.8, y: 0.8).translatedBy(x: 0, y: -40)
-            self?.hintsView?.alpha = 0
-            self?.searchField.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
-            self?.searchField.alpha = 0
-            self?.visualView.effect = nil
+            guard let weakSelf = self else { return }
+            
+            weakSelf.hintsView?.transform = CGAffineTransform(scaleX: 0.8, y: 0.8).translatedBy(x: 0, y: -40)
+            weakSelf.hintsView?.alpha = 0
+            weakSelf.searchField.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+            weakSelf.searchField.alpha = 0
+            weakSelf.visualView.effect = nil
+            weakSelf.locationBtn.alpha = 0
+            weakSelf.locationBtn.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
         }
         
         self.animator?.addCompletion { [weak self] position in
-            self?.visualView.effect = nil
-            self?.animationDidComplete.accept(position)
+            guard let weakSelf = self else { return }
+            
+            weakSelf.visualView.effect = nil
+            weakSelf.animationDidComplete.accept(position)
         }
         
         self.animator?.startAnimation()
@@ -100,16 +122,29 @@ class SearchPanAnimation {
             self.animator?.addAnimations { [weak self] in
                 guard let weakSelf = self else { return }
                 
-                switch state {
-                case .hidden:
-                    weakSelf.visualView.effect = nil
-                    weakSelf.searchField.alpha = 0
-                    weakSelf.hintsView?.alpha = 0
-                case .visible:
-                    weakSelf.visualView.effect = weakSelf.effect
-                    weakSelf.searchField.alpha = 1
-                    weakSelf.hintsView?.alpha = 1
-                }
+                UIView.animateKeyframes(withDuration: 0.3, delay: 0, options: [], animations: {
+                    UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1, animations: {
+                        switch state {
+                        case .hidden:
+                            weakSelf.visualView.effect = nil
+                            weakSelf.searchField.alpha = 0
+                            weakSelf.hintsView?.alpha = 0
+                        case .visible:
+                            weakSelf.searchField.alpha = 1
+                            weakSelf.visualView.effect = weakSelf.effect
+                            weakSelf.hintsView?.alpha = 1
+                        }
+                    })
+                    
+                    UIView.addKeyframe(withRelativeStartTime: 0.4, relativeDuration: 0.6, animations: {
+                        switch state {
+                        case .hidden:
+                            weakSelf.locationBtn.alpha = 0
+                        case .visible:
+                            weakSelf.locationBtn.alpha = 1
+                        }
+                    })
+                }, completion: nil)
             }
             
             self.animator?.addCompletion({ [weak self] position in
@@ -123,6 +158,7 @@ class SearchPanAnimation {
                 weakSelf.animator = nil
                 weakSelf.searchField.transform = .identity
                 weakSelf.hintsView?.transform = .identity
+                weakSelf.locationBtn.transform = .identity
                 weakSelf.animationDidComplete.accept(position)
             })
         }
@@ -156,12 +192,22 @@ class SearchPanAnimation {
         
         // Update the search field's transform during the final animation
         animator.addAnimations { [weak self] in
+            guard let weakSelf = self else { return }
+            
             if shouldHide {
-                self?.searchField.transform = CGAffineTransform(translationX: 0, y: max(-100, velocity.y)).scaledBy(x: 0.8, y: 0.8)
-                self?.hintsView?.transform = CGAffineTransform(translationX: 0, y: max(-100, velocity.y)).scaledBy(x: 0.8, y: 0.8)
+                weakSelf.searchField.alpha = 0
+                weakSelf.searchField.transform = CGAffineTransform(translationX: 0, y: max(-100, velocity.y)).scaledBy(x: 0.8, y: 0.8)
+                weakSelf.hintsView?.alpha = 0
+                weakSelf.hintsView?.transform = CGAffineTransform(translationX: 0, y: max(-100, velocity.y)).scaledBy(x: 0.8, y: 0.8)
+                weakSelf.locationBtn.alpha = 0
+                weakSelf.locationBtn.transform = CGAffineTransform(translationX: 0, y: max(-80, velocity.y)).scaledBy(x: 0.8, y: 0.8)
             } else {
-                self?.searchField.transform = .identity
-                self?.hintsView?.transform = .identity
+                weakSelf.searchField.alpha = 1
+                weakSelf.searchField.transform = .identity
+                weakSelf.hintsView?.alpha = 1
+                weakSelf.hintsView?.transform = .identity
+                weakSelf.locationBtn.alpha = 1
+                weakSelf.locationBtn.transform = .identity
             }
         }
         
@@ -231,6 +277,14 @@ class SearchPanAnimation {
         
         self.searchField.transform = CGAffineTransform(translationX: 0, y: offsetY).scaledBy(x: scale, y: scale)
         self.hintsView?.transform = CGAffineTransform(translationX: 0, y: offsetY).scaledBy(x: scale, y: scale)
+        
+        let locationBtnOffset: CGFloat
+        if offsetY < 0 {
+            locationBtnOffset = offsetY * 0.75
+        } else {
+            locationBtnOffset = offsetY * (1 / 0.75)
+        }
+        self.locationBtn.transform = CGAffineTransform(translationX: 0, y: locationBtnOffset).scaledBy(x: scale, y: scale)
     }
     
 }

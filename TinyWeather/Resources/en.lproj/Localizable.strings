@@ -16,6 +16,7 @@
 "searchInputPlaceholder" = "Search location";
 "searchHintsNoResultsMessage" = "Location not found";
 "searchHintsErrorMessage" = "Error looking up locations";
+"searchDeviceLocationButton" = "Your location";
 
 //
 // MARK: - Misc

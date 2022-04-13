@@ -21,6 +21,7 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
     private let scrollView: UIScrollView = UIScrollView()
     private let contentView: UIView = UIView()
     private let searchField: SearchTextField = SearchTextField()
+    private let locationBtn: UIIconButton
     private let disposeBag: DisposeBag = DisposeBag()
     
     private let viewModel: SearchViewModelProtocol
@@ -34,6 +35,7 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
 
     init(viewModel: SearchViewModelProtocol) {
         self.viewModel = viewModel
+        self.locationBtn = UIIconButton(theme: viewModel.theme)
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -120,6 +122,11 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
             make.top.bottom.equalTo(self.scrollView)
         }
         
+        // Location button
+        self.locationBtn.alpha = 0
+        self.locationBtn.setContentCompressionResistancePriority(.required, for: .vertical)
+        self.contentView.addSubview(self.locationBtn)
+        
         // Search field
         self.searchField.update(for: self.viewModel.theme)
         self.searchField.alpha = 0
@@ -128,10 +135,11 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
         self.searchField.returnKeyType = .done
         self.searchField.autocorrectionType = .no
         self.searchField.transform = CGAffineTransform(scaleX: 0.6, y: 0.6).translatedBy(x: 0, y: -50)
+        self.searchField.setContentCompressionResistancePriority(.required, for: .vertical)
         self.contentView.addSubview(self.searchField)
         
         // Animation
-        self.animation = SearchPanAnimation(searchField: self.searchField, visualView: self.visualView)
+        self.animation = SearchPanAnimation(searchField: self.searchField, visualView: self.visualView, locationBtn: self.locationBtn)
     }
     
     private func setupConstraints() {
@@ -147,6 +155,14 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
             make.centerX.equalToSuperview()
             make.top.equalTo(self.contentView).offset(8)
             make.bottom.equalToSuperview().priority(.high)
+            make.bottom.lessThanOrEqualToSuperview()
+        }
+        
+        self.locationBtn.snp.remakeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(self.searchField.snp.bottom).offset(16)
+            make.bottom.equalToSuperview().priority(.high)
+            make.bottom.lessThanOrEqualToSuperview()
         }
     }
     
@@ -160,7 +176,8 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
             self.searchHintsView?.snp.makeConstraints({ make in
                 make.top.equalTo(self.searchField.snp.bottom).offset(-8)
                 make.leading.trailing.equalTo(self.searchField).inset(24)
-                make.bottom.equalToSuperview()
+                make.bottom.equalToSuperview().priority(.high)
+                make.bottom.lessThanOrEqualToSuperview()
             })
         }
         
@@ -193,13 +210,25 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
             })
             .disposed(by: self.disposeBag)
         
-        outputs.searchHints
+        let searchHints = outputs.searchHints.share()
+        searchHints
             .subscribe(onNext: { [weak self] hints in
                 if let hints = hints {
                     self?.addHintsView(viewModel: hints)
                 } else {
                     self?.removeHintsView()
                 }
+            })
+            .disposed(by: self.disposeBag)
+        
+        searchHints
+            .map({ $0 != nil })
+            .bind(to: self.locationBtn.rx.isHidden)
+            .disposed(by: self.disposeBag)
+        
+        outputs.locationButtonTitle
+            .subscribe(onNext: { [weak self] viewModel in
+                self?.locationBtn.update(viewModel: viewModel)
             })
             .disposed(by: self.disposeBag)
         
@@ -240,9 +269,23 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
             })
             .disposed(by: self.disposeBag)
         
+        editBegin
+            .bind(to: inputs.searchFieldDidBeginEditing)
+            .disposed(by: self.disposeBag)
+        
         self.animation?.animationDidComplete
             .map({ $0 == .end })
             .bind(to: inputs.animationDidComplete)
+            .disposed(by: self.disposeBag)
+        
+        self.locationBtn.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.searchField.resignFirstResponder()
+            })
+            .disposed(by: self.disposeBag)
+        
+        self.locationBtn.rx.tap
+            .bind(to: inputs.searchByLocation)
             .disposed(by: self.disposeBag)
         
         // Enable panning animation only when needed
