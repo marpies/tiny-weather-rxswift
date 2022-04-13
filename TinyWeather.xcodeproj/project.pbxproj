@@ -96,6 +96,7 @@
 		C3A64ACB2805608A001B0683 /* TWModels in Frameworks */ = {isa = PBXBuildFile; productRef = C3A64ACA2805608A001B0683 /* TWModels */; };
 		C3A64ACD2805608A001B0683 /* TWRoutes in Frameworks */ = {isa = PBXBuildFile; productRef = C3A64ACC2805608A001B0683 /* TWRoutes */; };
 		C3A64ACF2805676C001B0683 /* DuotoneLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A64ACE2805676C001B0683 /* DuotoneLabel.swift */; };
+		C3A64AD328057C88001B0683 /* CLLocationManager+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A64AD228057C88001B0683 /* CLLocationManager+Rx.swift */; };
 		C3B6DA522804875600DD6C10 /* CoreDataService+LoadLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B6DA512804875600DD6C10 /* CoreDataService+LoadLocation.swift */; };
 		C3BCB5EA28041C7100D4ED15 /* WeatherLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3BCB5E928041C7100D4ED15 /* WeatherLoading.swift */; };
 		C3BCB5EC28041DF600D4ED15 /* WeatherLoadingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3BCB5EB28041DF600D4ED15 /* WeatherLoadingService.swift */; };
@@ -209,6 +210,7 @@
 		C365231127C6778100E6AF39 /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
 		C37724BC27DFB8C900C50450 /* SearchAnimations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAnimations.swift; sourceTree = "<group>"; };
 		C3A64ACE2805676C001B0683 /* DuotoneLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DuotoneLabel.swift; sourceTree = "<group>"; };
+		C3A64AD228057C88001B0683 /* CLLocationManager+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationManager+Rx.swift"; sourceTree = "<group>"; };
 		C3B6DA512804875600DD6C10 /* CoreDataService+LoadLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataService+LoadLocation.swift"; sourceTree = "<group>"; };
 		C3BCB5E928041C7100D4ED15 /* WeatherLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLoading.swift; sourceTree = "<group>"; };
 		C3BCB5EB28041DF600D4ED15 /* WeatherLoadingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLoadingService.swift; sourceTree = "<group>"; };
@@ -497,6 +499,7 @@
 				C348A57127F61F7C006787C3 /* Views+Rx */,
 				C326653227F9ACDB00DF83E8 /* Observable+Interval.swift */,
 				C336A47B27FF01C4008DC090 /* NSManagedObjectContext+PerformWith.swift */,
+				C3A64AD228057C88001B0683 /* CLLocationManager+Rx.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -768,6 +771,7 @@
 				C365225E27BE438400E6AF39 /* AppDelegate.swift in Sources */,
 				C326653D27FB395600DF83E8 /* TemperaturePillsDemoView.swift in Sources */,
 				C326654627FED10C00DF83E8 /* DefaultLocationStorageManaging.swift in Sources */,
+				C3A64AD328057C88001B0683 /* CLLocationManager+Rx.swift in Sources */,
 				C333416627F724A3003CF850 /* DailyWeatherTableDataSource.swift in Sources */,
 				C348A54A27F4C951006787C3 /* CoordinatesPresenting.swift in Sources */,
 				C348A54427F48B05006787C3 /* WeatherAssembly.swift in Sources */,
