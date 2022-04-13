@@ -14,6 +14,7 @@ import TWExtensions
 
 enum APIResource {
     case geo(location: String)
+    case reverseGeo(latitude: Double, longitude: Double)
     case weather(lat: Double, lon: Double)
     case currentAndDaily(lat: Double, lon: Double)
 }
@@ -22,7 +23,7 @@ extension APIResource: RequestProviding {
     
     var request: URLRequest? {
         switch self {
-        case .geo, .weather, .currentAndDaily:
+        case .geo, .reverseGeo, .weather, .currentAndDaily:
             if var comps = URLComponents(string: self.url.absoluteString) {
                 comps.queryItems = self.queryItems
                 
@@ -52,7 +53,7 @@ extension APIResource: RequestProviding {
     
     private var resourcePath: String {
         switch self {
-        case .geo:
+        case .geo, .reverseGeo:
             return "geo/1.0"
             
         case .weather, .currentAndDaily:
@@ -64,6 +65,9 @@ extension APIResource: RequestProviding {
         switch self {
         case .geo:
             return "direct"
+            
+        case .reverseGeo:
+            return "reverse"
             
         case .weather:
             return "weather"
@@ -79,6 +83,10 @@ extension APIResource: RequestProviding {
         switch self {
         case .geo(let location):
             params = ["q": location, "limit": "5"]
+        case .reverseGeo(let lat, let lon):
+            let lat: String = lat.format(".4")
+            let lon: String = lon.format(".4")
+            params = ["lat": lat, "lon": lon, "limit": "5"]
         case .weather(let lat, let lon):
             let lat: String = lat.format(".4")
             let lon: String = lon.format(".4")
