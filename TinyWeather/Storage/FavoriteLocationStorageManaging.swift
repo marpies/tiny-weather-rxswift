@@ -1,5 +1,5 @@
 //
-//  WeatherStorageManaging.swift
+//  FavoriteLocationStorageManaging.swift
 //  TinyWeather
 //
 //  Created by Marcel Piešťanský.
@@ -10,7 +10,10 @@
 //  
 
 import Foundation
+import RxSwift
+import TWModels
 
-protocol WeatherStorageManaging: DefaultLocationStorageManaging, LocationWeatherStorageManaging, FavoriteLocationStorageManaging {
-    
+protocol FavoriteLocationStorageManaging {
+    func loadLocationFavoriteStatus(_ location: WeatherLocation) -> Single<Bool>
+    func saveLocationFavoriteStatus(_ location: WeatherLocation, isFavorite: Bool) -> Single<Bool>
 }

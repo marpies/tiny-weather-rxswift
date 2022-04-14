@@ -98,6 +98,8 @@
 		C3ABBF662807448400B2F8DB /* DailyWeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3ABBF652807448400B2F8DB /* DailyWeatherView.swift */; };
 		C3ABBF6828074B1F00B2F8DB /* DailyWeatherView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3ABBF6728074B1F00B2F8DB /* DailyWeatherView+Rx.swift */; };
 		C3ABBF6A2808045200B2F8DB /* UIIconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3ABBF692808045200B2F8DB /* UIIconButton.swift */; };
+		C3ABBF6C28080E1F00B2F8DB /* FavoriteLocationStorageManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3ABBF6B28080E1F00B2F8DB /* FavoriteLocationStorageManaging.swift */; };
+		C3ABBF6E28080EBB00B2F8DB /* CoreDataService+FavoriteLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3ABBF6D28080EBB00B2F8DB /* CoreDataService+FavoriteLocation.swift */; };
 		C3ABBF70280811BE00B2F8DB /* NSManagedObjectContext+Save.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3ABBF6F280811BE00B2F8DB /* NSManagedObjectContext+Save.swift */; };
 		C3ABBF72280813F900B2F8DB /* UIIconButton+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3ABBF71280813F900B2F8DB /* UIIconButton+Rx.swift */; };
 		C3ABBF74280848F200B2F8DB /* UIViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3ABBF73280848F200B2F8DB /* UIViewController+Rx.swift */; };
@@ -216,6 +218,8 @@
 		C3ABBF652807448400B2F8DB /* DailyWeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherView.swift; sourceTree = "<group>"; };
 		C3ABBF6728074B1F00B2F8DB /* DailyWeatherView+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DailyWeatherView+Rx.swift"; sourceTree = "<group>"; };
 		C3ABBF692808045200B2F8DB /* UIIconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIIconButton.swift; sourceTree = "<group>"; };
+		C3ABBF6B28080E1F00B2F8DB /* FavoriteLocationStorageManaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteLocationStorageManaging.swift; sourceTree = "<group>"; };
+		C3ABBF6D28080EBB00B2F8DB /* CoreDataService+FavoriteLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataService+FavoriteLocation.swift"; sourceTree = "<group>"; };
 		C3ABBF6F280811BE00B2F8DB /* NSManagedObjectContext+Save.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Save.swift"; sourceTree = "<group>"; };
 		C3ABBF71280813F900B2F8DB /* UIIconButton+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIIconButton+Rx.swift"; sourceTree = "<group>"; };
 		C3ABBF73280848F200B2F8DB /* UIViewController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx.swift"; sourceTree = "<group>"; };
@@ -270,6 +274,7 @@
 				C336A47527FEDB07008DC090 /* StorageService.swift */,
 				C326654527FED10C00DF83E8 /* DefaultLocationStorageManaging.swift */,
 				C3BCB5ED28041F1E00D4ED15 /* LocationWeatherStorageManaging.swift */,
+				C3ABBF6B28080E1F00B2F8DB /* FavoriteLocationStorageManaging.swift */,
 				C3BCB5F128045C3800D4ED15 /* WeatherStorageManaging.swift */,
 				C326654C27FED3D900DF83E8 /* Core Data */,
 			);
@@ -306,6 +311,7 @@
 				C3B6DA512804875600DD6C10 /* CoreDataService+LoadLocation.swift */,
 				C3BCB5EF2804230700D4ED15 /* CoreDataService+LocationWeather.swift */,
 				C3BCB5F328045C6700D4ED15 /* CoreDataService+WeatherStorage.swift */,
+				C3ABBF6D28080EBB00B2F8DB /* CoreDataService+FavoriteLocation.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -842,7 +848,9 @@
 				C36522C627C107F100E6AF39 /* SearchTextField.swift in Sources */,
 				C36522AD27BE5AFC00E6AF39 /* SetupAssembly.swift in Sources */,
 				C3BCB5F228045C3800D4ED15 /* WeatherStorageManaging.swift in Sources */,
+				C3ABBF6E28080EBB00B2F8DB /* CoreDataService+FavoriteLocation.swift in Sources */,
 				C326655227FED54100DF83E8 /* CoreDataStore.swift in Sources */,
+				C3ABBF6C28080E1F00B2F8DB /* FavoriteLocationStorageManaging.swift in Sources */,
 				C36522FB27C51A0B00E6AF39 /* APISecrets.swift in Sources */,
 				C348A57727F62A05006787C3 /* WeatherUpdateTimeView.swift in Sources */,
 				C37724BD27DFB8C900C50450 /* SearchAnimations.swift in Sources */,
