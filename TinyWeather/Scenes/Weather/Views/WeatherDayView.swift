@@ -1,5 +1,5 @@
 //
-//  WeatherDayTableViewCell.swift
+//  WeatherDayView.swift
 //  TinyWeather
 //
 //  Created by Marcel Piešťanský.
@@ -13,7 +13,7 @@ import UIKit
 import SnapKit
 import TWThemes
 
-class WeatherDayTableViewCell: UITableViewCell {
+class WeatherDayView: UIView {
     
     private let contentStack: UIStackView = UIStackView()
     private let dayOfWeekLabel: UILabel = UILabel()
@@ -25,7 +25,7 @@ class WeatherDayTableViewCell: UITableViewCell {
         didSet {
             guard let theme = self.theme else { return }
             
-            self.contentView.backgroundColor = theme.colors.background
+            self.backgroundColor = theme.colors.background
             
             self.dayOfWeekLabel.font = theme.fonts.primary(style: .title2)
             self.dayOfWeekLabel.textColor = theme.colors.label
@@ -42,9 +42,9 @@ class WeatherDayTableViewCell: UITableViewCell {
             }
         }
     }
-
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    
+    init() {
+        super.init(frame: .zero)
         
         self.setupView()
     }
@@ -69,14 +69,12 @@ class WeatherDayTableViewCell: UITableViewCell {
     //
     
     private func setupView() {
-        self.selectionStyle = .none
-        
         self.contentStack.axis = .horizontal
         self.contentStack.alignment = .center
-        self.contentView.addSubview(self.contentStack)
+        self.addSubview(self.contentStack)
         self.contentStack.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(8)
-            make.leading.trailing.equalTo(self.contentView.readableContentGuide)
+            make.leading.trailing.equalToSuperview()
             make.bottom.equalToSuperview().inset(8)
         }
         

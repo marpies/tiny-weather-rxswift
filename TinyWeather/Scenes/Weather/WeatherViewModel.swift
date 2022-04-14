@@ -84,7 +84,6 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
             .compactMap({ $0 })
             .flatMap({
                 Observable.from($0)
-                    .with(interval: .milliseconds(60))
                     .observe(on: MainScheduler.instance)
             })
             .asDriver(onErrorJustReturn: nil)

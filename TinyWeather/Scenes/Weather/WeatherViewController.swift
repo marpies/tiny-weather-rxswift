@@ -18,14 +18,16 @@ class WeatherViewController: UIViewController, UIScrollViewDelegate, UITableView
     private let viewModel: WeatherViewModelProtocol
     private let disposeBag: DisposeBag = DisposeBag()
     
-    private let tableViewHeader: WeatherTableHeaderView
-    private let tableView: UITableView = UITableView(frame: .zero, style: .plain)
-    private let dataSource: DailyWeatherTableDataSource
+    private let headerView: WeatherHeaderView
+    private let dailyWeatherView: DailyWeatherView
+    
+    private let contentView: UIView = UIView()
+    private let scrollView: UIScrollView = UIScrollView()
     
     init(viewModel: WeatherViewModelProtocol) {
         self.viewModel = viewModel
-        self.tableViewHeader = WeatherTableHeaderView(theme: viewModel.theme)
-        self.dataSource = DailyWeatherTableDataSource(tableView: self.tableView, theme: viewModel.theme)
+        self.headerView = WeatherHeaderView(theme: viewModel.theme)
+        self.dailyWeatherView = DailyWeatherView(theme: viewModel.theme)
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -43,19 +45,11 @@ class WeatherViewController: UIViewController, UIScrollViewDelegate, UITableView
         self.bindViewModel()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
         
-        if let headerView = self.tableView.tableHeaderView {
-            let sizeToFit: CGSize = CGSize(width: headerView.bounds.width, height: 0)
-            let layoutSize: CGSize = headerView.systemLayoutSizeFitting(sizeToFit, withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
-            
-            if headerView.frame.size.height != layoutSize.height {
-                var frame: CGRect = headerView.frame
-                frame.size.height = layoutSize.height
-                headerView.frame = frame
-                self.tableView.tableHeaderView = headerView
-            }
+        if previousTraitCollection?.horizontalSizeClass != self.traitCollection.horizontalSizeClass {
+            self.layoutSubviews()
         }
     }
     
@@ -64,20 +58,68 @@ class WeatherViewController: UIViewController, UIScrollViewDelegate, UITableView
     //
     
     private func setupViews() {
-        // Table view
-        self.tableView.showsVerticalScrollIndicator = false
-        self.tableView.alwaysBounceVertical = true
-        self.tableView.allowsMultipleSelection = false
-        self.tableView.allowsSelection = true
-        self.tableView.tableHeaderView = self.tableViewHeader
-        self.tableView.tableFooterView = UIView()
-        self.tableView.rowHeight = UITableView.automaticDimension
-        self.tableView.estimatedRowHeight = 88
-        self.tableView.backgroundColor = self.viewModel.theme.colors.background
-        self.tableView.separatorColor = self.viewModel.theme.colors.separator
-        self.view.addSubview(self.tableView)
-        self.tableView.snp.makeConstraints { make in
+        self.scrollView.backgroundColor = self.viewModel.theme.colors.background
+        self.scrollView.alwaysBounceVertical = true
+        self.scrollView.showsVerticalScrollIndicator = false
+        self.view.addSubview(self.scrollView)
+        self.scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+        }
+        
+        self.contentView.backgroundColor = self.viewModel.theme.colors.background
+        self.scrollView.addSubview(self.contentView)
+        self.contentView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            make.width.equalTo(self.view)
+            make.height.equalTo(self.scrollView.safeAreaLayoutGuide).priority(.high)
+        }
+        
+        self.contentView.addSubview(self.headerView)
+        self.contentView.addSubview(self.dailyWeatherView)
+        
+        self.layoutSubviews()
+    }
+    
+    private func layoutSubviews() {
+        let isRegular: Bool = self.traitCollection.horizontalSizeClass == .regular
+        
+        if isRegular {
+            self.layoutRegularViews()
+        } else {
+            self.layoutCompactViews()
+        }
+    }
+    
+    private func layoutRegularViews() {
+        self.contentView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        
+        self.headerView.snp.remakeConstraints { make in
+            make.width.equalToSuperview().multipliedBy(0.5)
+            make.centerX.equalToSuperview().multipliedBy(0.5)
+            make.centerY.equalToSuperview()
+        }
+        
+        self.dailyWeatherView.snp.remakeConstraints { make in
+            make.leading.equalTo(self.contentView.snp.centerX)
+            make.trailing.equalTo(self.contentView.layoutMarginsGuide)
+            make.centerY.equalToSuperview()
+            make.top.greaterThanOrEqualToSuperview()
+            make.bottom.lessThanOrEqualToSuperview()
+        }
+    }
+    
+    private func layoutCompactViews() {
+        self.contentView.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        
+        self.headerView.snp.remakeConstraints { make in
+            make.leading.trailing.equalTo(self.contentView.layoutMarginsGuide)
+            make.top.equalToSuperview()
+        }
+        
+        self.dailyWeatherView.snp.remakeConstraints { make in
+            make.top.equalTo(self.headerView.snp.bottom)
+            make.leading.trailing.equalTo(self.contentView.layoutMarginsGuide)
+            make.bottom.lessThanOrEqualToSuperview()
         }
     }
 
@@ -90,12 +132,12 @@ class WeatherViewController: UIViewController, UIScrollViewDelegate, UITableView
         let outputs: WeatherViewModelOutputs = self.viewModel.outputs
         
         outputs.locationInfo
-            .drive(self.tableViewHeader.rx.location)
+            .drive(self.headerView.rx.location)
             .disposed(by: self.disposeBag)
         
         outputs.weatherInfo
             .map({ $0.current })
-            .drive(self.tableViewHeader.rx.weather)
+            .drive(self.headerView.rx.weather)
             .disposed(by: self.disposeBag)
         
         let locationInfo = outputs.locationInfo.map({ _ in })
@@ -111,42 +153,42 @@ class WeatherViewController: UIViewController, UIScrollViewDelegate, UITableView
             .disposed(by: self.disposeBag)
         
         outputs.newDailyWeather
-            .drive(self.dataSource.rx.newDailyWeather)
+            .drive(self.dailyWeatherView.rx.newDailyWeather)
             .disposed(by: self.disposeBag)
         
         loadingStart
-            .drive(self.tableViewHeader.rx.showLoading)
+            .drive(self.headerView.rx.showLoading)
             .disposed(by: self.disposeBag)
         
         loadingStart
-            .drive(self.dataSource.rx.removeAll)
+            .drive(self.dailyWeatherView.rx.removeAll)
             .disposed(by: self.disposeBag)
         
         outputs.state
             .filter({ $0 != .loading })
             .map({ _ in })
-            .drive(self.tableViewHeader.rx.hideLoading)
+            .drive(self.headerView.rx.hideLoading)
             .disposed(by: self.disposeBag)
         
-        self.tableView.rx
+        self.scrollView.rx
             .willBeginDragging
             .bind(to: inputs.panGestureDidBegin)
             .disposed(by: self.disposeBag)
         
-        self.tableView.rx
+        self.scrollView.rx
             .didScroll
             .compactMap({ [weak self] () -> CGFloat? in
                 guard let weakSelf = self else { return nil }
                 
-                return -(weakSelf.view.safeAreaInsets.top + weakSelf.tableView.contentOffset.y)
+                return -(weakSelf.view.safeAreaInsets.top + weakSelf.scrollView.contentOffset.y)
             })
             .bind(to: inputs.panGestureDidChange)
             .disposed(by: self.disposeBag)
         
-        self.tableView.rx
+        self.scrollView.rx
             .willEndDragging
             .compactMap({ [weak self] _ -> CGPoint? in
-                self?.tableView.panGestureRecognizer.velocity(in: self?.view)
+                self?.scrollView.panGestureRecognizer.velocity(in: self?.view)
             })
             .bind(to: inputs.panGestureDidEnd)
             .disposed(by: self.disposeBag)

@@ -1,5 +1,5 @@
 //
-//  WeatherTableHeaderView.swift
+//  WeatherHeaderView.swift
 //  TinyWeather
 //
 //  Created by Marcel Piešťanský.
@@ -14,7 +14,7 @@ import SnapKit
 import TWThemes
 import TWExtensions
 
-class WeatherTableHeaderView: UIView {
+class WeatherHeaderView: UIView {
 
     private let theme: Theme
     private let stackView: UIStackView = UIStackView()

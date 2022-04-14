@@ -1,5 +1,5 @@
 //
-//  WeatherTableHeaderView+Rx.swift
+//  WeatherHeaderView+Rx.swift
 //  TinyWeather
 //
 //  Created by Marcel Piešťanský.
@@ -13,7 +13,7 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-extension Reactive where Base: WeatherTableHeaderView {
+extension Reactive where Base: WeatherHeaderView {
     
     var location: Binder<Weather.Location.ViewModel> {
         return Binder(self.base) { view, vm in

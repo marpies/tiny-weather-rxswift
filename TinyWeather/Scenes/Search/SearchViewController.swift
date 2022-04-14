@@ -147,7 +147,7 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
         
         self.searchField.snp.remakeConstraints { make in
             if isRegular {
-                make.width.equalTo(self.contentView.readableContentGuide)
+                make.width.equalToSuperview().multipliedBy(0.5)
             } else {
                 make.width.equalToSuperview().inset(24)
             }
