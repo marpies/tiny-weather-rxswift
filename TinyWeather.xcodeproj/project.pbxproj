@@ -97,6 +97,7 @@
 		C3A64AD328057C88001B0683 /* CLLocationManager+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A64AD228057C88001B0683 /* CLLocationManager+Rx.swift */; };
 		C3ABBF662807448400B2F8DB /* DailyWeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3ABBF652807448400B2F8DB /* DailyWeatherView.swift */; };
 		C3ABBF6828074B1F00B2F8DB /* DailyWeatherView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3ABBF6728074B1F00B2F8DB /* DailyWeatherView+Rx.swift */; };
+		C3ABBF6A2808045200B2F8DB /* UIIconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3ABBF692808045200B2F8DB /* UIIconButton.swift */; };
 		C3ABBF70280811BE00B2F8DB /* NSManagedObjectContext+Save.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3ABBF6F280811BE00B2F8DB /* NSManagedObjectContext+Save.swift */; };
 		C3B6DA522804875600DD6C10 /* CoreDataService+LoadLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B6DA512804875600DD6C10 /* CoreDataService+LoadLocation.swift */; };
 		C3BCB5EA28041C7100D4ED15 /* WeatherLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3BCB5E928041C7100D4ED15 /* WeatherLoading.swift */; };
@@ -212,6 +213,7 @@
 		C3A64AD228057C88001B0683 /* CLLocationManager+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationManager+Rx.swift"; sourceTree = "<group>"; };
 		C3ABBF652807448400B2F8DB /* DailyWeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherView.swift; sourceTree = "<group>"; };
 		C3ABBF6728074B1F00B2F8DB /* DailyWeatherView+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DailyWeatherView+Rx.swift"; sourceTree = "<group>"; };
+		C3ABBF692808045200B2F8DB /* UIIconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIIconButton.swift; sourceTree = "<group>"; };
 		C3ABBF6F280811BE00B2F8DB /* NSManagedObjectContext+Save.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Save.swift"; sourceTree = "<group>"; };
 		C3B6DA512804875600DD6C10 /* CoreDataService+LoadLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataService+LoadLocation.swift"; sourceTree = "<group>"; };
 		C3BCB5E928041C7100D4ED15 /* WeatherLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLoading.swift; sourceTree = "<group>"; };
@@ -382,6 +384,7 @@
 			isa = PBXGroup;
 			children = (
 				C3A64AD028056F0D001B0683 /* UIDuotoneIconButton.swift */,
+				C3ABBF692808045200B2F8DB /* UIIconButton.swift */,
 				C3A64ACE2805676C001B0683 /* DuotoneLabel.swift */,
 				C333415D27F6F2EA003CF850 /* WeatherIconsDemoView.swift */,
 				C326653C27FB395600DF83E8 /* TemperaturePillsDemoView.swift */,
@@ -799,6 +802,7 @@
 				C36522C027BE9C5200E6AF39 /* SearchAssembly.swift in Sources */,
 				C365230427C51BC300E6AF39 /* NetworkError.swift in Sources */,
 				C365230C27C524DD00E6AF39 /* SearchHintsView.swift in Sources */,
+				C3ABBF6A2808045200B2F8DB /* UIIconButton.swift in Sources */,
 				C3BCB5EC28041DF600D4ED15 /* WeatherLoadingService.swift in Sources */,
 				C348A54F27F5A7D1006787C3 /* CurrentWeatherView.swift in Sources */,
 				C336A48027FF4D81008DC090 /* DailyWeatherDb.swift in Sources */,
