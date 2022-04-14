@@ -1,5 +1,5 @@
 //
-//  UIIconButton.swift
+//  UIDuotoneIconButton.swift
 //  TinyWeather
 //
 //  Created by Marcel Piešťanský.
@@ -14,7 +14,7 @@ import TWThemes
 import TWModels
 import SnapKit
 
-class UIIconButton: UIButton {
+class UIDuotoneIconButton: UIButton {
     
     private let theme: Theme
     private let iconView: DuotoneLabel
@@ -64,7 +64,7 @@ class UIIconButton: UIButton {
         self.layer.cornerRadius = self.bounds.height / 2
     }
     
-    func update(viewModel: IconButton.ViewModel) {
+    func update(viewModel: DuotoneIconButton.ViewModel) {
         self.iconView.setIcon(viewModel.icon)
         self.label.text = viewModel.title
     }

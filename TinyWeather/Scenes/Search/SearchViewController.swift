@@ -21,7 +21,7 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
     private let scrollView: UIScrollView = UIScrollView()
     private let contentView: UIView = UIView()
     private let searchField: SearchTextField = SearchTextField()
-    private let locationBtn: UIIconButton
+    private let locationBtn: UIDuotoneIconButton
     private let disposeBag: DisposeBag = DisposeBag()
     
     private let viewModel: SearchViewModelProtocol
@@ -35,7 +35,7 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
 
     init(viewModel: SearchViewModelProtocol) {
         self.viewModel = viewModel
-        self.locationBtn = UIIconButton(theme: viewModel.theme)
+        self.locationBtn = UIDuotoneIconButton(theme: viewModel.theme)
         
         super.init(nibName: nil, bundle: nil)
     }

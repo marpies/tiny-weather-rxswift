@@ -1,5 +1,5 @@
 //
-//  IconButton.swift
+//  DuotoneIconButton.swift
 //  TinyWeather
 //
 //  Created by Marcel Piešťanský.
@@ -11,7 +11,7 @@
 
 import Foundation
 
-public enum IconButton {
+public enum DuotoneIconButton {
     
     public struct ViewModel {
         public let icon: FontIcon

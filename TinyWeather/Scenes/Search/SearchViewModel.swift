@@ -32,7 +32,7 @@ protocol SearchViewModelInputs {
 
 protocol SearchViewModelOutputs {
     var searchPlaceholder: Observable<String> { get }
-    var locationButtonTitle: Observable<IconButton.ViewModel> { get }
+    var locationButtonTitle: Observable<DuotoneIconButton.ViewModel> { get }
     var animationState: Search.AnimationState { get }
     var searchHints: Observable<Search.SearchHints?> { get }
     var sceneDidHide: Observable<Void> { get }
@@ -76,8 +76,8 @@ class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchVie
         return _searchPlaceholder.asObservable()
     }
     
-    private let _locationButtonTitle: BehaviorRelay<IconButton.ViewModel> = BehaviorRelay(value: IconButton.ViewModel(icon: .location, title: NSLocalizedString("searchDeviceLocationButton", comment: "")))
-    var locationButtonTitle: Observable<IconButton.ViewModel> {
+    private let _locationButtonTitle: BehaviorRelay<DuotoneIconButton.ViewModel> = BehaviorRelay(value: DuotoneIconButton.ViewModel(icon: .location, title: NSLocalizedString("searchDeviceLocationButton", comment: "")))
+    var locationButtonTitle: Observable<DuotoneIconButton.ViewModel> {
         return _locationButtonTitle.asObservable()
     }
     
