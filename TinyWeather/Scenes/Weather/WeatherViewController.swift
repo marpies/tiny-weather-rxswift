@@ -158,17 +158,9 @@ class WeatherViewController: UIViewController, UIScrollViewDelegate, UITableView
             .drive(self.headerView.rx.weather)
             .disposed(by: self.disposeBag)
         
-        let locationInfo = outputs.locationInfo.map({ _ in })
-        let weatherInfo = outputs.weatherInfo.map({ _ in })
         let loadingStart = outputs.state
             .filter({ $0 == .loading })
             .map({ _ in })
-        
-        Observable.merge(locationInfo.asObservable(), weatherInfo.asObservable(), loadingStart.asObservable())
-            .subscribe(onNext: { [weak self] in
-                self?.view.setNeedsLayout()
-            })
-            .disposed(by: self.disposeBag)
         
         outputs.newDailyWeather
             .drive(self.dailyWeatherView.rx.newDailyWeather)
