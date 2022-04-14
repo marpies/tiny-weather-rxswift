@@ -26,6 +26,7 @@ class LocationDb: NSManagedObject {
         let lon: Double
         let lat: Double
         let isDefault: Bool
+        let isFavorite: Bool
     }
 
     @NSManaged var name: String
@@ -34,10 +35,11 @@ class LocationDb: NSManagedObject {
     @NSManaged var lon: Double
     @NSManaged var lat: Double
     @NSManaged var isDefault: Bool
+    @NSManaged var isFavorite: Bool
     @NSManaged var weather: WeatherDb?
     
     var model: LocationDb.Model {
-        return LocationDb.Model(name: name, state: state, country: country, lon: lon, lat: lat, isDefault: isDefault)
+        return LocationDb.Model(name: name, state: state, country: country, lon: lon, lat: lat, isDefault: isDefault, isFavorite: isFavorite)
     }
 
 }
