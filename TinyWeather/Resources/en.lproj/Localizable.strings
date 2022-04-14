@@ -26,6 +26,7 @@
 "latitudeSouthAbbreviation" = "S";
 "longitudeEastAbbreviation" = "E";
 "longitudeWestAbbreviation" = "W";
+"okAlertButton" = "OK";
 
 //
 // MARK: - Weather
@@ -33,3 +34,7 @@
 
 "currentWeatherLastUpdateTimeTitle" = "Last updated:";
 "currentWeatherLastUpdateJustNowText" = "Just now";
+"locationAddToFavoritesButton" = "Add to favorites";
+"locationRemoveFromFavoritesButton" = "Remove from favorites";
+"locationFavoriteErrorTitle" = "Error";
+"locationFavoriteErrorMessage" = "There was an unexpected error updating the favorites. Please try again.";

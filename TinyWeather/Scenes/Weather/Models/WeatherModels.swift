@@ -11,8 +11,14 @@
 
 import UIKit
 import TWModels
+import RxRelay
 
 enum Weather {
+    
+    struct Model {
+        /// The current location presented in the weather scene.
+        let location: BehaviorRelay<WeatherLocation?> = BehaviorRelay(value: nil)
+    }
     
     enum Error: Swift.Error {
         case invalidData

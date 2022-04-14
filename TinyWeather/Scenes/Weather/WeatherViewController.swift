@@ -20,6 +20,7 @@ class WeatherViewController: UIViewController, UIScrollViewDelegate, UITableView
     
     private let headerView: WeatherHeaderView
     private let dailyWeatherView: DailyWeatherView
+    private let favoriteBtn: UIIconButton
     
     private let contentView: UIView = UIView()
     private let scrollView: UIScrollView = UIScrollView()
@@ -28,6 +29,7 @@ class WeatherViewController: UIViewController, UIScrollViewDelegate, UITableView
         self.viewModel = viewModel
         self.headerView = WeatherHeaderView(theme: viewModel.theme)
         self.dailyWeatherView = DailyWeatherView(theme: viewModel.theme)
+        self.favoriteBtn = UIIconButton(theme: viewModel.theme)
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -71,11 +73,17 @@ class WeatherViewController: UIViewController, UIScrollViewDelegate, UITableView
         self.contentView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
             make.width.equalTo(self.view)
-            make.height.equalTo(self.scrollView.safeAreaLayoutGuide).priority(.high)
+            make.height.equalTo(self.scrollView.safeAreaLayoutGuide).priority(.medium)
         }
         
+        self.headerView.setContentCompressionResistancePriority(.required, for: .vertical)
         self.contentView.addSubview(self.headerView)
+        
+        self.dailyWeatherView.setContentCompressionResistancePriority(.required, for: .vertical)
         self.contentView.addSubview(self.dailyWeatherView)
+        
+        self.favoriteBtn.setContentCompressionResistancePriority(.required, for: .vertical)
+        self.contentView.addSubview(self.favoriteBtn)
         
         self.layoutSubviews()
     }
@@ -99,6 +107,11 @@ class WeatherViewController: UIViewController, UIScrollViewDelegate, UITableView
             make.centerY.equalToSuperview()
         }
         
+        self.favoriteBtn.snp.remakeConstraints { make in
+            make.centerX.equalToSuperview().multipliedBy(0.5)
+            make.top.equalTo(self.headerView.snp.bottom)
+        }
+        
         self.dailyWeatherView.snp.remakeConstraints { make in
             make.leading.equalTo(self.contentView.snp.centerX)
             make.trailing.equalTo(self.contentView.layoutMarginsGuide)
@@ -116,8 +129,13 @@ class WeatherViewController: UIViewController, UIScrollViewDelegate, UITableView
             make.top.equalToSuperview()
         }
         
-        self.dailyWeatherView.snp.remakeConstraints { make in
+        self.favoriteBtn.snp.remakeConstraints { make in
+            make.centerX.equalToSuperview()
             make.top.equalTo(self.headerView.snp.bottom)
+        }
+        
+        self.dailyWeatherView.snp.remakeConstraints { make in
+            make.top.equalTo(self.favoriteBtn.snp.bottom).offset(16)
             make.leading.trailing.equalTo(self.contentView.layoutMarginsGuide)
             make.bottom.lessThanOrEqualToSuperview()
         }
@@ -168,6 +186,25 @@ class WeatherViewController: UIViewController, UIScrollViewDelegate, UITableView
             .filter({ $0 != .loading })
             .map({ _ in })
             .drive(self.headerView.rx.hideLoading)
+            .disposed(by: self.disposeBag)
+        
+        outputs.favoriteButtonTitle
+            .map({ $0 == nil })
+            .drive(self.favoriteBtn.rx.isHidden)
+            .disposed(by: self.disposeBag)
+        
+        outputs.favoriteButtonTitle
+            .compactMap({ $0 })
+            .drive(self.favoriteBtn.rx.viewModel)
+            .disposed(by: self.disposeBag)
+        
+        outputs.favoriteStatusAlert
+            .emit(to: self.rx.alert)
+            .disposed(by: self.disposeBag)
+        
+        self.favoriteBtn.rx
+            .tap
+            .bind(to: inputs.toggleFavoriteStatus)
             .disposed(by: self.disposeBag)
         
         self.scrollView.rx

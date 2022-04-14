@@ -22,6 +22,7 @@ protocol WeatherViewModelInputs {
     var panGestureDidBegin: PublishRelay<Void> { get }
     var panGestureDidChange: PublishRelay<CGFloat> { get }
     var panGestureDidEnd: PublishRelay<CGPoint> { get }
+    var toggleFavoriteStatus: PublishRelay<Void> { get }
 }
 
 protocol WeatherViewModelOutputs {
@@ -29,6 +30,8 @@ protocol WeatherViewModelOutputs {
     var state: Driver<Weather.State> { get }
     var weatherInfo: Driver<Weather.Overview.ViewModel> { get }
     var newDailyWeather: Driver<Weather.Day.ViewModel> { get }
+    var favoriteButtonTitle: Driver<IconButton.ViewModel?> { get }
+    var favoriteStatusAlert: Signal<Alert.ViewModel> { get }
 }
 
 protocol WeatherViewModelProtocol {
@@ -49,6 +52,8 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
     private let router: WeakRouter<AppRoute>
     private let storage: WeatherStorageManaging
     
+    private var model: Weather.Model = Weather.Model()
+    
     private var didBeginPan: BehaviorRelay<Bool> = BehaviorRelay(value: false)
     private var panTranslation: BehaviorRelay<CGFloat> = BehaviorRelay(value: 0)
 
@@ -61,6 +66,7 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
     let panGestureDidBegin: PublishRelay<Void> = PublishRelay()
     let panGestureDidChange: PublishRelay<CGFloat> = PublishRelay()
     let panGestureDidEnd: PublishRelay<CGPoint> = PublishRelay()
+    let toggleFavoriteStatus: PublishRelay<Void> = PublishRelay()
 
     // Outputs
     private let _locationInfo: BehaviorRelay<Weather.Location.ViewModel?> = BehaviorRelay(value: nil)
@@ -89,6 +95,17 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
             .asDriver(onErrorJustReturn: nil)
             .compactMap({ $0 })
     }
+    
+    private let isLocationFavorite: BehaviorRelay<Bool> = BehaviorRelay(value: false)
+    private let _favoriteButtonTitle: BehaviorRelay<IconButton.ViewModel?> = BehaviorRelay(value: nil)
+    var favoriteButtonTitle: Driver<IconButton.ViewModel?> {
+        return _favoriteButtonTitle.asDriver(onErrorJustReturn: nil)
+    }
+    
+    private let _favoriteStatusAlert: PublishRelay<Alert.ViewModel> = PublishRelay()
+    var favoriteStatusAlert: Signal<Alert.ViewModel> {
+        return _favoriteStatusAlert.asSignal()
+    }
 
     init(theme: Theme, weatherLoader: WeatherLoading, router: WeakRouter<AppRoute>, storage: WeatherStorageManaging) {
         self.theme = theme
@@ -114,6 +131,50 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
         
         self.panGestureDidChange
             .bind(to: self.panTranslation)
+            .disposed(by: self.disposeBag)
+        
+        // Update favorite status on button tap
+        let favoriteStatus = self.toggleFavoriteStatus
+            .flatMap({
+                Observable.zip(self.model.location.compactMap({ $0 }), self.isLocationFavorite)
+            })
+            .flatMap({ (location: WeatherLocation, isFavorite: Bool) in
+                storage.saveLocationFavoriteStatus(location, isFavorite: !isFavorite)
+                    .map({ Optional($0) })
+                    .asDriver(onErrorJustReturn: .none)
+            })
+            .share()
+        
+        favoriteStatus
+            .compactMap({ $0 })
+            .bind(to: self.isLocationFavorite)
+            .disposed(by: self.disposeBag)
+        
+        favoriteStatus
+            .filter({ $0 == nil })
+            .compactMap({ [weak self] _ in
+                self?.getFavoriteUpdateErrorAlert()
+            })
+            .bind(to: self._favoriteStatusAlert)
+            .disposed(by: self.disposeBag)
+        
+        // Map favorite state to the button title
+        self.isLocationFavorite
+            .asDriver(onErrorJustReturn: false)
+            .map({ [weak self] (isFavorite) in
+                self?.getFavoriteButton(isFavorite: isFavorite)
+            })
+            .drive(self._favoriteButtonTitle)
+            .disposed(by: self.disposeBag)
+        
+        // Load the favorite state for the current location whenever it changes
+        self.model.location
+            .compactMap({ $0 })
+            .flatMap({ location in
+                storage.loadLocationFavoriteStatus(location)
+                    .asDriver(onErrorJustReturn: false)
+            })
+            .bind(to: self.isLocationFavorite)
             .disposed(by: self.disposeBag)
         
         Observable.combineLatest(self.panGestureDidChange, self.didBeginPan)
@@ -149,6 +210,7 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
     func loadWeather(forLocation location: WeatherLocation) {
         let info: Weather.Location.ViewModel = self.getLocationInfo(response: location)
         self._locationInfo.accept(info)
+        self.model.location.accept(location)
         
         // Save this location as default now (i.e. last one shown)
         self.storage.saveDefaultLocation(location)
@@ -317,6 +379,28 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
         let days: UInt = hours / 24
         let format: String = NSLocalizedString("num_days_ago", comment: "")
         return String.localizedStringWithFormat(format, days)
+    }
+    
+    private func getFavoriteButton(isFavorite: Bool) -> IconButton.ViewModel {
+        let title: String
+        let font: UIFont
+        
+        if isFavorite {
+            title = NSLocalizedString("locationRemoveFromFavoritesButton", comment: "")
+            font = self.theme.fonts.iconSolid(style: .caption1)
+        } else {
+            title = NSLocalizedString("locationAddToFavoritesButton", comment: "")
+            font = self.theme.fonts.iconLight(style: .caption1)
+        }
+        
+        return IconButton.ViewModel(icon: .heart, title: title, font: font)
+    }
+    
+    private func getFavoriteUpdateErrorAlert() -> Alert.ViewModel {
+        let title: String = NSLocalizedString("locationFavoriteErrorTitle", comment: "")
+        let message: String = NSLocalizedString("locationFavoriteErrorMessage", comment: "")
+        let button: String = NSLocalizedString("okAlertButton", comment: "")
+        return Alert.ViewModel(title: title, message: message, button: button)
     }
 
 }
