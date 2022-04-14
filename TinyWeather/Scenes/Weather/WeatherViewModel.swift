@@ -293,7 +293,7 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
     private func getLastUpdate(timestamp: TimeInterval) -> String {
         let now: TimeInterval = Date().timeIntervalSince1970
         let diff: TimeInterval = now - timestamp
-        let minutes: UInt = UInt(floor(diff / 60))
+        let minutes: UInt = UInt(max(floor(diff / 60), 0))
         
         // "Just now"
         if minutes < 1 {
