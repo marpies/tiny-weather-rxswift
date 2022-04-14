@@ -51,7 +51,6 @@ class WeatherHeaderView: UIView {
         }
         
         self.locationView?.update(viewModel: viewModel)
-        self.addBorderView()
     }
     
     func updateWeather(viewModel: Weather.Current.ViewModel) {
@@ -66,7 +65,6 @@ class WeatherHeaderView: UIView {
         }
         
         self.currentWeatherView?.update(viewModel: viewModel)
-        self.addBorderView()
     }
     
     func showLoading() {
@@ -79,8 +77,6 @@ class WeatherHeaderView: UIView {
         
         self.spinnerView?.startAnimating()
         self.stackView.addArrangedSubview(self.spinnerView!)
-        
-        self.addBorderView()
     }
     
     func hideLoading() {
@@ -106,14 +102,6 @@ class WeatherHeaderView: UIView {
         }
         
         self.borderView.backgroundColor = self.theme.colors.separator
-    }
-    
-    private func addBorderView() {
-        self.stackView.addArrangedSubview(self.borderView)
-        self.borderView.snp.remakeConstraints { make in
-            make.height.equalTo(1 / UIScreen.main.scale)
-            make.width.equalTo(self.layoutMarginsGuide).multipliedBy(0.5).priority(.high)
-        }
     }
 
 }
