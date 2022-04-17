@@ -33,11 +33,10 @@ protocol SearchViewModelInputs {
 }
 
 protocol SearchViewModelOutputs {
-    // todo drivers
-    var searchPlaceholder: Observable<String> { get }
-    var locationButtonTitle: Observable<DuotoneIconButton.ViewModel> { get }
+    var searchPlaceholder: Driver<NSAttributedString?> { get }
+    var locationButtonTitle: Driver<DuotoneIconButton.ViewModel> { get }
     var animationState: Search.AnimationState { get }
-    var searchHints: Observable<Search.SearchHints?> { get }
+    var searchHints: Driver<Search.SearchHints?> { get }
     var sceneDidHide: Observable<Void> { get }
     var sceneWillHide: Observable<Void> { get }
     var isInteractiveAnimationEnabled: Bool { get }
@@ -80,13 +79,18 @@ class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchVie
     let isInteractiveAnimationEnabled: Bool
     
     private let _searchPlaceholder: BehaviorRelay<String> = BehaviorRelay(value: NSLocalizedString("searchInputPlaceholder", comment: ""))
-    var searchPlaceholder: Observable<String> {
-        return _searchPlaceholder.asObservable()
+    var searchPlaceholder: Driver<NSAttributedString?> {
+        return _searchPlaceholder.map({ [theme] (text) in
+            NSAttributedString(string: text, attributes: [
+                NSAttributedString.Key.font: theme.fonts.primary(style: .title2),
+                NSAttributedString.Key.foregroundColor: theme.colors.secondaryLabel
+            ])
+        }).asDriver(onErrorJustReturn: nil)
     }
     
     private let _locationButtonTitle: BehaviorRelay<DuotoneIconButton.ViewModel> = BehaviorRelay(value: DuotoneIconButton.ViewModel(icon: .location, title: NSLocalizedString("searchDeviceLocationButton", comment: "")))
-    var locationButtonTitle: Observable<DuotoneIconButton.ViewModel> {
-        return _locationButtonTitle.asObservable()
+    var locationButtonTitle: Driver<DuotoneIconButton.ViewModel> {
+        return _locationButtonTitle.asDriver()
     }
     
     private let _animationState: BehaviorRelay<Search.AnimationState> = BehaviorRelay(value: .hidden)
@@ -95,8 +99,8 @@ class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchVie
     }
     
     private let _searchHints: PublishRelay<Search.SearchHints?> = PublishRelay()
-    var searchHints: Observable<Search.SearchHints?> {
-        return _searchHints.asObservable()
+    var searchHints: Driver<Search.SearchHints?> {
+        return _searchHints.asDriver(onErrorJustReturn: nil)
     }
     
     private let _sceneDidHide: PublishRelay<Void> = PublishRelay()

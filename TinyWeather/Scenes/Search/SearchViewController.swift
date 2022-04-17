@@ -33,6 +33,16 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
     private var animationState: Search.AnimationState {
         return self.viewModel.outputs.animationState
     }
+    
+    private var searchHints: Binder<Search.SearchHints?> {
+        return Binder(self) { [weak self] (vc, vm) in
+            if let vm = vm {
+                self?.addHintsView(viewModel: vm)
+            } else {
+                self?.removeHintsView()
+            }
+        }
+    }
 
     init(viewModel: SearchViewModelProtocol) {
         self.viewModel = viewModel
@@ -212,36 +222,21 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
         let outputs: SearchViewModelOutputs = self.viewModel.outputs
         
         outputs.searchPlaceholder
-            .subscribe(onNext: { [weak self] value in
-                guard let weakSelf = self else { return }
-                
-                weakSelf.searchField.attributedPlaceholder = NSAttributedString(string: value, attributes: [
-                    NSAttributedString.Key.font: weakSelf.viewModel.theme.fonts.primary(style: .title2),
-                    NSAttributedString.Key.foregroundColor: weakSelf.viewModel.theme.colors.secondaryLabel
-                ])
-            })
+            .compactMap({ $0 })
+            .drive(self.searchField.rx.attributedPlaceholder)
             .disposed(by: self.disposeBag)
         
-        let searchHints = outputs.searchHints.share()
-        searchHints
-            .subscribe(onNext: { [weak self] hints in
-                if let hints = hints {
-                    self?.addHintsView(viewModel: hints)
-                } else {
-                    self?.removeHintsView()
-                }
-            })
+        outputs.searchHints
+            .drive(self.searchHints)
             .disposed(by: self.disposeBag)
         
-        searchHints
+        outputs.searchHints
             .map({ $0 != nil })
-            .bind(to: self.locationBtn.rx.isHidden)
+            .drive(self.locationBtn.rx.isHidden)
             .disposed(by: self.disposeBag)
         
         outputs.locationButtonTitle
-            .subscribe(onNext: { [weak self] viewModel in
-                self?.locationBtn.update(viewModel: viewModel)
-            })
+            .drive(self.locationBtn.rx.viewModel)
             .disposed(by: self.disposeBag)
         
         self.searchField.rx.text
