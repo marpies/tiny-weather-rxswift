@@ -19,6 +19,7 @@ class SearchPanAnimation {
     private let searchField: UIView
     private let visualView: UIVisualEffectView
     private let locationBtn: UIView
+    private let favoritesView: UIView
     private let effect: UIBlurEffect = UIBlurEffect(style: .regular)
     
     private var animator: UIViewPropertyAnimator?
@@ -30,10 +31,11 @@ class SearchPanAnimation {
     
     var hintsView: UIView?
     
-    init(searchField: UIView, visualView: UIVisualEffectView, locationBtn: UIView) {
+    init(searchField: UIView, visualView: UIVisualEffectView, locationBtn: UIView, favoritesView: UIView) {
         self.searchField = searchField
         self.visualView = visualView
         self.locationBtn = locationBtn
+        self.favoritesView = favoritesView
     }
     
     deinit {
@@ -50,6 +52,7 @@ class SearchPanAnimation {
         self.visualView.effect = nil
         self.searchField.transform = CGAffineTransform(scaleX: 0.6, y: 0.6).translatedBy(x: 0, y: -50)
         self.locationBtn.transform = CGAffineTransform(scaleX: 0.6, y: 0.6).translatedBy(x: 0, y: -100)
+        self.favoritesView.transform = CGAffineTransform(scaleX: 0.6, y: 0.6).translatedBy(x: 0, y: -50)
         
         self.animator?.addAnimations { [weak self] in
             guard let weakSelf = self else { return }
@@ -61,9 +64,14 @@ class SearchPanAnimation {
                     weakSelf.visualView.effect = weakSelf.effect
                 })
                 
-                UIView.addKeyframe(withRelativeStartTime: 0.4, relativeDuration: 0.6, animations: {
+                UIView.addKeyframe(withRelativeStartTime: 0.3, relativeDuration: 0.7, animations: {
                     weakSelf.locationBtn.alpha = 1
                     weakSelf.locationBtn.transform = .identity
+                })
+                
+                UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.5, animations: {
+                    weakSelf.favoritesView.alpha = 1
+                    weakSelf.favoritesView.transform = .identity
                 })
             }, completion: nil)
         }
@@ -86,13 +94,15 @@ class SearchPanAnimation {
         self.animator?.addAnimations { [weak self] in
             guard let weakSelf = self else { return }
             
-            weakSelf.hintsView?.transform = CGAffineTransform(scaleX: 0.8, y: 0.8).translatedBy(x: 0, y: -40)
             weakSelf.hintsView?.alpha = 0
-            weakSelf.searchField.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+            weakSelf.hintsView?.transform = CGAffineTransform(scaleX: 0.8, y: 0.8).translatedBy(x: 0, y: -40)
             weakSelf.searchField.alpha = 0
-            weakSelf.visualView.effect = nil
+            weakSelf.searchField.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
             weakSelf.locationBtn.alpha = 0
             weakSelf.locationBtn.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+            weakSelf.favoritesView.alpha = 0
+            weakSelf.favoritesView.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+            weakSelf.visualView.effect = nil
         }
         
         self.animator?.addCompletion { [weak self] position in
@@ -136,12 +146,21 @@ class SearchPanAnimation {
                         }
                     })
                     
-                    UIView.addKeyframe(withRelativeStartTime: 0.4, relativeDuration: 0.6, animations: {
+                    UIView.addKeyframe(withRelativeStartTime: 0.2, relativeDuration: 0.8, animations: {
                         switch state {
                         case .hidden:
                             weakSelf.locationBtn.alpha = 0
                         case .visible:
                             weakSelf.locationBtn.alpha = 1
+                        }
+                    })
+                    
+                    UIView.addKeyframe(withRelativeStartTime: 0.3, relativeDuration: 0.7, animations: {
+                        switch state {
+                        case .hidden:
+                            weakSelf.favoritesView.alpha = 0
+                        case .visible:
+                            weakSelf.favoritesView.alpha = 1
                         }
                     })
                 }, completion: nil)
@@ -159,6 +178,7 @@ class SearchPanAnimation {
                 weakSelf.searchField.transform = .identity
                 weakSelf.hintsView?.transform = .identity
                 weakSelf.locationBtn.transform = .identity
+                weakSelf.favoritesView.transform = .identity
                 weakSelf.animationDidComplete.accept(position)
             })
         }
@@ -200,7 +220,9 @@ class SearchPanAnimation {
                 weakSelf.hintsView?.alpha = 0
                 weakSelf.hintsView?.transform = CGAffineTransform(translationX: 0, y: max(-100, velocity.y)).scaledBy(x: 0.8, y: 0.8)
                 weakSelf.locationBtn.alpha = 0
-                weakSelf.locationBtn.transform = CGAffineTransform(translationX: 0, y: max(-80, velocity.y)).scaledBy(x: 0.8, y: 0.8)
+                weakSelf.locationBtn.transform = CGAffineTransform(translationX: 0, y: max(-100, velocity.y)).scaledBy(x: 0.8, y: 0.8)
+                weakSelf.favoritesView.alpha = 0
+                weakSelf.favoritesView.transform = CGAffineTransform(translationX: 0, y: max(-100, velocity.y)).scaledBy(x: 0.8, y: 0.8)
             } else {
                 weakSelf.searchField.alpha = 1
                 weakSelf.searchField.transform = .identity
@@ -208,6 +230,8 @@ class SearchPanAnimation {
                 weakSelf.hintsView?.transform = .identity
                 weakSelf.locationBtn.alpha = 1
                 weakSelf.locationBtn.transform = .identity
+                weakSelf.favoritesView.alpha = 1
+                weakSelf.favoritesView.transform = .identity
             }
         }
         
@@ -270,7 +294,7 @@ class SearchPanAnimation {
             }
             
         case .visible:
-            if progress > 0.1 && self.searchField.isFirstResponder {
+            if self.searchField.isFirstResponder && (total < -0.1 || progress > 0.1) {
                 self.searchField.endEditing(true)
             }
         }
@@ -285,6 +309,14 @@ class SearchPanAnimation {
             locationBtnOffset = offsetY * (1 / 0.75)
         }
         self.locationBtn.transform = CGAffineTransform(translationX: 0, y: locationBtnOffset).scaledBy(x: scale, y: scale)
+        
+        let favoritesViewOffset: CGFloat
+        if offsetY < 0 {
+            favoritesViewOffset = offsetY * 0.7
+        } else {
+            favoritesViewOffset = offsetY * (1 / 0.7)
+        }
+        self.favoritesView.transform = CGAffineTransform(translationX: 0, y: favoritesViewOffset).scaledBy(x: scale, y: scale)
     }
     
 }

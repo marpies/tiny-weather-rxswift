@@ -17,6 +17,9 @@
 "searchHintsNoResultsMessage" = "Location not found";
 "searchHintsErrorMessage" = "Error looking up locations";
 "searchDeviceLocationButton" = "Your location";
+"numberOfFavoritesTitle" = "Favorites (%d)";
+"noFavoritesMessage" = "Your favorite locations will appear here.";
+"favoriteLocationRemoveButton" = "Remove";
 
 //
 // MARK: - Misc

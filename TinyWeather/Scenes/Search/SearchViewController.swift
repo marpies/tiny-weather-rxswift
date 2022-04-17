@@ -16,15 +16,16 @@ import RxGesture
 
 class SearchViewController: UIViewController, UIScrollViewDelegate {
     
-    private let visualView: UIVisualEffectView = UIVisualEffectView(effect: nil)
+    private let viewModel: SearchViewModelProtocol
+    private let locationBtn: UIDuotoneIconButton
+    private let favoritesView: FavoriteLocationsView
+    
+    private let disposeBag: DisposeBag = DisposeBag()
     
     private let scrollView: UIScrollView = UIScrollView()
     private let contentView: UIView = UIView()
     private let searchField: SearchTextField = SearchTextField()
-    private let locationBtn: UIDuotoneIconButton
-    private let disposeBag: DisposeBag = DisposeBag()
-    
-    private let viewModel: SearchViewModelProtocol
+    private let visualView: UIVisualEffectView = UIVisualEffectView(effect: nil)
     
     private var searchHintsView: SearchHintsView?
     private var animation: SearchPanAnimation?
@@ -36,6 +37,7 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
     init(viewModel: SearchViewModelProtocol) {
         self.viewModel = viewModel
         self.locationBtn = UIDuotoneIconButton(theme: viewModel.theme)
+        self.favoritesView = FavoriteLocationsView(theme: viewModel.theme)
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -122,6 +124,10 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
             make.top.bottom.equalTo(self.scrollView)
         }
         
+        // Favorites view
+        self.favoritesView.alpha = 0
+        self.contentView.addSubview(self.favoritesView)
+        
         // Location button
         self.locationBtn.alpha = 0
         self.locationBtn.setContentCompressionResistancePriority(.required, for: .vertical)
@@ -139,7 +145,7 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
         self.contentView.addSubview(self.searchField)
         
         // Animation
-        self.animation = SearchPanAnimation(searchField: self.searchField, visualView: self.visualView, locationBtn: self.locationBtn)
+        self.animation = SearchPanAnimation(searchField: self.searchField, visualView: self.visualView, locationBtn: self.locationBtn, favoritesView: self.favoritesView)
     }
     
     private func setupConstraints() {
@@ -154,14 +160,21 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
             make.height.equalTo(44)
             make.centerX.equalToSuperview()
             make.top.equalTo(self.contentView).offset(8)
-            make.bottom.equalToSuperview().priority(.high)
-            make.bottom.lessThanOrEqualToSuperview()
         }
         
         self.locationBtn.snp.remakeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(self.searchField.snp.bottom).offset(16)
-            make.bottom.equalToSuperview().priority(.high)
+        }
+        
+        self.favoritesView.snp.makeConstraints { make in
+            if isRegular {
+                make.width.equalTo(self.view.readableContentGuide)
+            } else {
+                make.width.equalTo(self.view.layoutMarginsGuide)
+            }
+            make.centerX.equalToSuperview()
+            make.top.equalTo(self.scrollView.safeAreaLayoutGuide.snp.centerY).multipliedBy(0.8)
             make.bottom.lessThanOrEqualToSuperview()
         }
     }
@@ -170,13 +183,12 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
         if self.searchHintsView == nil {
             self.searchHintsView = SearchHintsView(theme: self.viewModel.theme)
             self.searchHintsView?.hintViewTap
-                .bind(to: self.viewModel.inputs.cityHintTap)
+                .bind(to: self.viewModel.inputs.locationHintTap)
                 .disposed(by: self.disposeBag)
             self.contentView.insertSubview(self.searchHintsView!, belowSubview: self.searchField)
             self.searchHintsView?.snp.makeConstraints({ make in
                 make.top.equalTo(self.searchField.snp.bottom).offset(-8)
                 make.leading.trailing.equalTo(self.searchField).inset(24)
-                make.bottom.equalToSuperview().priority(.high)
                 make.bottom.lessThanOrEqualToSuperview()
             })
         }
@@ -269,6 +281,14 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
             })
             .disposed(by: self.disposeBag)
         
+        outputs.favorites
+            .drive(self.favoritesView.rx.viewModel)
+            .disposed(by: self.disposeBag)
+        
+        outputs.favoriteDeleteAlert
+            .emit(to: self.rx.alert)
+            .disposed(by: self.disposeBag)
+        
         editBegin
             .bind(to: inputs.searchFieldDidBeginEditing)
             .disposed(by: self.disposeBag)
@@ -288,18 +308,44 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
             .bind(to: inputs.searchByLocation)
             .disposed(by: self.disposeBag)
         
+        self.favoritesView.tableViewDidScroll
+            .filter({ [weak self] in
+                self?.searchField.isFirstResponder ?? false
+            })
+            .subscribe(onNext: { [weak self] in
+                self?.searchField.resignFirstResponder()
+            })
+            .disposed(by: self.disposeBag)
+        
+        self.favoritesView.locationDidSelect
+            .bind(to: inputs.favoriteLocationDidSelect)
+            .disposed(by: self.disposeBag)
+        
+        self.favoritesView.locationDidDelete
+            .bind(to: inputs.favoriteLocationDidDelete)
+            .disposed(by: self.disposeBag)
+        
         // Enable panning animation only when needed
         guard outputs.isInteractiveAnimationEnabled else { return }
         
-        self.view.rx.panGesture()
+        let pan = self.view.rx.panGesture(configuration: { [weak self] (_, delegate) in
+            delegate.otherFailureRequirementPolicy = .custom({ (gesture, other) in
+                // Avoid conflict with the favorites table view panning
+                if let g = self?.favoritesView.panGesture {
+                    return other === g || other.view === self?.favoritesView.tableView
+                }
+                return false
+            })
+        }).share()
+        
+        pan
             .when(.began)
-            .map({ _ in })
-            .subscribe(onNext: { [weak self] in
+            .subscribe(onNext: { [weak self] _ in
                 self?.startScrubbingAnimation()
             })
             .disposed(by: self.disposeBag)
         
-        self.view.rx.panGesture()
+        pan
             .when(.changed)
             .asTranslation()
             .map({ (translation, _) in translation })
@@ -308,7 +354,7 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
             })
             .disposed(by: self.disposeBag)
         
-        self.view.rx.panGesture()
+        pan
             .when(.ended)
             .asTranslation()
             .map({ (_, velocity) in velocity })

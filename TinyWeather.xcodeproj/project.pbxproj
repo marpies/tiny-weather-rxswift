@@ -103,6 +103,12 @@
 		C3ABBF70280811BE00B2F8DB /* NSManagedObjectContext+Save.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3ABBF6F280811BE00B2F8DB /* NSManagedObjectContext+Save.swift */; };
 		C3ABBF72280813F900B2F8DB /* UIIconButton+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3ABBF71280813F900B2F8DB /* UIIconButton+Rx.swift */; };
 		C3ABBF74280848F200B2F8DB /* UIViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3ABBF73280848F200B2F8DB /* UIViewController+Rx.swift */; };
+		C3ABBF76280889EF00B2F8DB /* FavoriteLocationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3ABBF75280889EF00B2F8DB /* FavoriteLocationsView.swift */; };
+		C3ABBF7828089D9D00B2F8DB /* FavoritesTableCellProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3ABBF7728089D9D00B2F8DB /* FavoritesTableCellProvider.swift */; };
+		C3ABBF7A28089DCF00B2F8DB /* FavoriteLocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3ABBF7928089DCF00B2F8DB /* FavoriteLocationTableViewCell.swift */; };
+		C3ABBF7C2808A5ED00B2F8DB /* FavoriteLocationsView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3ABBF7B2808A5ED00B2F8DB /* FavoriteLocationsView+Rx.swift */; };
+		C3ABBF7E280AC13600B2F8DB /* FavoritesTableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3ABBF7D280AC13600B2F8DB /* FavoritesTableDataSource.swift */; };
+		C3ABBF80280AC44D00B2F8DB /* FavoritesTableDataSource+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3ABBF7F280AC44D00B2F8DB /* FavoritesTableDataSource+Rx.swift */; };
 		C3B6DA522804875600DD6C10 /* CoreDataService+LoadLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B6DA512804875600DD6C10 /* CoreDataService+LoadLocation.swift */; };
 		C3BCB5EA28041C7100D4ED15 /* WeatherLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3BCB5E928041C7100D4ED15 /* WeatherLoading.swift */; };
 		C3BCB5EC28041DF600D4ED15 /* WeatherLoadingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3BCB5EB28041DF600D4ED15 /* WeatherLoadingService.swift */; };
@@ -223,6 +229,12 @@
 		C3ABBF6F280811BE00B2F8DB /* NSManagedObjectContext+Save.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Save.swift"; sourceTree = "<group>"; };
 		C3ABBF71280813F900B2F8DB /* UIIconButton+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIIconButton+Rx.swift"; sourceTree = "<group>"; };
 		C3ABBF73280848F200B2F8DB /* UIViewController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx.swift"; sourceTree = "<group>"; };
+		C3ABBF75280889EF00B2F8DB /* FavoriteLocationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteLocationsView.swift; sourceTree = "<group>"; };
+		C3ABBF7728089D9D00B2F8DB /* FavoritesTableCellProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTableCellProvider.swift; sourceTree = "<group>"; };
+		C3ABBF7928089DCF00B2F8DB /* FavoriteLocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteLocationTableViewCell.swift; sourceTree = "<group>"; };
+		C3ABBF7B2808A5ED00B2F8DB /* FavoriteLocationsView+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoriteLocationsView+Rx.swift"; sourceTree = "<group>"; };
+		C3ABBF7D280AC13600B2F8DB /* FavoritesTableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTableDataSource.swift; sourceTree = "<group>"; };
+		C3ABBF7F280AC44D00B2F8DB /* FavoritesTableDataSource+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoritesTableDataSource+Rx.swift"; sourceTree = "<group>"; };
 		C3B6DA512804875600DD6C10 /* CoreDataService+LoadLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataService+LoadLocation.swift"; sourceTree = "<group>"; };
 		C3BCB5E928041C7100D4ED15 /* WeatherLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLoading.swift; sourceTree = "<group>"; };
 		C3BCB5EB28041DF600D4ED15 /* WeatherLoadingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLoadingService.swift; sourceTree = "<group>"; };
@@ -411,6 +423,8 @@
 				C3ABBF6728074B1F00B2F8DB /* DailyWeatherView+Rx.swift */,
 				C3ABBF71280813F900B2F8DB /* UIIconButton+Rx.swift */,
 				C3ABBF73280848F200B2F8DB /* UIViewController+Rx.swift */,
+				C3ABBF7B2808A5ED00B2F8DB /* FavoriteLocationsView+Rx.swift */,
+				C3ABBF7F280AC44D00B2F8DB /* FavoritesTableDataSource+Rx.swift */,
 			);
 			path = "Views+Rx";
 			sourceTree = "<group>";
@@ -541,6 +555,8 @@
 				C36522C527C107F100E6AF39 /* SearchTextField.swift */,
 				C365230B27C524DD00E6AF39 /* SearchHintsView.swift */,
 				C365230D27C5276100E6AF39 /* SearchHintLocationView.swift */,
+				C3ABBF75280889EF00B2F8DB /* FavoriteLocationsView.swift */,
+				C3ABBF7928089DCF00B2F8DB /* FavoriteLocationTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -560,6 +576,8 @@
 			isa = PBXGroup;
 			children = (
 				C365230927C522C800E6AF39 /* SearchModels.swift */,
+				C3ABBF7728089D9D00B2F8DB /* FavoritesTableCellProvider.swift */,
+				C3ABBF7D280AC13600B2F8DB /* FavoritesTableDataSource.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -787,6 +805,7 @@
 				C36522BD27BE9C3800E6AF39 /* SearchViewController.swift in Sources */,
 				C326654E27FED40E00DF83E8 /* LocationDb.swift in Sources */,
 				C336A47627FEDB07008DC090 /* StorageService.swift in Sources */,
+				C3ABBF7828089D9D00B2F8DB /* FavoritesTableCellProvider.swift in Sources */,
 				C365225E27BE438400E6AF39 /* AppDelegate.swift in Sources */,
 				C326653D27FB395600DF83E8 /* TemperaturePillsDemoView.swift in Sources */,
 				C326654627FED10C00DF83E8 /* DefaultLocationStorageManaging.swift in Sources */,
@@ -794,11 +813,14 @@
 				C348A54A27F4C951006787C3 /* CoordinatesPresenting.swift in Sources */,
 				C348A54427F48B05006787C3 /* WeatherAssembly.swift in Sources */,
 				C333415E27F6F2EA003CF850 /* WeatherIconsDemoView.swift in Sources */,
+				C3ABBF7E280AC13600B2F8DB /* FavoritesTableDataSource.swift in Sources */,
 				C348A53E27F4814B006787C3 /* WeatherViewController.swift in Sources */,
 				C365230627C51C1C00E6AF39 /* APIResource.swift in Sources */,
+				C3ABBF7C2808A5ED00B2F8DB /* FavoriteLocationsView+Rx.swift in Sources */,
 				C36522A327BE591D00E6AF39 /* Coordinator.swift in Sources */,
 				C348A56E27F61D2A006787C3 /* WindSpeedPresenting.swift in Sources */,
 				C3BCB5F02804230700D4ED15 /* CoreDataService+LocationWeather.swift in Sources */,
+				C3ABBF7A28089DCF00B2F8DB /* FavoriteLocationTableViewCell.swift in Sources */,
 				C3ABBF662807448400B2F8DB /* DailyWeatherView.swift in Sources */,
 				C36522B927BE679700E6AF39 /* ThemeAssembly.swift in Sources */,
 				C348A54627F48D9D006787C3 /* WeatherCoordinator.swift in Sources */,
@@ -807,6 +829,7 @@
 				C336A47E27FF49C5008DC090 /* CoreDataService+StorageService.swift in Sources */,
 				C365230E27C5276100E6AF39 /* SearchHintLocationView.swift in Sources */,
 				C333416227F71FD8003CF850 /* WeatherHeaderView+Rx.swift in Sources */,
+				C3ABBF80280AC44D00B2F8DB /* FavoritesTableDataSource+Rx.swift in Sources */,
 				C326653927F9C60000DF83E8 /* WeatherDayOverviewView.swift in Sources */,
 				C326655427FED57400DF83E8 /* CoreDataService.swift in Sources */,
 				C365230027C51B9100E6AF39 /* RequestExecuting.swift in Sources */,
@@ -819,6 +842,7 @@
 				C3BCB5EC28041DF600D4ED15 /* WeatherLoadingService.swift in Sources */,
 				C348A54F27F5A7D1006787C3 /* CurrentWeatherView.swift in Sources */,
 				C3ABBF74280848F200B2F8DB /* UIViewController+Rx.swift in Sources */,
+				C3ABBF76280889EF00B2F8DB /* FavoriteLocationsView.swift in Sources */,
 				C336A48027FF4D81008DC090 /* DailyWeatherDb.swift in Sources */,
 				C326653727F9C41E00DF83E8 /* TemperaturePillView.swift in Sources */,
 				C348A54227F484BF006787C3 /* WeatherModels.swift in Sources */,

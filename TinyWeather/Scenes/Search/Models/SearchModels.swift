@@ -17,13 +17,28 @@ import TWModels
 enum Search {
     
     struct Model {
-        let hintCities: BehaviorRelay<[Search.Location.Response]?> = BehaviorRelay(value: nil)
+        let hints: BehaviorRelay<[Search.Location.Response]?> = BehaviorRelay(value: nil)
+        let favorites: BehaviorRelay<[WeatherLocation]?> = BehaviorRelay(value: nil)
         
-        func getCity(at index: Int) -> Search.Location.Response? {
-            if index >= 0, let cities = self.hintCities.value, index < cities.count {
-                return cities[index]
+        func getHintLocation(at index: Int) -> Search.Location.Response? {
+            if index >= 0, let locations = self.hints.value, index < locations.count {
+                return locations[index]
             }
             return nil
+        }
+        
+        func getFavoriteLocation(at index: Int) -> WeatherLocation? {
+            if index >= 0, let locations = self.favorites.value, index < locations.count {
+                return locations[index]
+            }
+            return nil
+        }
+        
+        func removeFavoriteLocation(at index: Int) {
+            if index >= 0, var locations = self.favorites.value, index < locations.count {
+                locations.remove(at: index)
+                self.favorites.accept(locations)
+            }
         }
     }
     
@@ -54,10 +69,19 @@ enum Search {
             let lat: Double
         }
         
-        struct ViewModel {
+        struct ViewModel: Hashable {
+            let id: UUID = UUID()
             let flag: UIImage?
             let title: String
             let subtitle: String
+            
+            static func == (lhs: Search.Location.ViewModel, rhs: Search.Location.ViewModel) -> Bool {
+                return lhs.id == rhs.id
+            }
+            
+            func hash(into hasher: inout Hasher) {
+                hasher.combine(self.id)
+            }
         }
     }
     
@@ -66,6 +90,13 @@ enum Search {
         case empty(message: String)
         case results(cities: [Search.Location.ViewModel])
         case error(message: String)
+    }
+    
+    enum Favorites {
+        enum ViewModel {
+            case none(String)
+            case saved(String, [Search.Location.ViewModel])
+        }
     }
     
 }

@@ -26,11 +26,14 @@ protocol SearchViewModelInputs {
     
     var searchValue: BehaviorRelay<String?> { get }
     var performSearch: PublishSubject<Void> { get }
-    var cityHintTap: PublishRelay<Int> { get }
+    var locationHintTap: PublishRelay<Int> { get }
     var searchByLocation: PublishRelay<Void> { get }
+    var favoriteLocationDidSelect: PublishRelay<Int> { get }
+    var favoriteLocationDidDelete: PublishRelay<Int> { get }
 }
 
 protocol SearchViewModelOutputs {
+    // todo drivers
     var searchPlaceholder: Observable<String> { get }
     var locationButtonTitle: Observable<DuotoneIconButton.ViewModel> { get }
     var animationState: Search.AnimationState { get }
@@ -38,6 +41,8 @@ protocol SearchViewModelOutputs {
     var sceneDidHide: Observable<Void> { get }
     var sceneWillHide: Observable<Void> { get }
     var isInteractiveAnimationEnabled: Bool { get }
+    var favorites: Driver<Search.Favorites.ViewModel> { get }
+    var favoriteDeleteAlert: Signal<Alert.ViewModel> { get }
 }
 
 protocol SearchViewModelProtocol: ThemeProviding {
@@ -63,10 +68,12 @@ class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchVie
     let performSearch: PublishSubject<Void> = PublishSubject()
     let animationDidStart: PublishRelay<Void> = PublishRelay()
     let animationDidComplete: PublishRelay<Bool> = PublishRelay()
-    let cityHintTap: PublishRelay<Int> = PublishRelay()
+    let locationHintTap: PublishRelay<Int> = PublishRelay()
     let viewDidDisappear: PublishRelay<Void> = PublishRelay()
     let searchByLocation: PublishRelay<Void> = PublishRelay()
     let searchFieldDidBeginEditing: PublishRelay<Void> = PublishRelay()
+    let favoriteLocationDidSelect: PublishRelay<Int> = PublishRelay()
+    let favoriteLocationDidDelete: PublishRelay<Int> = PublishRelay()
     
     // Outputs
     let isInteractiveAnimationEnabled: Bool
@@ -101,7 +108,18 @@ class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchVie
         return _sceneWillHide.asObservable()
     }
     
-    init(apiService: RequestExecuting, theme: Theme, router: WeakRouter<AppRoute>, isInteractiveAnimationEnabled: Bool) {
+    private let _favoriteLocations: BehaviorRelay<[Search.Location.ViewModel]> = BehaviorRelay(value: [])
+    private let _favorites: BehaviorRelay<Search.Favorites.ViewModel> = BehaviorRelay(value: .none(""))
+    var favorites: Driver<Search.Favorites.ViewModel> {
+        return _favorites.asDriver()
+    }
+    
+    private let _favoriteDeleteAlert: PublishRelay<Alert.ViewModel> = PublishRelay()
+    var favoriteDeleteAlert: Signal<Alert.ViewModel> {
+        return _favoriteDeleteAlert.asSignal()
+    }
+    
+    init(apiService: RequestExecuting, theme: Theme, router: WeakRouter<AppRoute>, storage: FavoriteLocationStorageManaging, isInteractiveAnimationEnabled: Bool) {
         self.theme = theme
         self.apiService = apiService
         self.isInteractiveAnimationEnabled = isInteractiveAnimationEnabled
@@ -131,10 +149,10 @@ class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchVie
             })
             .disposed(by: self.disposeBag)
 
-        self.cityHintTap
+        self.locationHintTap
             .asObservable()
             .compactMap({ [weak self] in
-                self?.model.getCity(at: $0)
+                self?.model.getHintLocation(at: $0)
             })
             .subscribe(onNext: { [weak self] (location) in
                 self?._sceneWillHide.accept(())
@@ -155,6 +173,44 @@ class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchVie
             .bind(to: self._sceneDidHide)
             .disposed(by: self.disposeBag)
         
+        self.favoriteLocationDidSelect
+            .compactMap({ [weak self] in
+                self?.model.getFavoriteLocation(at: $0)
+            })
+            .subscribe(onNext: { [weak self] (location) in
+                self?._sceneWillHide.accept(())
+                
+                router.route(to: .weather(location))
+            })
+            .disposed(by: self.disposeBag)
+        
+        let unfavorite = self.favoriteLocationDidDelete
+            .map({ [weak self] (index) -> (Int, WeatherLocation?) in
+                (index, self?.model.getFavoriteLocation(at: index))
+            })
+            .filter({ $0.1 != nil })
+            .flatMap({ pair in
+                storage.saveLocationFavoriteStatus(pair.1!, isFavorite: false)
+                    .map({ _ in Optional(pair) })
+                    .catchAndReturn(nil)
+            })
+            .share()
+        
+        unfavorite
+            .compactMap({ $0?.0 })
+            .subscribe(onNext: { [weak self] (index) in
+                self?.removeFavoriteLocation(at: index)
+            })
+            .disposed(by: self.disposeBag)
+                
+        unfavorite
+            .filter({ $0 == nil })
+            .compactMap({ [weak self] _ in
+                self?.getFavoriteDeleteErrorAlert()
+            })
+            .bind(to: self._favoriteDeleteAlert)
+            .disposed(by: self.disposeBag)
+        
         // Look up locations based on the device location
         let searchByLocation = self.searchByLocation
             .flatMapLatest({
@@ -168,7 +224,6 @@ class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchVie
             })
             .map({ try $0.map(to: [Search.Location.Response].self) })
             .share()
-        
         
         // Single location found for the device location, show weather right away
         searchByLocation
@@ -208,22 +263,52 @@ class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchVie
         // Update model with the found locations
         Observable.merge(searchResults, searchByLocation)
             .catchAndReturn([])
-            .bind(to: self.model.hintCities)
+            .bind(to: self.model.hints)
             .disposed(by: self.disposeBag)
         
         // Clear search hints if showing error message and we focus into the search field
         self.searchFieldDidBeginEditing.withLatestFrom(self._searchHints)
-                .compactMap({ $0 })
-                .filter({ val in
-                    if case Search.SearchHints.error = val {
-                        return true
-                    }
-                    return false
+            .compactMap({ $0 })
+            .filter({ val in
+                if case Search.SearchHints.error = val {
+                    return true
+                }
+                return false
+            })
+            .subscribe(onNext: { [weak self] _ in
+                self?._searchHints.accept(nil)
+            })
+            .disposed(by: self.disposeBag)
+        
+        // Load favorites
+        storage.loadFavoriteLocations()
+            .do(onSuccess: { [weak self] (locations: [WeatherLocation]) in
+                self?.model.favorites.accept(locations)
+            })
+            .compactMap({ [weak self] (locations: [WeatherLocation]) in
+                locations.compactMap({
+                    self?.getFavoriteLocation(response: $0)
                 })
-                .subscribe(onNext: { [weak self] _ in
-                    self?._searchHints.accept(nil)
-                })
-                .disposed(by: self.disposeBag)
+            })
+            .catchAndReturn([])
+            .asObservable()
+            .bind(to: self._favoriteLocations)
+            .disposed(by: self.disposeBag)
+                
+        self._favoriteLocations
+            .map({ [weak self] (locations: [Search.Location.ViewModel]) -> Search.Favorites.ViewModel in
+                if locations.isEmpty {
+                    let message: String = NSLocalizedString("noFavoritesMessage", comment: "")
+                    return .none(message)
+                }
+
+                let title: String = self?.getFavoritesTitle(count: locations.count) ?? ""
+                return .saved(title, locations)
+            })
+            .catchAndReturn(.none(NSLocalizedString("noFavoritesMessage", comment: "")))
+            .asObservable()
+            .bind(to: self._favorites)
+            .disposed(by: self.disposeBag)
     }
     
     private func getLocation(response: Search.Location.Response) -> Search.Location.ViewModel {
@@ -239,6 +324,35 @@ class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchVie
     private func updateAnimationState(finished: Bool) {
         let newState: Search.AnimationState = finished ? self.animationState.opposite : self.animationState
         self._animationState.accept(newState)
+    }
+    
+    private func getFavoriteLocation(response: WeatherLocation) -> Search.Location.ViewModel {
+        var title: String = response.name
+        if let state = response.state, state.isEmpty == false {
+            title = "\(title), \(state)"
+        }
+        
+        let subtitle: String = self.getCoords(lat: response.lat, lon: response.lon)
+        return Search.Location.ViewModel(flag: UIImage(named: response.country), title: title, subtitle: subtitle)
+    }
+    
+    private func getFavoritesTitle(count: Int) -> String {
+        let title: String = NSLocalizedString("numberOfFavoritesTitle", comment: "")
+        return String.localizedStringWithFormat(title, count)
+    }
+    
+    private func getFavoriteDeleteErrorAlert() -> Alert.ViewModel {
+        let title: String = NSLocalizedString("locationFavoriteErrorTitle", comment: "")
+        let message: String = NSLocalizedString("locationFavoriteErrorMessage", comment: "")
+        let button: String = NSLocalizedString("okAlertButton", comment: "")
+        return Alert.ViewModel(title: title, message: message, button: button)
+    }
+    
+    private func removeFavoriteLocation(at index: Int) {
+        self.model.removeFavoriteLocation(at: index)
+        var locations: [Search.Location.ViewModel] = self._favoriteLocations.value
+        locations.remove(at: index)
+        self._favoriteLocations.accept(locations)
     }
 
 }
