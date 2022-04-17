@@ -21,7 +21,7 @@ protocol SetupViewModelInputs {
 }
 
 protocol SetupViewModelOutputs {
-    
+    var launchImageName: Observable<String> { get }
 }
 
 protocol SetupViewModelProtocol {
@@ -44,10 +44,15 @@ class SetupViewModel: SetupViewModelProtocol, SetupViewModelInputs, SetupViewMod
     // Inputs
     let viewDidLoad: PublishRelay<Void> = PublishRelay()
     
+    // Outputs
+    let launchImageName: Observable<String>
+    
     init(theme: Theme, router: WeakRouter<AppRoute>, storage: StorageService) {
         self.theme = theme
         self.storage = storage
         self.router = router
+        
+        self.launchImageName = Observable.just("LaunchImage")
         
         self.viewDidLoad
             .take(1)
