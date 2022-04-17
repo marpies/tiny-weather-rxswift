@@ -23,7 +23,7 @@ class TransitionAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     }
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return self.pushing ? 0.5 : 0.4
+        return self.pushing ? 1 : 0.4
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -42,7 +42,7 @@ class TransitionAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         
         if self.pushing {
             toView.center = CGPoint(x: size.width / 2, y: size.height / 2)
-            toView.transform = CGAffineTransform(scaleX: 1.1, y: 1.1).translatedBy(x: 0, y: -50)
+            toView.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
             toView.alpha = 0
             
             UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 0.85, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
@@ -57,7 +57,7 @@ class TransitionAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             
             UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
                 fromView.alpha = 0
-                fromView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9).translatedBy(x: 0, y: 50)
+                fromView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
             }) { (_) in
                 transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
             }
