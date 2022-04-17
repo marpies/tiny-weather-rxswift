@@ -137,6 +137,7 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
         let favoriteStatus = self.toggleFavoriteStatus
             .flatMap({
                 Observable.zip(self.model.location.compactMap({ $0 }), self.isLocationFavorite)
+                    .take(1)
             })
             .flatMap({ (location: WeatherLocation, isFavorite: Bool) in
                 storage.saveLocationFavoriteStatus(location, isFavorite: !isFavorite)
