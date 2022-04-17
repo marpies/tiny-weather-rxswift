@@ -49,4 +49,8 @@ class WeatherCoordinator: Coordinator {
         self.viewModel.loadWeather(forLocation: location)
     }
     
+    func favoriteDidDelete(forLocation location: WeatherLocation) {
+        self.viewModel.favoriteDidDelete(forLocation: location)
+    }
+    
 }

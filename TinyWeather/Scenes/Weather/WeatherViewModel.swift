@@ -40,6 +40,7 @@ protocol WeatherViewModelProtocol {
     var outputs: WeatherViewModelOutputs { get }
     
     func loadWeather(forLocation location: WeatherLocation)
+    func favoriteDidDelete(forLocation location: WeatherLocation)
 }
 
 class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, WeatherViewModelOutputs, WeatherConditionPresenting, TemperaturePresenting, WindSpeedPresenting,
@@ -235,6 +236,13 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
                 self?._state.accept(.error)
             })
             .disposed(by: self.disposeBag)
+    }
+    
+    func favoriteDidDelete(forLocation location: WeatherLocation) {
+        // If this is the scene's location, update the "favorite" button
+        guard self.model.matchesCurrentLocation(location) else { return }
+        
+        self.isLocationFavorite.accept(false)
     }
     
     //

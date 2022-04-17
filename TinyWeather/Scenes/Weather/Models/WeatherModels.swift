@@ -11,6 +11,7 @@
 
 import UIKit
 import TWModels
+import TWExtensions
 import RxRelay
 
 enum Weather {
@@ -18,6 +19,13 @@ enum Weather {
     struct Model {
         /// The current location presented in the weather scene.
         let location: BehaviorRelay<WeatherLocation?> = BehaviorRelay(value: nil)
+        
+        func matchesCurrentLocation(_ location: WeatherLocation) -> Bool {
+            guard let currentLocation = self.location.value else { return false }
+            
+            return location.lat.isNearEqual(to: currentLocation.lat) &&
+                    location.lon.isNearEqual(to: currentLocation.lon)
+        }
     }
     
     enum Error: Swift.Error {

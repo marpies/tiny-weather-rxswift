@@ -43,6 +43,7 @@ protocol SearchViewModelOutputs {
     var isInteractiveAnimationEnabled: Bool { get }
     var favorites: Driver<Search.Favorites.ViewModel> { get }
     var favoriteDeleteAlert: Signal<Alert.ViewModel> { get }
+    var favoriteDidDelete: Signal<WeatherLocation> { get }
 }
 
 protocol SearchViewModelProtocol: ThemeProviding {
@@ -117,6 +118,11 @@ class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchVie
     private let _favoriteDeleteAlert: PublishRelay<Alert.ViewModel> = PublishRelay()
     var favoriteDeleteAlert: Signal<Alert.ViewModel> {
         return _favoriteDeleteAlert.asSignal()
+    }
+    
+    private let _favoriteDidDelete: PublishRelay<WeatherLocation> = PublishRelay()
+    var favoriteDidDelete: Signal<WeatherLocation> {
+        return _favoriteDidDelete.asSignal()
     }
     
     init(apiService: RequestExecuting, theme: Theme, router: WeakRouter<AppRoute>, storage: FavoriteLocationStorageManaging, isInteractiveAnimationEnabled: Bool) {
@@ -195,6 +201,11 @@ class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchVie
                     .catchAndReturn(nil)
             })
             .share()
+        
+        unfavorite
+            .compactMap({ $0?.1 })
+            .bind(to: self._favoriteDidDelete)
+            .disposed(by: self.disposeBag)
         
         unfavorite
             .compactMap({ $0?.0 })

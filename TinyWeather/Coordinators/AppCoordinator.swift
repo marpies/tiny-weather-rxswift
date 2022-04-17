@@ -77,6 +77,13 @@ class AppCoordinator: Coordinator, Router {
             coordinator.interactiveAnimation = animation != nil
             self.children.append(coordinator)
             
+            // Propagate deleted favorite location to the weather scene
+            coordinator.favoriteDidDelete
+                .subscribe(onNext: { [weak self] (location) in
+                    self?.deleteFavoriteInWeatherScene(location: location)
+                })
+                .disposed(by: self.disposeBag)
+            
             // Dispose the scene when it is hidden
             coordinator.sceneDidHide
                 .take(1)
@@ -115,6 +122,12 @@ class AppCoordinator: Coordinator, Router {
         }
         
         coordinator.displayWeather(forLocation: location)
+    }
+    
+    private func deleteFavoriteInWeatherScene(location: WeatherLocation) {
+        if let coord = self.children.first(where: { $0 is WeatherCoordinator }) as? WeatherCoordinator {
+            coord.favoriteDidDelete(forLocation: location)
+        }
     }
     
     private func setupAssembler(_ assembler: Assembler) {

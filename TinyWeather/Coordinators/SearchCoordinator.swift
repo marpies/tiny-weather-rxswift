@@ -15,6 +15,7 @@ import Swinject
 import RxSwift
 import RxCocoa
 import TWRoutes
+import TWModels
 
 class SearchCoordinator: Coordinator {
     
@@ -28,6 +29,11 @@ class SearchCoordinator: Coordinator {
     private let _sceneDidHide: PublishRelay<Void> = PublishRelay()
     var sceneDidHide: Observable<Void> {
         return _sceneDidHide.asObservable()
+    }
+    
+    private let _favoriteDidDelete: PublishRelay<WeatherLocation> = PublishRelay()
+    var favoriteDidDelete: Observable<WeatherLocation> {
+        return _favoriteDidDelete.asObservable()
     }
     
     /// Set to `true` before starting the coordinator to allow for interactive pan animation.
@@ -48,9 +54,11 @@ class SearchCoordinator: Coordinator {
         self.viewController = self.resolver.resolve(SearchViewController.self, argument: vm)
         
         vm.outputs.sceneDidHide
-            .subscribe(onNext: { [weak self] in
-                self?._sceneDidHide.accept(())
-            })
+            .bind(to: _sceneDidHide)
+            .disposed(by: self.disposeBag)
+        
+        vm.outputs.favoriteDidDelete
+            .emit(to: _favoriteDidDelete)
             .disposed(by: self.disposeBag)
         
         if let root = self.navigationController.topViewController, let vc = self.viewController {
