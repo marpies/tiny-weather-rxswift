@@ -110,6 +110,7 @@
 		C3ABBF7E280AC13600B2F8DB /* FavoritesTableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3ABBF7D280AC13600B2F8DB /* FavoritesTableDataSource.swift */; };
 		C3ABBF80280AC44D00B2F8DB /* FavoritesTableDataSource+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3ABBF7F280AC44D00B2F8DB /* FavoritesTableDataSource+Rx.swift */; };
 		C3ABBF82280C313600B2F8DB /* TransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3ABBF81280C313600B2F8DB /* TransitionAnimator.swift */; };
+		C3ABBF84280C361000B2F8DB /* UIDuotoneIconButton+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3ABBF83280C361000B2F8DB /* UIDuotoneIconButton+Rx.swift */; };
 		C3B6DA522804875600DD6C10 /* CoreDataService+LoadLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B6DA512804875600DD6C10 /* CoreDataService+LoadLocation.swift */; };
 		C3BCB5EA28041C7100D4ED15 /* WeatherLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3BCB5E928041C7100D4ED15 /* WeatherLoading.swift */; };
 		C3BCB5EC28041DF600D4ED15 /* WeatherLoadingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3BCB5EB28041DF600D4ED15 /* WeatherLoadingService.swift */; };
@@ -237,6 +238,7 @@
 		C3ABBF7D280AC13600B2F8DB /* FavoritesTableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTableDataSource.swift; sourceTree = "<group>"; };
 		C3ABBF7F280AC44D00B2F8DB /* FavoritesTableDataSource+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoritesTableDataSource+Rx.swift"; sourceTree = "<group>"; };
 		C3ABBF81280C313600B2F8DB /* TransitionAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionAnimator.swift; sourceTree = "<group>"; };
+		C3ABBF83280C361000B2F8DB /* UIDuotoneIconButton+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDuotoneIconButton+Rx.swift"; sourceTree = "<group>"; };
 		C3B6DA512804875600DD6C10 /* CoreDataService+LoadLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataService+LoadLocation.swift"; sourceTree = "<group>"; };
 		C3BCB5E928041C7100D4ED15 /* WeatherLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLoading.swift; sourceTree = "<group>"; };
 		C3BCB5EB28041DF600D4ED15 /* WeatherLoadingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLoadingService.swift; sourceTree = "<group>"; };
@@ -424,6 +426,7 @@
 				C333416127F71FD8003CF850 /* WeatherHeaderView+Rx.swift */,
 				C3ABBF6728074B1F00B2F8DB /* DailyWeatherView+Rx.swift */,
 				C3ABBF71280813F900B2F8DB /* UIIconButton+Rx.swift */,
+				C3ABBF83280C361000B2F8DB /* UIDuotoneIconButton+Rx.swift */,
 				C3ABBF73280848F200B2F8DB /* UIViewController+Rx.swift */,
 				C3ABBF7B2808A5ED00B2F8DB /* FavoriteLocationsView+Rx.swift */,
 				C3ABBF7F280AC44D00B2F8DB /* FavoritesTableDataSource+Rx.swift */,
@@ -839,6 +842,7 @@
 				C36522AB27BE5A0B00E6AF39 /* SetupViewModel.swift in Sources */,
 				C333416027F71B68003CF850 /* WeatherHeaderView.swift in Sources */,
 				C36522C027BE9C5200E6AF39 /* SearchAssembly.swift in Sources */,
+				C3ABBF84280C361000B2F8DB /* UIDuotoneIconButton+Rx.swift in Sources */,
 				C365230427C51BC300E6AF39 /* NetworkError.swift in Sources */,
 				C365230C27C524DD00E6AF39 /* SearchHintsView.swift in Sources */,
 				C3ABBF6A2808045200B2F8DB /* UIIconButton.swift in Sources */,
