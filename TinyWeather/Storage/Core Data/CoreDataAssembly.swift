@@ -28,6 +28,9 @@ struct CoreDataAssembly: Assembly {
         container.register(LocationWeatherStorageManaging.self) { r in
             return r.resolve(CoreDataService.self)!
         }
+        container.register(FavoriteLocationStorageManaging.self) { r in
+            return r.resolve(CoreDataService.self)!
+        }
         container.register(WeatherStorageManaging.self) { r in
             return r.resolve(CoreDataService.self)!
         }
