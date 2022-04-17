@@ -12,6 +12,7 @@
 import Foundation
 import RxSwift
 import TWModels
+import CoreData
 
 extension CoreDataService: FavoriteLocationStorageManaging {
     
@@ -43,6 +44,23 @@ extension CoreDataService: FavoriteLocationStorageManaging {
                     } else {
                         single(.success(false))
                     }
+                } catch {
+                    single(.failure(error))
+                }
+            }
+            return Disposables.create()
+        }
+    }
+    
+    func loadFavoriteLocations() -> Single<[WeatherLocation]> {
+        Single.create { single in
+            self.backgroundContext.performWith { ctx in
+                do {
+                    let request: NSFetchRequest<LocationDb> = NSFetchRequest(entityName: LocationDb.Attributes.entityName)
+                    request.predicate = NSPredicate(format: "isFavorite == true")
+                    
+                    let locations: [LocationDb.Model] = try ctx.fetch(request).map { $0.model }
+                    single(.success(locations))
                 } catch {
                     single(.failure(error))
                 }

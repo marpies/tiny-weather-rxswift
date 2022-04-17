@@ -16,4 +16,5 @@ import TWModels
 protocol FavoriteLocationStorageManaging {
     func loadLocationFavoriteStatus(_ location: WeatherLocation) -> Single<Bool>
     func saveLocationFavoriteStatus(_ location: WeatherLocation, isFavorite: Bool) -> Single<Bool>
+    func loadFavoriteLocations() -> Single<[WeatherLocation]>
 }
