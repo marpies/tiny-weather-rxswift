@@ -51,7 +51,6 @@ class CurrentWeatherHeaderView: UIStackView {
         self.axis = .horizontal
         self.spacing = 24
         
-        self.iconView.setColors(primary: self.theme.colors.label, secondary: UIColor(rgb: 0xFFE2C9))
         self.iconView.setSize(108)
         self.iconView.backgroundColor = self.theme.colors.background
         self.addArrangedSubview(self.iconView)
