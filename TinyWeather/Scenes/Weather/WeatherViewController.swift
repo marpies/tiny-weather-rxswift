@@ -157,19 +157,17 @@ class WeatherViewController: UIViewController, UIScrollViewDelegate, UITableView
             .drive(self.headerView.rx.weather)
             .disposed(by: self.disposeBag)
         
-        let loadingStart = outputs.state
-            .filter({ $0 == .loading })
-            .map({ _ in })
-        
         outputs.newDailyWeather
             .drive(self.dailyWeatherView.rx.newDailyWeather)
             .disposed(by: self.disposeBag)
         
-        loadingStart
+        outputs.state
+            .filter({ $0 == .loading })
+            .map({ _ in })
             .drive(self.headerView.rx.showLoading)
             .disposed(by: self.disposeBag)
         
-        loadingStart
+        outputs.dailyWeatherWillRefresh
             .drive(self.dailyWeatherView.rx.removeAll)
             .disposed(by: self.disposeBag)
         
@@ -219,6 +217,16 @@ class WeatherViewController: UIViewController, UIScrollViewDelegate, UITableView
                 self?.scrollView.panGestureRecognizer.velocity(in: self?.view)
             })
             .bind(to: inputs.panGestureDidEnd)
+            .disposed(by: self.disposeBag)
+        
+        NotificationCenter.default.rx.notification(UIApplication.didEnterBackgroundNotification)
+            .map({ _ in })
+            .bind(to: inputs.appDidEnterBackground)
+            .disposed(by: self.disposeBag)
+        
+        NotificationCenter.default.rx.notification(UIApplication.didBecomeActiveNotification)
+            .map({ _ in })
+            .bind(to: inputs.appDidBecomeActive)
             .disposed(by: self.disposeBag)
     }
     

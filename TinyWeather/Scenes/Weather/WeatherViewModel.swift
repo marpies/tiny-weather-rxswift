@@ -23,12 +23,15 @@ protocol WeatherViewModelInputs {
     var panGestureDidChange: PublishRelay<CGFloat> { get }
     var panGestureDidEnd: PublishRelay<CGPoint> { get }
     var toggleFavoriteStatus: PublishRelay<Void> { get }
+    var appDidEnterBackground: PublishRelay<Void> { get }
+    var appDidBecomeActive: PublishRelay<Void> { get }
 }
 
 protocol WeatherViewModelOutputs {
     var locationInfo: Driver<Weather.Location.ViewModel> { get }
     var state: Driver<Weather.State> { get }
     var currentWeather: Driver<Weather.Current.ViewModel> { get }
+    var dailyWeatherWillRefresh: Driver<Void> { get }
     var newDailyWeather: Driver<Weather.Day.ViewModel> { get }
     var favoriteButtonTitle: Driver<IconButton.ViewModel?> { get }
     var favoriteStatusAlert: Signal<Alert.ViewModel> { get }
@@ -57,6 +60,8 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
     
     private var didBeginPan: BehaviorRelay<Bool> = BehaviorRelay(value: false)
     private var panTranslation: BehaviorRelay<CGFloat> = BehaviorRelay(value: 0)
+    
+    private var autoRefreshDisposable: Disposable?
 
     var inputs: WeatherViewModelInputs { return self }
     var outputs: WeatherViewModelOutputs { return self }
@@ -68,6 +73,8 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
     let panGestureDidChange: PublishRelay<CGFloat> = PublishRelay()
     let panGestureDidEnd: PublishRelay<CGPoint> = PublishRelay()
     let toggleFavoriteStatus: PublishRelay<Void> = PublishRelay()
+    let appDidEnterBackground: PublishRelay<Void> = PublishRelay()
+    let appDidBecomeActive: PublishRelay<Void> = PublishRelay()
 
     // Outputs
     private let _locationInfo: BehaviorRelay<Weather.Location.ViewModel?> = BehaviorRelay(value: nil)
@@ -83,6 +90,11 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
     private let _currentWeather: BehaviorRelay<Weather.Current.ViewModel?> = BehaviorRelay(value: nil)
     var currentWeather: Driver<Weather.Current.ViewModel> {
         return _currentWeather.asDriver().compactMap({ $0 })
+    }
+    
+    private let _dailyWeatherWillRefresh: PublishRelay<Void> = PublishRelay()
+    var dailyWeatherWillRefresh: Driver<Void> {
+        return _dailyWeatherWillRefresh.asDriver(onErrorJustReturn: ())
     }
     
     private let _dailyWeather: BehaviorRelay<[Weather.Day.ViewModel?]?> = BehaviorRelay(value: nil)
@@ -119,6 +131,8 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
         self.dateFormatter.timeZone = TimeZone(abbreviation: "UTC")!
         self.dateFormatter.locale = Locale.current
         
+        self.setAutoRefreshTimer()
+        
         self.panGestureDidBegin
             .map({ true })
             .bind(to: self.didBeginPan)
@@ -132,6 +146,21 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
         
         self.panGestureDidChange
             .bind(to: self.panTranslation)
+            .disposed(by: self.disposeBag)
+        
+        self.appDidBecomeActive
+            .subscribe(onNext: { [weak self] in
+                guard let weakSelf = self else { return }
+                
+                weakSelf.setAutoRefreshTimer()
+                weakSelf.refreshWeather()
+            })
+            .disposed(by: self.disposeBag)
+        
+        self.appDidEnterBackground
+            .subscribe(onNext: { [weak self] in
+                self?.disposeAutoRefreshTimer()
+            })
             .disposed(by: self.disposeBag)
         
         // Update favorite status on button tap
@@ -221,21 +250,7 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
         self._state.accept(.loading)
         
         // Load current weather
-        self.weatherLoader.loadWeather(latitude: location.lat, longitude: location.lon)
-            .do(onSuccess: { [weak self] (weather: Weather.Overview.Response) in
-                self?.storage.saveLocationWeather(weather, location: location)
-            })
-            .compactMap({ [weak self] (weather: Weather.Overview.Response) in
-                self?.getWeatherOverview(response: weather)
-            })
-            .subscribe(onSuccess: { [weak self] (weather: Weather.Overview.ViewModel) in
-                self?._state.accept(.loaded)
-                self?._currentWeather.accept(weather.current)
-                self?._dailyWeather.accept(weather.daily)
-            }, onError: { [weak self] _ in
-                self?._state.accept(.error)
-            })
-            .disposed(by: self.disposeBag)
+        self.refreshWeather(forLocation: location)
     }
     
     func favoriteDidDelete(forLocation location: WeatherLocation) {
@@ -249,13 +264,61 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
     // MARK: - Private
     //
     
+    private func refreshWeather(forLocation location: WeatherLocation) {
+        let observable = self.weatherLoader.loadWeather(latitude: location.lat, longitude: location.lon)
+        
+        // Identical timestamp, refresh the current weather view only
+        observable
+            .filter({ [model] (weather: Weather.Overview.Response) in
+                model.loadTimestamp.isNearEqual(to: weather.current.lastUpdate)
+            })
+            .compactMap({ [weak self] (weather: Weather.Overview.Response) in
+                self?.getCurrentWeather(response: weather.current, timezoneOffset: weather.timezoneOffset)
+            })
+            .subscribe(onSuccess: { [weak self] (weather: Weather.Current.ViewModel) in
+                guard let weakSelf = self else { return }
+                
+                weakSelf._state.accept(.loaded)
+                weakSelf._currentWeather.accept(weather)
+            }, onError: { [weak self] _ in
+                self?._state.accept(.error)
+            })
+            .disposed(by: self.disposeBag)
+        
+        // Refresh all the info if we got a new data
+        observable
+            .filter({ [model] (weather: Weather.Overview.Response) in
+                model.loadTimestamp.isNearEqual(to: weather.current.lastUpdate) == false
+            })
+            .do(onNext: { [weak self] (weather: Weather.Overview.Response) in
+                guard let weakSelf = self else { return }
+                
+                weakSelf.model.loadTimestamp = weather.current.lastUpdate
+                weakSelf.storage.saveLocationWeather(weather, location: location)
+            })
+            .compactMap({ [weak self] (weather: Weather.Overview.Response) in
+                self?.getWeatherOverview(response: weather)
+            })
+            .subscribe(onSuccess: { [weak self] (weather: Weather.Overview.ViewModel) in
+                guard let weakSelf = self else { return }
+                
+                weakSelf._state.accept(.loaded)
+                weakSelf._currentWeather.accept(weather.current)
+                weakSelf._dailyWeatherWillRefresh.accept(())
+                weakSelf._dailyWeather.accept(weather.daily)
+            }, onError: { [weak self] _ in
+                self?._state.accept(.error)
+            })
+            .disposed(by: self.disposeBag)
+    }
+    
     private func getLocationInfo(response: WeatherLocation) -> Weather.Location.ViewModel {
         let title: String = response.name
         var subtitle: String = response.country
         if let state = response.state, state.isEmpty == false {
             subtitle = "\(state), \(subtitle)"
         }
-        return Weather.Location.ViewModel(title: title, subtitle: subtitle, flag: UIImage(named: response.country), favoriteIcon: "")
+        return Weather.Location.ViewModel(title: title, subtitle: subtitle, flag: UIImage(named: response.country))
     }
     
     private func getWeatherOverview(response: Weather.Overview.Response) -> Weather.Overview.ViewModel {
@@ -410,6 +473,28 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
         let message: String = NSLocalizedString("locationFavoriteErrorMessage", comment: "")
         let button: String = NSLocalizedString("okAlertButton", comment: "")
         return Alert.ViewModel(title: title, message: message, button: button)
+    }
+    
+    private func setAutoRefreshTimer() {
+        guard self.autoRefreshDisposable == nil else { return }
+        
+        self.autoRefreshDisposable = Observable<Int>.interval(.seconds(30), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                self?.refreshWeather()
+            })
+    }
+    
+    private func disposeAutoRefreshTimer() {
+        guard let disposable = self.autoRefreshDisposable else { return }
+        
+        self.autoRefreshDisposable = nil
+        disposable.dispose()
+    }
+    
+    private func refreshWeather() {
+        guard let location = self.model.location.value else { return }
+        
+        self.refreshWeather(forLocation: location)
     }
 
 }

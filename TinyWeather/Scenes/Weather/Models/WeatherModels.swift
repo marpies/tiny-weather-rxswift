@@ -20,6 +20,9 @@ enum Weather {
         /// The current location presented in the weather scene.
         let location: BehaviorRelay<WeatherLocation?> = BehaviorRelay(value: nil)
         
+        /// Last timestamp of the loaded weather model.
+        var loadTimestamp: TimeInterval = 0
+        
         func matchesCurrentLocation(_ location: WeatherLocation) -> Bool {
             guard let currentLocation = self.location.value else { return false }
             
@@ -41,7 +44,6 @@ enum Weather {
             let title: String
             let subtitle: String
             let flag: UIImage?
-            let favoriteIcon: String
         }
     }
     
