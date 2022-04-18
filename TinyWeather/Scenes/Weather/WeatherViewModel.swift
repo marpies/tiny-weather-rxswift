@@ -78,47 +78,26 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
 
     // Outputs
     private let _locationInfo: BehaviorRelay<Weather.Location.ViewModel?> = BehaviorRelay(value: nil)
-    var locationInfo: Driver<Weather.Location.ViewModel> {
-        return _locationInfo.asDriver().compactMap({ $0 })
-    }
+    let locationInfo: Driver<Weather.Location.ViewModel>
     
     private let _state: BehaviorRelay<Weather.State> = BehaviorRelay(value: .loading)
-    var state: Driver<Weather.State> {
-        return _state.asDriver()
-    }
+    let state: Driver<Weather.State>
     
     private let _currentWeather: BehaviorRelay<Weather.Current.ViewModel?> = BehaviorRelay(value: nil)
-    var currentWeather: Driver<Weather.Current.ViewModel> {
-        return _currentWeather.asDriver().compactMap({ $0 })
-    }
+    let currentWeather: Driver<Weather.Current.ViewModel>
     
     private let _dailyWeatherWillRefresh: PublishRelay<Void> = PublishRelay()
-    var dailyWeatherWillRefresh: Driver<Void> {
-        return _dailyWeatherWillRefresh.asDriver(onErrorJustReturn: ())
-    }
+    let dailyWeatherWillRefresh: Driver<Void>
     
     private let _dailyWeather: BehaviorRelay<[Weather.Day.ViewModel?]?> = BehaviorRelay(value: nil)
-    var newDailyWeather: Driver<Weather.Day.ViewModel> {
-        return _dailyWeather
-            .compactMap({ $0 })
-            .flatMap({
-                Observable.from($0)
-                    .observe(on: MainScheduler.instance)
-            })
-            .asDriver(onErrorJustReturn: nil)
-            .compactMap({ $0 })
-    }
+    let newDailyWeather: Driver<Weather.Day.ViewModel>
     
     private let isLocationFavorite: BehaviorRelay<Bool> = BehaviorRelay(value: false)
     private let _favoriteButtonTitle: BehaviorRelay<IconButton.ViewModel?> = BehaviorRelay(value: nil)
-    var favoriteButtonTitle: Driver<IconButton.ViewModel?> {
-        return _favoriteButtonTitle.asDriver(onErrorJustReturn: nil)
-    }
+    let favoriteButtonTitle: Driver<IconButton.ViewModel?>
     
     private let _favoriteStatusAlert: PublishRelay<Alert.ViewModel> = PublishRelay()
-    var favoriteStatusAlert: Signal<Alert.ViewModel> {
-        return _favoriteStatusAlert.asSignal()
-    }
+    let favoriteStatusAlert: Signal<Alert.ViewModel>
 
     init(theme: Theme, weatherLoader: WeatherLoading, router: WeakRouter<AppRoute>, storage: WeatherStorageManaging) {
         self.theme = theme
@@ -131,6 +110,26 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
         self.dateFormatter.timeZone = TimeZone(abbreviation: "UTC")!
         self.dateFormatter.locale = Locale.current
         
+        // Outputs
+        self.state = _state.asDriver()
+        
+        self.locationInfo = _locationInfo.asDriver().compactMap({ $0 })
+        self.currentWeather = _currentWeather.asDriver().compactMap({ $0 })
+        
+        self.dailyWeatherWillRefresh = _dailyWeatherWillRefresh.asDriver(onErrorJustReturn: ())
+        self.newDailyWeather = _dailyWeather
+            .compactMap({ $0 })
+            .flatMap({
+                Observable.from($0)
+                    .observe(on: MainScheduler.instance)
+            })
+            .asDriver(onErrorJustReturn: nil)
+            .compactMap({ $0 })
+        
+        self.favoriteButtonTitle = _favoriteButtonTitle.asDriver(onErrorJustReturn: nil)
+        self.favoriteStatusAlert = _favoriteStatusAlert.asSignal()
+        
+        // Init auto-refresh timer
         self.setAutoRefreshTimer()
         
         self.panGestureDidBegin

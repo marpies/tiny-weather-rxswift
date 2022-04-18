@@ -79,19 +79,10 @@ class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchVie
     let isInteractiveAnimationEnabled: Bool
     
     private let _searchPlaceholder: BehaviorRelay<String> = BehaviorRelay(value: NSLocalizedString("searchInputPlaceholder", comment: ""))
-    var searchPlaceholder: Driver<NSAttributedString?> {
-        return _searchPlaceholder.map({ [theme] (text) in
-            NSAttributedString(string: text, attributes: [
-                NSAttributedString.Key.font: theme.fonts.primary(style: .title2),
-                NSAttributedString.Key.foregroundColor: theme.colors.secondaryLabel
-            ])
-        }).asDriver(onErrorJustReturn: nil)
-    }
+    let searchPlaceholder: Driver<NSAttributedString?>
     
     private let _locationButtonTitle: BehaviorRelay<DuotoneIconButton.ViewModel> = BehaviorRelay(value: DuotoneIconButton.ViewModel(icon: .location, title: NSLocalizedString("searchDeviceLocationButton", comment: "")))
-    var locationButtonTitle: Driver<DuotoneIconButton.ViewModel> {
-        return _locationButtonTitle.asDriver()
-    }
+    let locationButtonTitle: Driver<DuotoneIconButton.ViewModel>
     
     private let _animationState: BehaviorRelay<Search.AnimationState> = BehaviorRelay(value: .hidden)
     var animationState: Search.AnimationState {
@@ -99,40 +90,45 @@ class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchVie
     }
     
     private let _searchHints: PublishRelay<Search.SearchHints?> = PublishRelay()
-    var searchHints: Driver<Search.SearchHints?> {
-        return _searchHints.asDriver(onErrorJustReturn: nil)
-    }
+    let searchHints: Driver<Search.SearchHints?>
     
     private let _sceneDidHide: PublishRelay<Void> = PublishRelay()
-    var sceneDidHide: Observable<Void> {
-        return _sceneDidHide.asObservable()
-    }
+    let sceneDidHide: Observable<Void>
     
     private let _sceneWillHide: PublishRelay<Void> = PublishRelay()
-    var sceneWillHide: Observable<Void> {
-        return _sceneWillHide.asObservable()
-    }
+    let sceneWillHide: Observable<Void>
     
     private let _favoriteLocations: BehaviorRelay<[Search.Location.ViewModel]> = BehaviorRelay(value: [])
     private let _favorites: BehaviorRelay<Search.Favorites.ViewModel> = BehaviorRelay(value: .none(""))
-    var favorites: Driver<Search.Favorites.ViewModel> {
-        return _favorites.asDriver()
-    }
+    let favorites: Driver<Search.Favorites.ViewModel>
     
     private let _favoriteDeleteAlert: PublishRelay<Alert.ViewModel> = PublishRelay()
-    var favoriteDeleteAlert: Signal<Alert.ViewModel> {
-        return _favoriteDeleteAlert.asSignal()
-    }
+    let favoriteDeleteAlert: Signal<Alert.ViewModel>
     
     private let _favoriteDidDelete: PublishRelay<WeatherLocation> = PublishRelay()
-    var favoriteDidDelete: Signal<WeatherLocation> {
-        return _favoriteDidDelete.asSignal()
-    }
+    let favoriteDidDelete: Signal<WeatherLocation>
     
     init(apiService: RequestExecuting, theme: Theme, router: WeakRouter<AppRoute>, storage: FavoriteLocationStorageManaging, isInteractiveAnimationEnabled: Bool) {
         self.theme = theme
         self.apiService = apiService
         self.isInteractiveAnimationEnabled = isInteractiveAnimationEnabled
+        
+        // Outputs
+        self.searchPlaceholder = _searchPlaceholder
+            .map({ [theme] (text) in
+                NSAttributedString(string: text, attributes: [
+                    NSAttributedString.Key.font: theme.fonts.primary(style: .title2),
+                    NSAttributedString.Key.foregroundColor: theme.colors.secondaryLabel
+                ])
+            }).asDriver(onErrorJustReturn: nil)
+        
+        self.locationButtonTitle = _locationButtonTitle.asDriver()
+        self.searchHints = _searchHints.asDriver(onErrorJustReturn: nil)
+        self.sceneDidHide = _sceneDidHide.asObservable()
+        self.sceneWillHide = _sceneWillHide.asObservable()
+        self.favorites = _favorites.asDriver()
+        self.favoriteDeleteAlert = _favoriteDeleteAlert.asSignal()
+        self.favoriteDidDelete = _favoriteDidDelete.asSignal()
         
         self.performSearch.withLatestFrom(self.searchValue)
             .subscribe(onNext: { [weak self] (searchTerm) in
