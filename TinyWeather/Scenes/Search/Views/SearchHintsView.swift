@@ -65,7 +65,7 @@ class SearchHintsView: UIView {
     //
     
     private func setupView() {
-        self.backgroundColor = self.theme.colors.secondaryBackground.withAlphaComponent(0.8)
+        self.backgroundColor = self.theme.colors.secondaryBackground.withAlphaComponent(0.9)
         self.layer.cornerRadius = 8
         self.layer.shadowColor = self.theme.colors.shadow.cgColor
         self.layer.shadowOffset = CGSize(width: 0, height: 10)
