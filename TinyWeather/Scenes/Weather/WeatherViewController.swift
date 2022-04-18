@@ -153,8 +153,7 @@ class WeatherViewController: UIViewController, UIScrollViewDelegate, UITableView
             .drive(self.headerView.rx.location)
             .disposed(by: self.disposeBag)
         
-        outputs.weatherInfo
-            .map({ $0.current })
+        outputs.currentWeather
             .drive(self.headerView.rx.weather)
             .disposed(by: self.disposeBag)
         

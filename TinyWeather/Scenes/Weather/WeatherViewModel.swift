@@ -28,7 +28,7 @@ protocol WeatherViewModelInputs {
 protocol WeatherViewModelOutputs {
     var locationInfo: Driver<Weather.Location.ViewModel> { get }
     var state: Driver<Weather.State> { get }
-    var weatherInfo: Driver<Weather.Overview.ViewModel> { get }
+    var currentWeather: Driver<Weather.Current.ViewModel> { get }
     var newDailyWeather: Driver<Weather.Day.ViewModel> { get }
     var favoriteButtonTitle: Driver<IconButton.ViewModel?> { get }
     var favoriteStatusAlert: Signal<Alert.ViewModel> { get }
@@ -80,9 +80,9 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
         return _state.asDriver()
     }
     
-    private let _weatherInfo: BehaviorRelay<Weather.Overview.ViewModel?> = BehaviorRelay(value: nil)
-    var weatherInfo: Driver<Weather.Overview.ViewModel> {
-        return _weatherInfo.asDriver().compactMap({ $0 })
+    private let _currentWeather: BehaviorRelay<Weather.Current.ViewModel?> = BehaviorRelay(value: nil)
+    var currentWeather: Driver<Weather.Current.ViewModel> {
+        return _currentWeather.asDriver().compactMap({ $0 })
     }
     
     private let _dailyWeather: BehaviorRelay<[Weather.Day.ViewModel?]?> = BehaviorRelay(value: nil)
@@ -230,7 +230,7 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
             })
             .subscribe(onSuccess: { [weak self] (weather: Weather.Overview.ViewModel) in
                 self?._state.accept(.loaded)
-                self?._weatherInfo.accept(weather)
+                self?._currentWeather.accept(weather.current)
                 self?._dailyWeather.accept(weather.daily)
             }, onError: { [weak self] _ in
                 self?._state.accept(.error)
