@@ -18,25 +18,19 @@ extension CoreDataService: StorageService {
     
     var initialize: Completable {
         return Completable.create { observer in
-            DispatchQueue.global(qos: .userInitiated).async {
-                self.container.loadPersistentStores { (persistentStoreDescription, error) in
-                    if let e = error {
-                        DispatchQueue.main.async {
-                            observer(.error(e))
-                        }
-                    } else {
-                        self.container.viewContext.automaticallyMergesChangesFromParent = true
-                        self.container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
-                        
-                        if case .sql(let url) = self.store.type {
-                            var fileUrl: URL = url
-                            fileUrl.excludeFromBackup()
-                        }
-                        
-                        DispatchQueue.main.async {
-                            observer(.completed)
-                        }
+            self.container.loadPersistentStores { (persistentStoreDescription, error) in
+                if let e = error {
+                    observer(.error(e))
+                } else {
+                    self.container.viewContext.automaticallyMergesChangesFromParent = true
+                    self.container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
+                    
+                    if case .sql(let url) = self.store.type {
+                        var fileUrl: URL = url
+                        fileUrl.excludeFromBackup()
                     }
+                    
+                    observer(.completed)
                 }
             }
             
