@@ -13,7 +13,7 @@
 // MARK: - Search
 //
 
-"searchInputPlaceholder" = "Search location";
+"searchInputPlaceholder" = "Search for location";
 "searchHintsNoResultsMessage" = "Location not found";
 "searchHintsErrorMessage" = "Error looking up locations";
 "searchDeviceLocationButton" = "Your location";
