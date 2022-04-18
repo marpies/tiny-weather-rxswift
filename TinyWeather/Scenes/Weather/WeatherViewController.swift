@@ -104,7 +104,7 @@ class WeatherViewController: UIViewController, UIScrollViewDelegate, UITableView
         self.headerView.snp.remakeConstraints { make in
             make.width.equalToSuperview().multipliedBy(0.5)
             make.centerX.equalToSuperview().multipliedBy(0.5)
-            make.centerY.equalToSuperview()
+            make.centerY.equalToSuperview().multipliedBy(0.94)
         }
         
         self.favoriteBtn.snp.remakeConstraints { make in
