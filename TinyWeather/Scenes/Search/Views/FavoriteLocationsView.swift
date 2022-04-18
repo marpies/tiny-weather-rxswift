@@ -22,6 +22,7 @@ class FavoriteLocationsView: UIView, UITableViewDelegate {
 
     private var messageLabel: UILabel?
     private var titleLabel: UILabel?
+    private var tableShadow: UIView?
     private var dataSource: FavoritesTableDataSource?
     private var disposeBag: DisposeBag?
     
@@ -56,6 +57,14 @@ class FavoriteLocationsView: UIView, UITableViewDelegate {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        if let shadow = self.tableShadow {
+            shadow.layer.shadowPath = CGPath(roundedRect: shadow.bounds, cornerWidth: 8, cornerHeight: 8, transform: nil)
+        }
     }
     
     //
@@ -102,16 +111,19 @@ class FavoriteLocationsView: UIView, UITableViewDelegate {
         
         self.disposeBag = nil
         
-        if let table = self.tableView, let label = self.titleLabel {
+        if let table = self.tableView, let label = self.titleLabel, let tableShadow = self.tableShadow {
             self.tableView = nil
             self.titleLabel = nil
+            self.tableShadow = nil
             
             UIView.animate(withDuration: 0.3, animations: {
                 table.alpha = 0
                 label.alpha = 0
+                tableShadow.alpha = 0
             }, completion: { _ in
                 table.removeFromSuperview()
                 label.removeFromSuperview()
+                tableShadow.removeFromSuperview()
             })
         }
     }
@@ -135,8 +147,7 @@ class FavoriteLocationsView: UIView, UITableViewDelegate {
                 table.allowsMultipleSelection = false
                 table.showsVerticalScrollIndicator = false
                 table.rowHeight = 60
-                table.backgroundColor = self.theme.colors.secondaryBackground.withAlphaComponent(0.9)
-                table.layer.cornerRadius = 8
+                table.backgroundColor = .clear
                 table.separatorColor = self.theme.colors.separator
                 table.delegate = self
                 self.addSubview(table)
@@ -144,6 +155,20 @@ class FavoriteLocationsView: UIView, UITableViewDelegate {
                     make.leading.trailing.bottom.equalToSuperview()
                     make.height.equalTo(4 * 60)
                     make.top.equalTo(self.titleLabel!.snp.bottom).offset(8)
+                }
+                
+                self.tableShadow = UIView()
+                self.tableShadow.map { view in
+                    view.layer.shadowColor = self.theme.colors.shadow.cgColor
+                    view.layer.shadowOffset = CGSize(width: 0, height: 10)
+                    view.layer.shadowRadius = 20
+                    view.layer.shadowOpacity = 0.15
+                    view.layer.cornerRadius = 8
+                    view.backgroundColor = self.theme.colors.secondaryBackground
+                    self.insertSubview(view, belowSubview: table)
+                    view.snp.makeConstraints { make in
+                        make.edges.equalTo(table)
+                    }
                 }
                 
                 self.dataSource = FavoritesTableDataSource(tableView: table, theme: self.theme)
