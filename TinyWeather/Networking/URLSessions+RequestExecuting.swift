@@ -28,7 +28,7 @@ extension Reactive: RequestExecuting where Base: URLSession {
             }
             
             let task = self.base.dataTask(with: request) { data, response, error in
-                if let r = response as? HTTPURLResponse, r.statusCode != 200 {
+                if let r = response as? HTTPURLResponse, !(200..<300 ~= r.statusCode) {
                     single(.failure(NetworkError.invalidResponse))
                 } else if let e = error {
                     single(.failure(NetworkError.underlying(e)))
