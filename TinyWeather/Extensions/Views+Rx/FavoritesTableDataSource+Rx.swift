@@ -13,8 +13,6 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-extension FavoritesTableDataSource: ReactiveCompatible { }
-
 extension Reactive where Base: FavoritesTableDataSource {
     
     var viewModel: Binder<[Search.Location.ViewModel]> {

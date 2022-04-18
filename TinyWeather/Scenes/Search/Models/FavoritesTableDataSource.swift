@@ -12,34 +12,35 @@
 import UIKit
 import TWThemes
 
-class FavoritesTableDataSource {
-
-    private let tableView: UITableView
+class FavoritesTableDataSource: UITableViewDiffableDataSource<Int, Search.Location.ViewModel> {
 
     private var viewModel: [Search.Location.ViewModel] = []
 
-    let dataSource: UITableViewDiffableDataSource<Int, Search.Location.ViewModel>
-
     init(tableView: UITableView, theme: Theme) {
         let cellProvider: FavoritesTableCellProvider = FavoritesTableCellProvider(tableView: tableView, theme: theme)
-
-        self.tableView = tableView
-        self.dataSource = UITableViewDiffableDataSource<Int, Search.Location.ViewModel>(tableView: tableView, cellProvider: cellProvider.cellFactory)
-        self.dataSource.defaultRowAnimation = .fade
-
-        tableView.dataSource = self.dataSource
+        
+        super.init(tableView: tableView, cellProvider: cellProvider.cellFactory)
+        
+        self.defaultRowAnimation = .fade
+        
+        tableView.dataSource = self
+    }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        // Required for swipe actions to work on the table view on iOS 14 and below
+        return true
     }
 
     func update(viewModel: [Search.Location.ViewModel]) {
         self.viewModel = viewModel
 
-        var snapshot = self.dataSource.snapshot()
+        var snapshot = self.snapshot()
         if snapshot.numberOfSections > 0 {
             snapshot.deleteSections([0])
         }
         snapshot.appendSections([0])
         snapshot.appendItems(viewModel, toSection: 0)
-        self.dataSource.apply(snapshot, animatingDifferences: true, completion: nil)
+        self.apply(snapshot, animatingDifferences: true, completion: nil)
     }
 
 }
