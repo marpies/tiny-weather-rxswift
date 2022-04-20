@@ -243,7 +243,7 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
         self.model.location.accept(location)
         
         // Save this location as default now (i.e. last one shown)
-        self.storage.saveDefaultLocation(location)
+        self.storage.saveDefaultLocation(location).subscribe().disposed(by: self.disposeBag)
         
         // Set loading state
         self._state.accept(.loading)

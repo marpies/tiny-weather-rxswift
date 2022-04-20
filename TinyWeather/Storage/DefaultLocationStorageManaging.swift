@@ -16,5 +16,5 @@ import TWModels
 protocol DefaultLocationStorageManaging {
     var defaultLocation: Maybe<WeatherLocation> { get }
     
-    func saveDefaultLocation(_ location: WeatherLocation)
+    func saveDefaultLocation(_ location: WeatherLocation) -> Completable
 }

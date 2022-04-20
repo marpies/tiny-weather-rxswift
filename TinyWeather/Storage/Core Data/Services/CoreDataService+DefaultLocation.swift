@@ -38,29 +38,35 @@ extension CoreDataService: DefaultLocationStorageManaging {
         }
     }
     
-    func saveDefaultLocation(_ location: WeatherLocation) {
-        self.backgroundContext.performWith { ctx in
-            do {
-                // Remove default flag from existing default location model
-                try self.clearDefaultLocation(context: ctx)
-                
-                // Set the default flag on the new location
-                // Update existing model or create a new one
-                let existing: LocationDb? = try self.loadLocation(latitude: location.lat, longitude: location.lon, context: ctx)
-                let model: LocationDb = existing ?? LocationDb(context: ctx)
-                
-                model.name = location.name
-                model.country = location.country
-                model.state = location.state
-                model.lon = location.lon
-                model.lat = location.lat
-                model.isDefault = true
-                
-                try ctx.save()
-            } catch {
-                // Ignored
-                print("Error saving default location: \(error)")
+    func saveDefaultLocation(_ location: WeatherLocation) -> Completable {
+        return Completable.create { observer in
+            self.backgroundContext.performWith { ctx in
+                do {
+                    // Remove default flag from existing default location model
+                    try self.clearDefaultLocation(context: ctx)
+                    
+                    // Set the default flag on the new location
+                    // Update existing model or create a new one
+                    let existing: LocationDb? = try self.loadLocation(latitude: location.lat, longitude: location.lon, context: ctx)
+                    let model: LocationDb = existing ?? LocationDb(context: ctx)
+                    
+                    model.name = location.name
+                    model.country = location.country
+                    model.state = location.state
+                    model.lon = location.lon
+                    model.lat = location.lat
+                    model.isDefault = true
+                    
+                    try ctx.saveIfNeeded()
+                    
+                    observer(.completed)
+                } catch {
+                    print("Error saving default location: \(error)")
+                    observer(.error(error))
+                }
             }
+            
+            return Disposables.create()
         }
     }
     
