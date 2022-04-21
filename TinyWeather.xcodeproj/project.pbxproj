@@ -53,6 +53,9 @@
 		C348A57927F62B8B006787C3 /* WeatherAttributeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348A57827F62B8B006787C3 /* WeatherAttributeView.swift */; };
 		C348A57B27F62C72006787C3 /* CurrentWeatherHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348A57A27F62C72006787C3 /* CurrentWeatherHeaderView.swift */; };
 		C348A57D27F62DEF006787C3 /* WeatherAttributesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348A57C27F62DEF006787C3 /* WeatherAttributesView.swift */; };
+		C35DF872280F36DE009641EB /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = C35DF871280F36DE009641EB /* RxCocoa */; };
+		C35DF874280F36DE009641EB /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = C35DF873280F36DE009641EB /* RxRelay */; };
+		C35DF876280F36DE009641EB /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C35DF875280F36DE009641EB /* RxSwift */; };
 		C365225E27BE438400E6AF39 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365225D27BE438400E6AF39 /* AppDelegate.swift */; };
 		C365226427BE438500E6AF39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C365226327BE438500E6AF39 /* Assets.xcassets */; };
 		C365226727BE438500E6AF39 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C365226527BE438500E6AF39 /* LaunchScreen.storyboard */; };
@@ -89,6 +92,8 @@
 		C365231027C52D2000E6AF39 /* NetworkingAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365230F27C52D2000E6AF39 /* NetworkingAssembly.swift */; };
 		C365231227C6778100E6AF39 /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365231127C6778100E6AF39 /* SearchCoordinator.swift */; };
 		C37724BD27DFB8C900C50450 /* SearchAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37724BC27DFB8C900C50450 /* SearchAnimations.swift */; };
+		C38DEEB6280DEC3F00777DCA /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = C38DEEB5280DEC3F00777DCA /* RxBlocking */; };
+		C38DEEB8280DEC3F00777DCA /* RxTest in Frameworks */ = {isa = PBXBuildFile; productRef = C38DEEB7280DEC3F00777DCA /* RxTest */; };
 		C3A64AC928054ED2001B0683 /* TWExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = C3A64AC828054ED2001B0683 /* TWExtensions */; };
 		C3A64ACB2805608A001B0683 /* TWModels in Frameworks */ = {isa = PBXBuildFile; productRef = C3A64ACA2805608A001B0683 /* TWModels */; };
 		C3A64ACD2805608A001B0683 /* TWRoutes in Frameworks */ = {isa = PBXBuildFile; productRef = C3A64ACC2805608A001B0683 /* TWRoutes */; };
@@ -271,6 +276,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C35DF872280F36DE009641EB /* RxCocoa in Frameworks */,
+				C38DEEB8280DEC3F00777DCA /* RxTest in Frameworks */,
+				C35DF876280F36DE009641EB /* RxSwift in Frameworks */,
+				C35DF874280F36DE009641EB /* RxRelay in Frameworks */,
+				C38DEEB6280DEC3F00777DCA /* RxBlocking in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -692,6 +702,13 @@
 				C365226F27BE438500E6AF39 /* PBXTargetDependency */,
 			);
 			name = TinyWeatherTests;
+			packageProductDependencies = (
+				C38DEEB5280DEC3F00777DCA /* RxBlocking */,
+				C38DEEB7280DEC3F00777DCA /* RxTest */,
+				C35DF871280F36DE009641EB /* RxCocoa */,
+				C35DF873280F36DE009641EB /* RxRelay */,
+				C35DF875280F36DE009641EB /* RxSwift */,
+			);
 			productName = TinyWeatherTests;
 			productReference = C365226D27BE438500E6AF39 /* TinyWeatherTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -1393,6 +1410,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		C35DF871280F36DE009641EB /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C365228A27BE445D00E6AF39 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		C35DF873280F36DE009641EB /* RxRelay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C365228A27BE445D00E6AF39 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxRelay;
+		};
+		C35DF875280F36DE009641EB /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C365228A27BE445D00E6AF39 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
 		C365228B27BE445D00E6AF39 /* RxSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C365228A27BE445D00E6AF39 /* XCRemoteSwiftPackageReference "RxSwift" */;
@@ -1427,6 +1459,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C36522C127BEDE0C00E6AF39 /* XCRemoteSwiftPackageReference "RxGesture" */;
 			productName = RxGesture;
+		};
+		C38DEEB5280DEC3F00777DCA /* RxBlocking */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C365228A27BE445D00E6AF39 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxBlocking;
+		};
+		C38DEEB7280DEC3F00777DCA /* RxTest */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C365228A27BE445D00E6AF39 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxTest;
 		};
 		C3A64AC828054ED2001B0683 /* TWExtensions */ = {
 			isa = XCSwiftPackageProductDependency;
