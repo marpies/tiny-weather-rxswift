@@ -24,26 +24,32 @@ struct WeatherLoadingService: WeatherLoading {
     
     func loadWeather(latitude: Double, longitude: Double) -> Single<Weather.Overview.Response> {
         return Single.create { single in
-            // Storage request
-            let storage = self.storage.loadLocationWeather(latitude: latitude, longitude: longitude)
+            // Load storage first, then API if no cache recent exists
+            let loader = self.storage.loadLocationWeather(latitude: latitude, longitude: longitude)
                 .filter({ (weather) in
                     self.isCacheRecent(weather.current)
                 })
-            
-            // API request
-            let apiRequest = self.apiService
-                .execute(request: APIResource.currentAndDaily(lat: latitude, lon: longitude))
-                .map({ (response: HTTPResponse) in
-                    try response.map(to: Weather.Overview.Response.self)
+                .asObservable()
+                .first()
+                .catchAndReturn(nil)
+                .flatMap({ (r: Weather.Overview.Response?) -> Single<Weather.Overview.Response> in
+                    // Use the recent cache if we have it
+                    if let response = r {
+                        return Single.just(response)
+                    }
+                    
+                    // Make an API call if needed
+                    return self.apiService
+                        .execute(request: APIResource.currentAndDaily(lat: latitude, lon: longitude))
+                        .map({ (response: HTTPResponse) in
+                            try response.map(to: Weather.Overview.Response.self)
+                        })
                 })
             
-            // Load storage first, then API if no cache exists
-            let disposable = Observable.concat(storage.asObservable(), apiRequest.asObservable())
-                .first()
-                .compactMap({ $0 })
+            let disposable = loader
                 .subscribe(onSuccess: { weather in
                     single(.success(weather))
-                }, onError: { error in
+                }, onFailure: { error in
                     single(.failure(error))
                 })
             
