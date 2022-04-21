@@ -265,6 +265,8 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
     
     private func refreshWeather(forLocation location: WeatherLocation) {
         let observable = self.weatherLoader.loadWeather(latitude: location.lat, longitude: location.lon)
+            .asObservable()
+            .share()
         
         // Identical timestamp, refresh the current weather view only
         observable
@@ -274,7 +276,7 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
             .compactMap({ [weak self] (weather: Weather.Overview.Response) in
                 self?.getCurrentWeather(response: weather.current, timezoneOffset: weather.timezoneOffset)
             })
-            .subscribe(onSuccess: { [weak self] (weather: Weather.Current.ViewModel) in
+            .subscribe(onNext: { [weak self] (weather: Weather.Current.ViewModel) in
                 guard let weakSelf = self else { return }
                 
                 weakSelf._state.accept(.loaded)
@@ -298,7 +300,7 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
             .compactMap({ [weak self] (weather: Weather.Overview.Response) in
                 self?.getWeatherOverview(response: weather)
             })
-            .subscribe(onSuccess: { [weak self] (weather: Weather.Overview.ViewModel) in
+            .subscribe(onNext: { [weak self] (weather: Weather.Overview.ViewModel) in
                 guard let weakSelf = self else { return }
                 
                 weakSelf._state.accept(.loaded)
