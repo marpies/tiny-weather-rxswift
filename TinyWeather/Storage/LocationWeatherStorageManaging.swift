@@ -16,6 +16,6 @@ import TWModels
 protocol LocationWeatherStorageManaging {
     var cacheDuration: TimeInterval { get }
     
-    func saveLocationWeather(_ weather: Weather.Overview.Response, location: WeatherLocation)
     func loadLocationWeather(latitude: Double, longitude: Double) -> Maybe<Weather.Overview.Response>
+    func saveLocationWeather(_ weather: Weather.Overview.Response, location: WeatherLocation) -> Completable
 }

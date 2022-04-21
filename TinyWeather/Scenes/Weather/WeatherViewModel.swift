@@ -293,7 +293,7 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
                 guard let weakSelf = self else { return }
                 
                 weakSelf.model.loadTimestamp = weather.current.lastUpdate
-                weakSelf.storage.saveLocationWeather(weather, location: location)
+                weakSelf.storage.saveLocationWeather(weather, location: location).subscribe().disposed(by: weakSelf.disposeBag)
             })
             .compactMap({ [weak self] (weather: Weather.Overview.Response) in
                 self?.getWeatherOverview(response: weather)

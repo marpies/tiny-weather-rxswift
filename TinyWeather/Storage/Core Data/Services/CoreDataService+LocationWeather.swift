@@ -20,43 +20,50 @@ extension CoreDataService: LocationWeatherStorageManaging {
         return 10 * 60
     }
     
-    func saveLocationWeather(_ weather: Weather.Overview.Response, location: WeatherLocation) {
-        self.backgroundContext.performWith { ctx in
-            let request: NSFetchRequest<WeatherDb> = self.getRequest(latitude: location.lat, longitude: location.lon)
-            
-            do {
-                let results: [WeatherDb] = try ctx.fetch(request)
-                let model: WeatherDb
+    func saveLocationWeather(_ weather: Weather.Overview.Response, location: WeatherLocation) -> Completable {
+        return Completable.create { observer in
+            self.backgroundContext.performWith { ctx in
+                let request: NSFetchRequest<WeatherDb> = self.getRequest(latitude: location.lat, longitude: location.lon)
                 
-                // Update existing model
-                if let m = results.first {
-                    model = m
+                do {
+                    let results: [WeatherDb] = try ctx.fetch(request)
+                    let model: WeatherDb
                     
-                    // Check if the new model is newer
-                    guard weather.current.lastUpdate > model.lastUpdate.timeIntervalSince1970 else {
-                        return
-                    }
-                    
-                    // Delete existing daily for this location
-                    if let daily = model.daily as? Set<DailyWeatherDb> {
-                        daily.forEach { weather in
-                            ctx.delete(weather)
+                    // Update existing model
+                    if let m = results.first {
+                        model = m
+                        
+                        // Check if the new model is newer
+                        guard weather.current.lastUpdate > model.lastUpdate.timeIntervalSince1970 else {
+                            observer(.completed)
+                            return
+                        }
+                        
+                        // Delete existing daily for this location
+                        if let daily = model.daily as? Set<DailyWeatherDb> {
+                            daily.forEach { weather in
+                                ctx.delete(weather)
+                            }
                         }
                     }
+                    // Create a new model
+                    else {
+                        model = WeatherDb(context: ctx)
+                        model.location = try self.getDefaultWeatherLocation(location, context: ctx)
+                    }
+                    
+                    self.updateModel(model, weather: weather, location: location, context: ctx)
+                    
+                    try ctx.save()
+                    
+                    observer(.completed)
+                } catch {
+                    print("Error saving location weather: \(error)")
+                    observer(.error(error))
                 }
-                // Create a new model
-                else {
-                    model = WeatherDb(context: ctx)
-                    model.location = try self.getDefaultWeatherLocation(location, context: ctx)
-                }
-                
-                self.updateModel(model, weather: weather, location: location, context: ctx)
-                
-                try ctx.save()
-            } catch {
-                // Ignored
-                print("Error saving location weather: \(error)")
             }
+            
+            return Disposables.create()
         }
     }
     
