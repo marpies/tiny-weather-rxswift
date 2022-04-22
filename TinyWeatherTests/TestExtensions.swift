@@ -17,4 +17,16 @@ extension Dictionary where Key == String, Value == Any {
         return try! JSONSerialization.data(withJSONObject: self, options: [])
     }
     
+    func double(_ key: String) -> Double {
+        return (self[key] as? Double) ?? 0
+    }
+    
+    func int(_ key: String) -> Int {
+        return (self[key] as? Int) ?? 0
+    }
+    
+    func string(_ key: String) -> String {
+        return (self[key] as? String) ?? ""
+    }
+    
 }
