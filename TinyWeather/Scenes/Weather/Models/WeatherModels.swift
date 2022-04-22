@@ -309,7 +309,7 @@ enum Weather {
                 self.tempMin = try temps.decode(Float.self, forKey: .min)
                 self.tempMax = try temps.decode(Float.self, forKey: .max)
                 
-                self.windSpeed = try container.decode(Float.self, forKey: .windSpeed)
+                self.windSpeed = try container.decode(Float.self, forKey: .windSpeed) * 3.6 // km/h
                 
                 if container.contains(.rain) {
                     self.rain = try container.decode(Float.self, forKey: .rain).rounded()
