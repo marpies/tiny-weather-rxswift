@@ -281,8 +281,6 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
                 
                 weakSelf._state.accept(.loaded)
                 weakSelf._currentWeather.accept(weather)
-            }, onError: { [weak self] _ in
-                self?._state.accept(.error)
             })
             .disposed(by: self.disposeBag)
         
