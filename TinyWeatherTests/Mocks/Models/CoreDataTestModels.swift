@@ -16,7 +16,7 @@ import TWModels
 
 enum CoreDataTestModels {
     @discardableResult static func createLocation(_ location: WeatherLocation, isDefault: Bool, isFavorite: Bool, context: NSManagedObjectContext) -> LocationDb {
-        let result: LocationDb = LocationDb(context: context)
+        let result: LocationDb = NSEntityDescription.insertNewObject(forEntityName: LocationDb.Attributes.entityName, into: context) as! LocationDb
         result.name = location.name
         result.country = location.country
         result.state = location.state
@@ -32,7 +32,7 @@ enum CoreDataTestModels {
         let currentWeather = weather.current
         let locationModel = self.createLocation(location, isDefault: false, isFavorite: false, context: context)
         
-        let result: WeatherDb = WeatherDb(context: context)
+        let result: WeatherDb = NSEntityDescription.insertNewObject(forEntityName: WeatherDb.Attributes.entityName, into: context) as! WeatherDb
         result.location = locationModel
         result.condition = currentWeather.weather.id
         result.conditionDescription = currentWeather.weather.description
@@ -47,7 +47,7 @@ enum CoreDataTestModels {
         result.isNight = currentWeather.weather.isNight
         
         let daily: [DailyWeatherDb] = weather.daily.map({ daily in
-            let model: DailyWeatherDb = DailyWeatherDb(context: context)
+            let model: DailyWeatherDb = NSEntityDescription.insertNewObject(forEntityName: DailyWeatherDb.Attributes.entityName, into: context) as! DailyWeatherDb
             model.date = Date(timeIntervalSince1970: daily.date)
             model.condition = daily.weather.id
             model.windSpeed = daily.windSpeed

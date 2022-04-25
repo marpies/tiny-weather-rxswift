@@ -48,7 +48,7 @@ extension CoreDataService: DefaultLocationStorageManaging {
                     // Set the default flag on the new location
                     // Update existing model or create a new one
                     let existing: LocationDb? = try self.loadLocation(latitude: location.lat, longitude: location.lon, context: ctx)
-                    let model: LocationDb = existing ?? LocationDb(context: ctx)
+                    let model: LocationDb = existing ?? NSEntityDescription.insertNewObject(forEntityName: LocationDb.Attributes.entityName, into: ctx) as! LocationDb
                     
                     model.name = location.name
                     model.country = location.country

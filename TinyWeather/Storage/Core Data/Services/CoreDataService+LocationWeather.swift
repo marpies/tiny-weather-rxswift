@@ -48,7 +48,7 @@ extension CoreDataService: LocationWeatherStorageManaging {
                     }
                     // Create a new model
                     else {
-                        model = WeatherDb(context: ctx)
+                        model = NSEntityDescription.insertNewObject(forEntityName: WeatherDb.Attributes.entityName, into: ctx) as! WeatherDb
                         model.location = try self.getDefaultWeatherLocation(location, context: ctx)
                     }
                     
@@ -154,7 +154,7 @@ extension CoreDataService: LocationWeatherStorageManaging {
         if let existing = try self.loadLocation(latitude: location.lat, longitude: location.lon, context: context) {
             model = existing
         } else {
-            model = LocationDb(context: context)
+            model = NSEntityDescription.insertNewObject(forEntityName: LocationDb.Attributes.entityName, into: context) as! LocationDb
             model.isDefault = false
         }
         
@@ -162,7 +162,7 @@ extension CoreDataService: LocationWeatherStorageManaging {
     }
     
     private func getDailyModel(response: Weather.Day.Response, location: WeatherDb, context: NSManagedObjectContext) -> DailyWeatherDb {
-        let model: DailyWeatherDb = DailyWeatherDb(context: context)
+        let model: DailyWeatherDb = NSEntityDescription.insertNewObject(forEntityName: DailyWeatherDb.Attributes.entityName, into: context) as! DailyWeatherDb
         
         model.date = Date(timeIntervalSince1970: response.date)
         model.condition = response.weather.id
