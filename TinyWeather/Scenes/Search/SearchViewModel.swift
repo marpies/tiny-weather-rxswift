@@ -53,6 +53,8 @@ protocol SearchViewModelProtocol: ThemeProviding {
 class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchViewModelOutputs, CoordinatesPresenting {
     
     private let disposeBag: DisposeBag = DisposeBag()
+    
+    // todo should be abstracted away for mocking
     private let locationManager: CLLocationManager = CLLocationManager()
     
     private var model: Search.Model = Search.Model()
