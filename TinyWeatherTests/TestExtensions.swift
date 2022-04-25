@@ -26,7 +26,19 @@ extension Dictionary where Key == String, Value == Any {
     }
     
     func string(_ key: String) -> String {
-        return (self[key] as? String) ?? ""
+        return self.stringOptional(key) ?? ""
+    }
+    
+    func stringOptional(_ key: String) -> String? {
+        return self[key] as? String
+    }
+    
+}
+
+extension Array where Element == [String: Any] {
+    
+    var asData: Data {
+        return try! JSONSerialization.data(withJSONObject: self, options: [])
     }
     
 }
