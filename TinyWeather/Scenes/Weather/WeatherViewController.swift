@@ -177,9 +177,11 @@ class WeatherViewController: UIViewController, UIScrollViewDelegate, UITableView
             .drive(self.headerView.rx.hideLoading)
             .disposed(by: self.disposeBag)
         
-        outputs.favoriteButtonTitle
-            .map({ $0 == nil })
-            .drive(self.favoriteBtn.rx.isHidden)
+        Observable.combineLatest(outputs.state.asObservable(), outputs.favoriteButtonTitle.asObservable())
+            .map({ (state, title) -> Bool in
+                (title == nil) || (state != .loaded)
+            })
+            .bind(to: self.favoriteBtn.rx.isHidden)
             .disposed(by: self.disposeBag)
         
         outputs.favoriteButtonTitle
