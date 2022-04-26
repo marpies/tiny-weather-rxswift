@@ -132,7 +132,7 @@ class WeatherViewController: UIViewController, UIScrollViewDelegate, UITableView
             make.bottom.lessThanOrEqualToSuperview()
         }
         
-        self.errorView?.snp.makeConstraints({ make in
+        self.errorView?.snp.remakeConstraints({ make in
             make.leading.equalTo(self.contentView.snp.centerX)
             make.trailing.equalTo(self.contentView.layoutMarginsGuide)
             make.centerY.equalToSuperview()
@@ -158,7 +158,7 @@ class WeatherViewController: UIViewController, UIScrollViewDelegate, UITableView
             make.bottom.lessThanOrEqualToSuperview()
         }
         
-        self.errorView?.snp.makeConstraints({ make in
+        self.errorView?.snp.remakeConstraints({ make in
             make.top.equalTo(self.headerView.snp.bottom).offset(16)
             make.leading.trailing.equalTo(self.contentView.layoutMarginsGuide)
             make.bottom.lessThanOrEqualToSuperview()
