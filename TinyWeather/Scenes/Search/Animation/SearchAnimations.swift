@@ -210,6 +210,13 @@ class SearchPanAnimation {
         
         let shouldHide: Bool = velocity.y < 0
         
+        // Finish animation instantly if we are meant to hide and we have not become visible at all
+        if shouldHide && self.animationState == .hidden && animator.fractionComplete < 0.0015 {
+            animator.stopAnimation(false)
+            animator.finishAnimation(at: .current)
+            return
+        }
+        
         // Update the search field's transform during the final animation
         animator.addAnimations { [weak self] in
             guard let weakSelf = self else { return }

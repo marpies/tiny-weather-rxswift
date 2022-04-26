@@ -110,6 +110,7 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
     
     private func setupViews() {
         self.view.backgroundColor = .clear
+        self.view.isUserInteractionEnabled = false
         
         // Blur
         self.view.addSubview(self.visualView)
@@ -211,6 +212,43 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
         self.searchHintsView?.removeFromSuperview()
         self.searchHintsView = nil
         self.animation?.hintsView = nil
+    }
+    
+    private func registerPanGesture() {
+        let pan = self.view.rx.panGesture(configuration: { [weak self] (_, delegate) in
+            delegate.otherFailureRequirementPolicy = .custom({ (gesture, other) in
+                // Avoid conflict with the favorites table view panning
+                if let g = self?.favoritesView.panGesture {
+                    return other === g || other.view === self?.favoritesView.tableView
+                }
+                return false
+            })
+        }).share()
+        
+        pan
+            .when(.began)
+            .subscribe(onNext: { [weak self] _ in
+                self?.startScrubbingAnimation()
+            })
+            .disposed(by: self.disposeBag)
+        
+        pan
+            .when(.changed)
+            .asTranslation()
+            .map({ (translation, _) in translation })
+            .subscribe(onNext: { [weak self] translation in
+                self?.updateAnimationProgress(translation: translation)
+            })
+            .disposed(by: self.disposeBag)
+        
+        pan
+            .when(.ended)
+            .asTranslation()
+            .map({ (_, velocity) in velocity })
+            .subscribe(onNext: { [weak self] velocity in
+                self?.finishAnimation(velocity: velocity)
+            })
+            .disposed(by: self.disposeBag)
     }
 
     //
@@ -320,41 +358,19 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
             .bind(to: inputs.favoriteLocationDidDelete)
             .disposed(by: self.disposeBag)
         
+        outputs.sceneDidAppear
+            .take(1)
+            .map({ true })
+            .bind(to: self.view.rx.isUserInteractionEnabled)
+            .disposed(by: self.disposeBag)
+        
         // Enable panning animation only when needed
         guard outputs.isInteractiveAnimationEnabled else { return }
         
-        let pan = self.view.rx.panGesture(configuration: { [weak self] (_, delegate) in
-            delegate.otherFailureRequirementPolicy = .custom({ (gesture, other) in
-                // Avoid conflict with the favorites table view panning
-                if let g = self?.favoritesView.panGesture {
-                    return other === g || other.view === self?.favoritesView.tableView
-                }
-                return false
-            })
-        }).share()
-        
-        pan
-            .when(.began)
-            .subscribe(onNext: { [weak self] _ in
-                self?.startScrubbingAnimation()
-            })
-            .disposed(by: self.disposeBag)
-        
-        pan
-            .when(.changed)
-            .asTranslation()
-            .map({ (translation, _) in translation })
-            .subscribe(onNext: { [weak self] translation in
-                self?.updateAnimationProgress(translation: translation)
-            })
-            .disposed(by: self.disposeBag)
-        
-        pan
-            .when(.ended)
-            .asTranslation()
-            .map({ (_, velocity) in velocity })
-            .subscribe(onNext: { [weak self] velocity in
-                self?.finishAnimation(velocity: velocity)
+        outputs.sceneDidAppear
+            .take(1)
+            .subscribe(onNext: { [weak self] in
+                self?.registerPanGesture()
             })
             .disposed(by: self.disposeBag)
     }

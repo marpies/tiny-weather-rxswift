@@ -39,6 +39,7 @@ protocol SearchViewModelOutputs {
     var searchHints: Driver<Search.SearchHints?> { get }
     var sceneDidHide: Observable<Void> { get }
     var sceneWillHide: Observable<Void> { get }
+    var sceneDidAppear: Observable<Void> { get }
     var isInteractiveAnimationEnabled: Bool { get }
     var favorites: Driver<Search.Favorites.ViewModel> { get }
     var favoriteDeleteAlert: Signal<Alert.ViewModel> { get }
@@ -100,6 +101,9 @@ class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchVie
     private let _sceneWillHide: PublishRelay<Void> = PublishRelay()
     let sceneWillHide: Observable<Void>
     
+    private let _sceneDidAppear: PublishRelay<Void> = PublishRelay()
+    let sceneDidAppear: Observable<Void>
+    
     private let _favoriteLocations: BehaviorRelay<[Search.Location.ViewModel]> = BehaviorRelay(value: [])
     private let _favorites: BehaviorRelay<Search.Favorites.ViewModel> = BehaviorRelay(value: .none(""))
     let favorites: Driver<Search.Favorites.ViewModel>
@@ -128,6 +132,7 @@ class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchVie
         self.searchHints = _searchHints.asDriver(onErrorJustReturn: nil)
         self.sceneDidHide = _sceneDidHide.asObservable()
         self.sceneWillHide = _sceneWillHide.asObservable()
+        self.sceneDidAppear = _sceneDidAppear.asObservable()
         self.favorites = _favorites.asDriver()
         self.favoriteDeleteAlert = _favoriteDeleteAlert.asSignal()
         self.favoriteDidDelete = _favoriteDidDelete.asSignal()
@@ -175,6 +180,14 @@ class SearchViewModel: SearchViewModelProtocol, SearchViewModelInputs, SearchVie
             .subscribe(onNext: { [weak self] _ in
                 self?._sceneDidHide.accept(())
             })
+            .disposed(by: self.disposeBag)
+        
+        self._animationState
+            .skip(1)
+            .distinctUntilChanged()
+            .filter({ $0 == .visible })
+            .map({ _ in })
+            .bind(to: _sceneDidAppear)
             .disposed(by: self.disposeBag)
         
         self.viewDidDisappear
