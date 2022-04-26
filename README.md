@@ -16,4 +16,4 @@ Obtain the [OpenWeather API key](https://openweathermap.org/api) and add it to t
 * [RxGesture](https://github.com/RxSwiftCommunity/RxGesture)
 * [SnapKit](https://github.com/SnapKit/SnapKit)
 * [Swinject](https://github.com/Swinject/Swinject)
-* [FontAweomse Icons](https://fontawesome.com/)
+* [FontAwesome Icons](https://fontawesome.com/)
