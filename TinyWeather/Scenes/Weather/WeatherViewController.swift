@@ -25,6 +25,18 @@ class WeatherViewController: UIViewController, UIScrollViewDelegate, UITableView
     private let contentView: UIView = UIView()
     private let scrollView: UIScrollView = UIScrollView()
     
+    private var errorView: WeatherErrorView?
+    
+    private var errorViewModel: Binder<Weather.Error.ViewModel?> {
+        return Binder(self) { [weak self] (vc, vm) in
+            if let vm = vm {
+                self?.addErrorView(viewModel: vm)
+            } else {
+                self?.removeErrorView()
+            }
+        }
+    }
+    
     init(viewModel: WeatherViewModelProtocol) {
         self.viewModel = viewModel
         self.headerView = WeatherHeaderView(theme: viewModel.theme)
@@ -119,6 +131,12 @@ class WeatherViewController: UIViewController, UIScrollViewDelegate, UITableView
             make.top.greaterThanOrEqualToSuperview()
             make.bottom.lessThanOrEqualToSuperview()
         }
+        
+        self.errorView?.snp.makeConstraints({ make in
+            make.leading.equalTo(self.contentView.snp.centerX)
+            make.trailing.equalTo(self.contentView.layoutMarginsGuide)
+            make.centerY.equalToSuperview()
+        })
     }
     
     private func layoutCompactViews() {
@@ -138,6 +156,29 @@ class WeatherViewController: UIViewController, UIScrollViewDelegate, UITableView
             make.top.equalTo(self.favoriteBtn.snp.bottom).offset(16)
             make.leading.trailing.equalTo(self.contentView.layoutMarginsGuide)
             make.bottom.lessThanOrEqualToSuperview()
+        }
+        
+        self.errorView?.snp.makeConstraints({ make in
+            make.top.equalTo(self.headerView.snp.bottom).offset(16)
+            make.leading.trailing.equalTo(self.contentView.layoutMarginsGuide)
+            make.bottom.lessThanOrEqualToSuperview()
+        })
+    }
+    
+    private func addErrorView(viewModel: Weather.Error.ViewModel) {
+        if self.errorView == nil {
+            self.errorView = WeatherErrorView(theme: self.viewModel.theme)
+            self.contentView.addSubview(self.errorView!)
+        }
+        
+        self.errorView?.update(viewModel: viewModel)
+        self.layoutSubviews()
+    }
+    
+    private func removeErrorView() {
+        if let view = self.errorView {
+            self.errorView = nil
+            view.removeFromSuperview()
         }
     }
 
@@ -172,6 +213,11 @@ class WeatherViewController: UIViewController, UIScrollViewDelegate, UITableView
             .disposed(by: self.disposeBag)
         
         outputs.state
+            .map({ $0 != .loaded })
+            .drive(self.dailyWeatherView.rx.isHidden)
+            .disposed(by: self.disposeBag)
+        
+        outputs.state
             .filter({ $0 != .loading })
             .map({ _ in })
             .drive(self.headerView.rx.hideLoading)
@@ -191,6 +237,10 @@ class WeatherViewController: UIViewController, UIScrollViewDelegate, UITableView
         
         outputs.favoriteStatusAlert
             .emit(to: self.rx.alert)
+            .disposed(by: self.disposeBag)
+        
+        outputs.weatherError
+            .drive(self.errorViewModel)
             .disposed(by: self.disposeBag)
         
         self.favoriteBtn.rx

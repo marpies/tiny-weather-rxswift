@@ -35,6 +35,7 @@ protocol WeatherViewModelOutputs {
     var newDailyWeather: Driver<Weather.Day.ViewModel> { get }
     var favoriteButtonTitle: Driver<IconButton.ViewModel?> { get }
     var favoriteStatusAlert: Signal<Alert.ViewModel> { get }
+    var weatherError: Driver<Weather.Error.ViewModel?> { get }
 }
 
 protocol WeatherViewModelProtocol {
@@ -98,6 +99,9 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
     
     private let _favoriteStatusAlert: PublishRelay<Alert.ViewModel> = PublishRelay()
     let favoriteStatusAlert: Signal<Alert.ViewModel>
+    
+    private let _weatherError: PublishRelay<Weather.Error.ViewModel?> = PublishRelay()
+    let weatherError: Driver<Weather.Error.ViewModel?>
 
     init(theme: Theme, weatherLoader: WeatherLoading, router: WeakRouter<AppRoute>, storage: WeatherStorageManaging) {
         self.theme = theme
@@ -128,6 +132,8 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
         
         self.favoriteButtonTitle = _favoriteButtonTitle.asDriver(onErrorJustReturn: nil)
         self.favoriteStatusAlert = _favoriteStatusAlert.asSignal()
+        
+        self.weatherError = _weatherError.asDriver(onErrorJustReturn: nil)
         
         // Init auto-refresh timer
         self.setAutoRefreshTimer()
@@ -234,6 +240,17 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
         self.panGestureDidEnd
             .map({ _ in false })
             .bind(to: self.didBeginPan)
+            .disposed(by: self.disposeBag)
+        
+        self._state
+            .map({ $0 == .error })
+            .map({ [weak self] (isError) -> Weather.Error.ViewModel? in
+                if isError {
+                    return self?.getLoadError()
+                }
+                return nil
+            })
+            .bind(to: self._weatherError)
             .disposed(by: self.disposeBag)
     }
     
@@ -494,6 +511,11 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
         guard let location = self.model.location.value else { return }
         
         self.refreshWeather(forLocation: location)
+    }
+    
+    private func getLoadError() -> Weather.Error.ViewModel {
+        let icon: DuotoneIcon.ViewModel = DuotoneIcon.ViewModel(icon: .thunderstorm, primaryColor: self.theme.colors.weather.cloud, secondaryColor: self.theme.colors.weather.sun)
+        return Weather.Error.ViewModel(icon: icon, message: NSLocalizedString("weatherLoadErrorMessage", comment: ""))
     }
 
 }

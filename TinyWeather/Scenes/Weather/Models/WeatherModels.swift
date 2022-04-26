@@ -33,6 +33,11 @@ enum Weather {
     
     enum Error: Swift.Error {
         case invalidData
+        
+        struct ViewModel {
+            let icon: DuotoneIcon.ViewModel
+            let message: String
+        }
     }
     
     enum State {

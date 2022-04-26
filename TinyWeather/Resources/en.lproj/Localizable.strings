@@ -41,3 +41,4 @@
 "locationRemoveFromFavoritesButton" = "Remove from favorites";
 "locationFavoriteErrorTitle" = "Error";
 "locationFavoriteErrorMessage" = "There was an unexpected error updating the favorites. Please try again.";
+"weatherLoadErrorMessage" = "There was an error loading the weather.";
