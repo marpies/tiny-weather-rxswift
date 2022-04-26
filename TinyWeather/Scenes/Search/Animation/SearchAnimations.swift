@@ -94,14 +94,15 @@ class SearchPanAnimation {
         self.animator?.addAnimations { [weak self] in
             guard let weakSelf = self else { return }
             
+            let views: [UIView] = [weakSelf.searchField, weakSelf.locationBtn, weakSelf.favoritesView]
+            views.forEach { view in
+                view.alpha = 0
+                view.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+            }
+            
             weakSelf.hintsView?.alpha = 0
             weakSelf.hintsView?.transform = CGAffineTransform(scaleX: 0.8, y: 0.8).translatedBy(x: 0, y: -40)
-            weakSelf.searchField.alpha = 0
-            weakSelf.searchField.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
-            weakSelf.locationBtn.alpha = 0
-            weakSelf.locationBtn.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
-            weakSelf.favoritesView.alpha = 0
-            weakSelf.favoritesView.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+            
             weakSelf.visualView.effect = nil
         }
         
@@ -221,24 +222,18 @@ class SearchPanAnimation {
         animator.addAnimations { [weak self] in
             guard let weakSelf = self else { return }
             
+            let views: [UIView?] = [weakSelf.searchField, weakSelf.hintsView, weakSelf.locationBtn, weakSelf.favoritesView]
+            
             if shouldHide {
-                weakSelf.searchField.alpha = 0
-                weakSelf.searchField.transform = CGAffineTransform(translationX: 0, y: max(-100, velocity.y)).scaledBy(x: 0.8, y: 0.8)
-                weakSelf.hintsView?.alpha = 0
-                weakSelf.hintsView?.transform = CGAffineTransform(translationX: 0, y: max(-100, velocity.y)).scaledBy(x: 0.8, y: 0.8)
-                weakSelf.locationBtn.alpha = 0
-                weakSelf.locationBtn.transform = CGAffineTransform(translationX: 0, y: max(-100, velocity.y)).scaledBy(x: 0.8, y: 0.8)
-                weakSelf.favoritesView.alpha = 0
-                weakSelf.favoritesView.transform = CGAffineTransform(translationX: 0, y: max(-100, velocity.y)).scaledBy(x: 0.8, y: 0.8)
+                views.forEach { view in
+                    view?.alpha = 0
+                    view?.transform = CGAffineTransform(translationX: 0, y: max(-100, velocity.y)).scaledBy(x: 0.8, y: 0.8)
+                }
             } else {
-                weakSelf.searchField.alpha = 1
-                weakSelf.searchField.transform = .identity
-                weakSelf.hintsView?.alpha = 1
-                weakSelf.hintsView?.transform = .identity
-                weakSelf.locationBtn.alpha = 1
-                weakSelf.locationBtn.transform = .identity
-                weakSelf.favoritesView.alpha = 1
-                weakSelf.favoritesView.transform = .identity
+                views.forEach { view in
+                    view?.alpha = 1
+                    view?.transform = .identity
+                }
             }
         }
         
@@ -306,24 +301,23 @@ class SearchPanAnimation {
             }
         }
         
-        self.searchField.transform = CGAffineTransform(translationX: 0, y: offsetY).scaledBy(x: scale, y: scale)
-        self.hintsView?.transform = CGAffineTransform(translationX: 0, y: offsetY).scaledBy(x: scale, y: scale)
+        self.translateAndScale(view: self.searchField, offsetY: offsetY, factor: 1, scale: scale)
+        self.translateAndScale(view: self.hintsView, offsetY: offsetY, factor: 1, scale: scale)
+        self.translateAndScale(view: self.locationBtn, offsetY: offsetY, factor: 0.75, scale: scale)
+        self.translateAndScale(view: self.favoritesView, offsetY: offsetY, factor: 0.7, scale: scale)
+    }
+    
+    private func translateAndScale(view: UIView?, offsetY: CGFloat, factor: CGFloat, scale: CGFloat) {
+        guard let view = view else { return }
         
-        let locationBtnOffset: CGFloat
+        let newOffset: CGFloat
         if offsetY < 0 {
-            locationBtnOffset = offsetY * 0.75
+            newOffset = offsetY * factor
         } else {
-            locationBtnOffset = offsetY * (1 / 0.75)
+            newOffset = offsetY * (1 / factor)
         }
-        self.locationBtn.transform = CGAffineTransform(translationX: 0, y: locationBtnOffset).scaledBy(x: scale, y: scale)
         
-        let favoritesViewOffset: CGFloat
-        if offsetY < 0 {
-            favoritesViewOffset = offsetY * 0.7
-        } else {
-            favoritesViewOffset = offsetY * (1 / 0.7)
-        }
-        self.favoritesView.transform = CGAffineTransform(translationX: 0, y: favoritesViewOffset).scaledBy(x: scale, y: scale)
+        view.transform = CGAffineTransform(translationX: 0, y: newOffset).scaledBy(x: scale, y: scale)
     }
     
 }
