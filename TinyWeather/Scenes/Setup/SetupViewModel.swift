@@ -15,6 +15,7 @@ import CoreGraphics
 import RxCocoa
 import TWThemes
 import TWRoutes
+import TWModels
 
 protocol SetupViewModelInputs {
     var viewDidLoad: PublishRelay<Void> { get }
@@ -86,10 +87,29 @@ class SetupViewModel: SetupViewModelProtocol, SetupViewModelInputs, SetupViewMod
                 // Ignore error, start with search
                 self?.router.route(to: .search(nil))
             }, onCompleted: { [weak self] in
-                // No default location, start with search
-                self?.router.route(to: .search(nil))
+                // No default location, use the bundled one or route to the search
+                if let location = self?.getDefaultLocation() {
+                    self?.router.route(to: .weather(location))
+                } else {
+                    self?.router.route(to: .search(nil))
+                }
             })
             .disposed(by: self.disposeBag)
+    }
+    
+    private func getDefaultLocation() -> WeatherLocation? {
+        if let path = Bundle.main.path(forResource: "Defaults", ofType: "plist"),
+           let dict = NSDictionary(contentsOfFile: path),
+           let name = dict.value(forKey: "TWDefaultLocationName") as? String,
+           let country = dict.value(forKey: "TWDefaultLocationCountry") as? String,
+           let latRaw = dict.value(forKey: "TWDefaultLocationLatitude") as? String,
+           let lonRaw = dict.value(forKey: "TWDefaultLocationLongitude") as? String,
+           let lat = Double(latRaw),
+           let lon = Double(lonRaw) {
+            let state = dict.value(forKey: "TWDefaultLocationState") as? String
+            return Search.Location.Response(name: name, state: state, country: country, lon: lon, lat: lat)
+        }
+        return nil
     }
 
 }
