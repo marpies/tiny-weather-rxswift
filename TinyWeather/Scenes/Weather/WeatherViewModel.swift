@@ -257,6 +257,12 @@ class WeatherViewModel: WeatherViewModelProtocol, WeatherViewModelInputs, Weathe
     func loadWeather(forLocation location: WeatherLocation) {
         let info: Weather.Location.ViewModel = self.getLocationInfo(response: location)
         self._locationInfo.accept(info)
+        
+        // Hide existing daily weather if loading a new location
+        if self.model.matchesCurrentLocation(location) == false {
+            self._dailyWeatherWillRefresh.accept(())
+        }
+        
         self.model.location.accept(location)
         
         // Save this location as default now (i.e. last one shown)
