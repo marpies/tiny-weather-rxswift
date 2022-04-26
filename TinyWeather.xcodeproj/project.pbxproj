@@ -113,6 +113,7 @@
 		C365231027C52D2000E6AF39 /* NetworkingAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365230F27C52D2000E6AF39 /* NetworkingAssembly.swift */; };
 		C365231227C6778100E6AF39 /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365231127C6778100E6AF39 /* SearchCoordinator.swift */; };
 		C37724BD27DFB8C900C50450 /* SearchAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37724BC27DFB8C900C50450 /* SearchAnimations.swift */; };
+		C377257B2817E5620099C8E6 /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = C377257A2817E5620099C8E6 /* Defaults.plist */; };
 		C38DEEA7280DE4DF00777DCA /* CoreDataService+StorageService+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C38DEEA6280DE4DF00777DCA /* CoreDataService+StorageService+Tests.swift */; };
 		C38DEEB6280DEC3F00777DCA /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = C38DEEB5280DEC3F00777DCA /* RxBlocking */; };
 		C38DEEB8280DEC3F00777DCA /* RxTest in Frameworks */ = {isa = PBXBuildFile; productRef = C38DEEB7280DEC3F00777DCA /* RxTest */; };
@@ -268,6 +269,7 @@
 		C365230F27C52D2000E6AF39 /* NetworkingAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingAssembly.swift; sourceTree = "<group>"; };
 		C365231127C6778100E6AF39 /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
 		C37724BC27DFB8C900C50450 /* SearchAnimations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAnimations.swift; sourceTree = "<group>"; };
+		C377257A2817E5620099C8E6 /* Defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Defaults.plist; sourceTree = "<group>"; };
 		C38DEEA6280DE4DF00777DCA /* CoreDataService+StorageService+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataService+StorageService+Tests.swift"; sourceTree = "<group>"; };
 		C3A64ACE2805676C001B0683 /* DuotoneLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DuotoneLabel.swift; sourceTree = "<group>"; };
 		C3A64AD028056F0D001B0683 /* UIDuotoneIconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDuotoneIconButton.swift; sourceTree = "<group>"; };
@@ -688,6 +690,7 @@
 			isa = PBXGroup;
 			children = (
 				C348A55027F5ABCA006787C3 /* Fonts */,
+				C377257A2817E5620099C8E6 /* Defaults.plist */,
 				C326654927FED2BB00DF83E8 /* TinyWeather.xcdatamodeld */,
 				C36522CF27C4E3FE00E6AF39 /* Localizable.strings */,
 				C336A48728002B5A008DC090 /* Localizable.stringsdict */,
@@ -919,6 +922,7 @@
 				C348A55627F5ABCA006787C3 /* icons_solid.ttf in Resources */,
 				C348A55A27F5B060006787C3 /* icons_duotone.plist in Resources */,
 				C336A48528002B5A008DC090 /* Localizable.stringsdict in Resources */,
+				C377257B2817E5620099C8E6 /* Defaults.plist in Resources */,
 				C36522CD27C4E3FE00E6AF39 /* Localizable.strings in Resources */,
 				C348A55527F5ABCA006787C3 /* icons_light.ttf in Resources */,
 				C348A56427F5B6F6006787C3 /* icons_duotone.otf in Resources */,
