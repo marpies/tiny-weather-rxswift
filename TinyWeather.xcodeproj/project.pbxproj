@@ -118,6 +118,14 @@
 		C38DEEA7280DE4DF00777DCA /* CoreDataService+StorageService+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C38DEEA6280DE4DF00777DCA /* CoreDataService+StorageService+Tests.swift */; };
 		C38DEEB6280DEC3F00777DCA /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = C38DEEB5280DEC3F00777DCA /* RxBlocking */; };
 		C38DEEB8280DEC3F00777DCA /* RxTest in Frameworks */ = {isa = PBXBuildFile; productRef = C38DEEB7280DEC3F00777DCA /* RxTest */; };
+		C399D27D281AA34D00845F7F /* TWThemes in Frameworks */ = {isa = PBXBuildFile; productRef = C399D27C281AA34D00845F7F /* TWThemes */; };
+		C399D27F281AA34D00845F7F /* TWExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = C399D27E281AA34D00845F7F /* TWExtensions */; };
+		C399D281281AA34D00845F7F /* TWRoutes in Frameworks */ = {isa = PBXBuildFile; productRef = C399D280281AA34D00845F7F /* TWRoutes */; };
+		C399D283281AA34D00845F7F /* TWModels in Frameworks */ = {isa = PBXBuildFile; productRef = C399D282281AA34D00845F7F /* TWModels */; };
+		C399D285281AA3ED00845F7F /* TWExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = C399D284281AA3ED00845F7F /* TWExtensions */; };
+		C399D287281AA3ED00845F7F /* TWModels in Frameworks */ = {isa = PBXBuildFile; productRef = C399D286281AA3ED00845F7F /* TWModels */; };
+		C399D289281AA3ED00845F7F /* TWRoutes in Frameworks */ = {isa = PBXBuildFile; productRef = C399D288281AA3ED00845F7F /* TWRoutes */; };
+		C399D28B281AA3ED00845F7F /* TWThemes in Frameworks */ = {isa = PBXBuildFile; productRef = C399D28A281AA3ED00845F7F /* TWThemes */; };
 		C3A64AC928054ED2001B0683 /* TWExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = C3A64AC828054ED2001B0683 /* TWExtensions */; };
 		C3A64ACB2805608A001B0683 /* TWModels in Frameworks */ = {isa = PBXBuildFile; productRef = C3A64ACA2805608A001B0683 /* TWModels */; };
 		C3A64ACD2805608A001B0683 /* TWRoutes in Frameworks */ = {isa = PBXBuildFile; productRef = C3A64ACC2805608A001B0683 /* TWRoutes */; };
@@ -307,6 +315,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C365229027BE445D00E6AF39 /* RxCocoa in Frameworks */,
+				C399D27D281AA34D00845F7F /* TWThemes in Frameworks */,
 				C3D566D328054BFC008BEDBB /* TWThemes in Frameworks */,
 				C365229527BE446900E6AF39 /* Swinject in Frameworks */,
 				C3A64ACD2805608A001B0683 /* TWRoutes in Frameworks */,
@@ -314,9 +323,12 @@
 				C365229827BE447400E6AF39 /* SnapKit in Frameworks */,
 				C365228E27BE445D00E6AF39 /* RxRelay in Frameworks */,
 				C365228C27BE445D00E6AF39 /* RxSwift in Frameworks */,
+				C399D283281AA34D00845F7F /* TWModels in Frameworks */,
 				C36522C327BEDE0C00E6AF39 /* RxGesture in Frameworks */,
 				C3A64AC928054ED2001B0683 /* TWExtensions in Frameworks */,
+				C399D27F281AA34D00845F7F /* TWExtensions in Frameworks */,
 				C3A64ACB2805608A001B0683 /* TWModels in Frameworks */,
+				C399D281281AA34D00845F7F /* TWRoutes in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,7 +340,11 @@
 				C38DEEB8280DEC3F00777DCA /* RxTest in Frameworks */,
 				C35DF876280F36DE009641EB /* RxSwift in Frameworks */,
 				C35DF874280F36DE009641EB /* RxRelay in Frameworks */,
+				C399D28B281AA3ED00845F7F /* TWThemes in Frameworks */,
 				C38DEEB6280DEC3F00777DCA /* RxBlocking in Frameworks */,
+				C399D289281AA3ED00845F7F /* TWRoutes in Frameworks */,
+				C399D285281AA3ED00845F7F /* TWExtensions in Frameworks */,
+				C399D287281AA3ED00845F7F /* TWModels in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -819,6 +835,10 @@
 				C3A64AC828054ED2001B0683 /* TWExtensions */,
 				C3A64ACA2805608A001B0683 /* TWModels */,
 				C3A64ACC2805608A001B0683 /* TWRoutes */,
+				C399D27C281AA34D00845F7F /* TWThemes */,
+				C399D27E281AA34D00845F7F /* TWExtensions */,
+				C399D280281AA34D00845F7F /* TWRoutes */,
+				C399D282281AA34D00845F7F /* TWModels */,
 			);
 			productName = TinyWeather;
 			productReference = C365225A27BE438400E6AF39 /* TinyWeather.app */;
@@ -844,6 +864,10 @@
 				C35DF871280F36DE009641EB /* RxCocoa */,
 				C35DF873280F36DE009641EB /* RxRelay */,
 				C35DF875280F36DE009641EB /* RxSwift */,
+				C399D284281AA3ED00845F7F /* TWExtensions */,
+				C399D286281AA3ED00845F7F /* TWModels */,
+				C399D288281AA3ED00845F7F /* TWRoutes */,
+				C399D28A281AA3ED00845F7F /* TWThemes */,
 			);
 			productName = TinyWeatherTests;
 			productReference = C365226D27BE438500E6AF39 /* TinyWeatherTests.xctest */;
@@ -904,6 +928,7 @@
 				C365229327BE446900E6AF39 /* XCRemoteSwiftPackageReference "Swinject" */,
 				C365229627BE447400E6AF39 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				C36522C127BEDE0C00E6AF39 /* XCRemoteSwiftPackageReference "RxGesture" */,
+				C399D27B281AA34D00845F7F /* XCRemoteSwiftPackageReference "tiny-weather-common" */,
 			);
 			productRefGroup = C365225B27BE438400E6AF39 /* Products */;
 			projectDirPath = "";
@@ -1214,7 +1239,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Q6T2359V7Q;
 				INFOPLIST_FILE = TinyWeatherTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1413,7 +1438,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Q6T2359V7Q;
 				INFOPLIST_FILE = TinyWeatherTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1435,7 +1460,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Q6T2359V7Q;
 				INFOPLIST_FILE = TinyWeatherTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1567,6 +1592,14 @@
 				minimumVersion = 4.0.3;
 			};
 		};
+		C399D27B281AA34D00845F7F /* XCRemoteSwiftPackageReference "tiny-weather-common" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/marpies/tiny-weather-common.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1629,6 +1662,46 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C365228A27BE445D00E6AF39 /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxTest;
+		};
+		C399D27C281AA34D00845F7F /* TWThemes */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C399D27B281AA34D00845F7F /* XCRemoteSwiftPackageReference "tiny-weather-common" */;
+			productName = TWThemes;
+		};
+		C399D27E281AA34D00845F7F /* TWExtensions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C399D27B281AA34D00845F7F /* XCRemoteSwiftPackageReference "tiny-weather-common" */;
+			productName = TWExtensions;
+		};
+		C399D280281AA34D00845F7F /* TWRoutes */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C399D27B281AA34D00845F7F /* XCRemoteSwiftPackageReference "tiny-weather-common" */;
+			productName = TWRoutes;
+		};
+		C399D282281AA34D00845F7F /* TWModels */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C399D27B281AA34D00845F7F /* XCRemoteSwiftPackageReference "tiny-weather-common" */;
+			productName = TWModels;
+		};
+		C399D284281AA3ED00845F7F /* TWExtensions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C399D27B281AA34D00845F7F /* XCRemoteSwiftPackageReference "tiny-weather-common" */;
+			productName = TWExtensions;
+		};
+		C399D286281AA3ED00845F7F /* TWModels */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C399D27B281AA34D00845F7F /* XCRemoteSwiftPackageReference "tiny-weather-common" */;
+			productName = TWModels;
+		};
+		C399D288281AA3ED00845F7F /* TWRoutes */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C399D27B281AA34D00845F7F /* XCRemoteSwiftPackageReference "tiny-weather-common" */;
+			productName = TWRoutes;
+		};
+		C399D28A281AA3ED00845F7F /* TWThemes */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C399D27B281AA34D00845F7F /* XCRemoteSwiftPackageReference "tiny-weather-common" */;
+			productName = TWThemes;
 		};
 		C3A64AC828054ED2001B0683 /* TWExtensions */ = {
 			isa = XCSwiftPackageProductDependency;

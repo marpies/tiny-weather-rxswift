@@ -36,6 +36,15 @@
           "revision": "f10b6e9ebff440f985c43008f7c2d097639fcb81",
           "version": "2.8.1"
         }
+      },
+      {
+        "package": "TinyWeatherCommon",
+        "repositoryURL": "https://github.com/marpies/tiny-weather-common.git",
+        "state": {
+          "branch": null,
+          "revision": "2031d8070d2ef08e6f09384946fd18e472c3b0e9",
+          "version": "1.0.0"
+        }
       }
     ]
   },
