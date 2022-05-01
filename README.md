@@ -1,6 +1,6 @@
-![hero](https://user-images.githubusercontent.com/6077555/165308274-0cd82832-6078-4ed6-8428-6287d4ed758d.png)
+![hero](https://user-images.githubusercontent.com/6077555/166138541-e8d9020e-1687-4615-a83f-c876db706b0e.png)
 
-Simple weather app powered by [OpenWeather API](https://openweathermap.org/api). Built with Swift, UIKit and RxSwift.
+Simple weather app powered by [OpenWeather API](https://openweathermap.org/api). Built with Swift, UIKit and RxSwift. [Visit this repository for a version built with Combine](https://github.com/marpies/tiny-weather-combine).
 
 It is *really* tiny - contains a couple of screens, Core Data for caching and only displays degrees Celsius (apologies to all you Fahrenheits out there).
 
